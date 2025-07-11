@@ -58,7 +58,7 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                             <children>
                                 <Label text="Don't have an account?" />
-                                <Hyperlink text="Sign Up" />
+                                <Hyperlink fx:id="signUpLink" onAction="#handleSignUpLink" text="Sign Up" />
                             </children>
                         </HBox>
                     </children>

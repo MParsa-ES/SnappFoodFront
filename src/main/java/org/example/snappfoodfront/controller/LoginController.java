@@ -2,6 +2,7 @@ package org.example.snappfoodfront.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -13,6 +14,8 @@ import java.io.IOException;
 
 public class LoginController {
 
+    private final AuthApiService authApiService;
+
     @FXML
     private PasswordField passwordField;
 
@@ -21,6 +24,13 @@ public class LoginController {
 
     @FXML
     private Label errorLabel;
+
+    @FXML
+    private Hyperlink signUpLink;
+
+    public LoginController() {
+        this.authApiService = new AuthApiService();
+    }
 
 
     @FXML
@@ -35,7 +45,6 @@ public class LoginController {
             return;
         }
 
-        AuthApiService authApiService = new AuthApiService();
         try {
             errorLabel.setVisible(false);
             UserLoginDto.Response loginResponse = authApiService.login(phone, password);
@@ -55,4 +64,12 @@ public class LoginController {
         }
     }
 
+    @FXML
+    private void handleSignUpLink(ActionEvent event) {
+        try {
+            SceneManager.switchScene(event, "sign-up-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

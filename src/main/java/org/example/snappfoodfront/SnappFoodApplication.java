@@ -15,8 +15,7 @@ public class SnappFoodApplication extends Application {
 
         URL url = new File("src/main/resources/view/login-view.fxml").toURI().toURL();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(url);
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(FXMLLoader.load(url));
         stage.setHeight(400);
         stage.setWidth(600);
         stage.setTitle("Snapp Food");
