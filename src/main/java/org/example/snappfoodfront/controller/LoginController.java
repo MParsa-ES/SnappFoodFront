@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.snappfoodfront.Service.AuthApiService;
 import org.example.snappfoodfront.model.UserLoginDto;
+import org.example.snappfoodfront.Utils.SceneManager;
 
 import java.io.IOException;
 
@@ -42,7 +43,7 @@ public class LoginController {
             errorLabel.setText("Login Successful");
             String token = loginResponse.getToken();
 
-            // TODO : direct to the next page
+            SceneManager.switchScene(event, "dashboard-view.fxml");
 
         } catch (IOException | InterruptedException e) {
             errorLabel.setVisible(true);
@@ -51,7 +52,6 @@ public class LoginController {
         } catch (AuthApiService.LoginException e) {
             errorLabel.setVisible(true);
             errorLabel.setText(e.getMessage());
-            return;
         }
     }
 

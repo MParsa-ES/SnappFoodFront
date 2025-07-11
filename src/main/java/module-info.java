@@ -10,6 +10,7 @@ module org.example.snappfoodfront {
     opens org.example.snappfoodfront.controller to javafx.fxml, javafx.graphics, com.google.gson;
     opens org.example.snappfoodfront.model to javafx.fxml, javafx.graphics, com.google.gson;
     opens org.example.snappfoodfront.Service to javafx.fxml, javafx.graphics, com.google.gson;
+    opens org.example.snappfoodfront.Utils to javafx.fxml, javafx.graphics, com.google.gson;
 
     exports org.example.snappfoodfront;
 }
