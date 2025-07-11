@@ -1,6 +1,5 @@
 package org.example.snappfoodfront.controller;
 
-import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -51,7 +50,7 @@ public class LoginController {
             throw new RuntimeException("Failed to login : " + e.getMessage(), e);
         } catch (AuthApiService.LoginException e) {
             errorLabel.setVisible(true);
-
+            errorLabel.setText(e.getMessage());
             return;
         }
     }

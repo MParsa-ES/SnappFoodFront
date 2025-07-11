@@ -1,6 +1,8 @@
 package org.example.snappfoodfront.Service;
 
 import com.google.gson.Gson;
+import lombok.Getter;
+import org.example.snappfoodfront.model.ErrorResponseDto;
 import org.example.snappfoodfront.model.UserLoginDto;
 
 import java.io.IOException;
@@ -31,7 +33,8 @@ public class AuthApiService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 200) {
-            throw new LoginException(response.body());
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new LoginException(errorResponseDto);
         }
 
         return gson.fromJson(response.body(), UserLoginDto.Response.class);
@@ -39,9 +42,14 @@ public class AuthApiService {
     }
 
 
+    @Getter
     public class LoginException extends Exception {
-        public LoginException(String message) {
-            super(message);
+
+        private ErrorResponseDto errorResponseDto;
+
+        public LoginException(ErrorResponseDto errorResponseDto) {
+            super(errorResponseDto.getError());
+            this.errorResponseDto = errorResponseDto;
         }
     }
 
