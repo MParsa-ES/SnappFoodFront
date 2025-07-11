@@ -12,6 +12,9 @@ public class SnappFoodApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        stage.setHeight(400);
+        stage.setWidth(600);
+        stage.setTitle("Snapp Food");
         stage.setScene(scene);
         stage.show();
     }
