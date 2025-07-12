@@ -28,13 +28,12 @@ public class SceneManager {
             loginStage.show();
 
         } catch (IOException e) {
-            System.err.println("خطا در بارگذاری صفحه لاگین:");
+            System.err.println("Error loading login window");
             e.printStackTrace();
         }
     }
 
 
-    // متد کمکی برای بستن پنجره فعلی
     public static void closeCurrentStage(Node node) {
         Stage currentStage = (Stage) node.getScene().getWindow();
         currentStage.close();
