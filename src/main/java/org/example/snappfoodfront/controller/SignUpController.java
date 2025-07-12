@@ -32,7 +32,7 @@ public class SignUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // اضافه کردن گزینه‌ها به لیست ComboBox
+
         roleBox.getItems().addAll(
                 "BUYER",
                 "SELLER",
