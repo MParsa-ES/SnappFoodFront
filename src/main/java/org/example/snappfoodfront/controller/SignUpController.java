@@ -2,12 +2,15 @@ package org.example.snappfoodfront.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.example.snappfoodfront.Utils.SceneManager;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SignUpController {
+public class SignUpController implements Initializable {
 
     @FXML
     public TextField phoneField;
@@ -27,6 +30,16 @@ public class SignUpController {
     @FXML
     public Hyperlink LoginLink;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // اضافه کردن گزینه‌ها به لیست ComboBox
+        roleBox.getItems().addAll(
+                "BUYER",
+                "SELLER",
+                "COURIER"
+        );
+
+    }
 
     @FXML
     private void handleLoginLink(ActionEvent event) {
