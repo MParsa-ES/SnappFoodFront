@@ -2,34 +2,37 @@ package org.example.snappfoodfront.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import org.example.snappfoodfront.Service.AuthApiService;
 import org.example.snappfoodfront.model.UserLoginDto;
 import org.example.snappfoodfront.Utils.SceneManager;
+import org.example.snappfoodfront.Utils.Methods;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
-public class LoginController {
+public class LoginController implements Initializable {
 
     private final AuthApiService authApiService;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private TextField phoneField;
-
     @FXML
     private Label errorLabel;
-
     @FXML
     private Hyperlink signUpLink;
 
     public LoginController() {
         this.authApiService = new AuthApiService();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Methods.filterPhoneField(phoneField);
     }
 
 
@@ -52,13 +55,13 @@ public class LoginController {
             errorLabel.setText("Login Successful");
             String token = loginResponse.getToken();
 
-            SceneManager.switchScene(event, "dashboard-view.fxml");
+            SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
 
         } catch (IOException | InterruptedException e) {
             errorLabel.setVisible(true);
             errorLabel.setText("Internal Server Error");
             throw new RuntimeException("Failed to login : " + e.getMessage(), e);
-        } catch (AuthApiService.LoginException e) {
+        } catch (AuthApiService.AuthException e) {
             errorLabel.setVisible(true);
             errorLabel.setText(e.getMessage());
         }
@@ -67,7 +70,7 @@ public class LoginController {
     @FXML
     private void handleSignUpLink(ActionEvent event) {
         try {
-            SceneManager.switchScene(event, "sign-up-view.fxml");
+            SceneManager.switchScene(event, "sign-up-view.fxml", 600, 400);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,20 @@
+.custom-button {
+    -fx-min-width: 220px;
+    -fx-max-width: 220px;
+    -fx-pref-width: 220px;
+
+    -fx-min-height: 30px;
+    -fx-max-height: 30px;
+    -fx-pref-height: 30px;
+
+    -fx-background-color: #ff7600;
+    -fx-text-fill: white;
+    -fx-font-family: "System Bold";
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+}
+
+.custom-button:hover {
+    -fx-background-color: #e66900;
+    -fx-cursor: hand;
+}

@@ -1,6 +1,8 @@
 package org.example.snappfoodfront.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -9,12 +11,16 @@ public class UserRegisterDto {
 
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ValidateRequest {
         String phone;
     }
 
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Request {
         private String full_name;
         private String phone;
@@ -27,6 +33,8 @@ public class UserRegisterDto {
 
         @Getter
         @Setter
+        @NoArgsConstructor
+        @AllArgsConstructor
         public static class BankInfoDto {
             private String bank_name;
             private String account_number;

@@ -1,11 +1,14 @@
 package org.example.snappfoodfront.Utils;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,22 +43,35 @@ public class SceneManager {
         currentStage.close();
     }
 
-    public static void switchScene(ActionEvent event, String fxmlFileName) throws IOException {
+    public static void switchScene(ActionEvent event, String fxmlFileName, double width, double height) throws IOException {
 
-        Scene scene;
-
+        Parent newRoot;
         try {
-            scene = new Scene(FXMLLoader.load(Objects.requireNonNull(SceneManager.class.getResource("/view/" + fxmlFileName))));
+            URL resourceUrl = SceneManager.class.getResource("/view/" + fxmlFileName);
+            newRoot = FXMLLoader.load(resourceUrl);
         } catch (IOException e) {
-            System.err.println("Error loading view " + fxmlFileName);
             e.printStackTrace();
-            return;
+            throw e;
         }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setScene(scene);
+        Scene newScene = new Scene(newRoot);
+
+        newRoot.setOpacity(0.0);
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), newRoot);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
+
+        stage.setScene(newScene);
+        stage.setWidth(width);
+        stage.setHeight(height);
+
+        stage.centerOnScreen();
         stage.show();
+
+
     }
 
 }
