@@ -55,7 +55,12 @@ public class LoginController implements Initializable {
             errorLabel.setText("Login Successful");
             String token = loginResponse.getToken();
 
-            SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+            if (loginResponse.getUser().getRole().equals("SELLER")) {
+                SceneManager.switchScene(event, "seller-dashboard-view.fxml", 1024, 720);
+            } else {
+                SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+            }
+
 
         } catch (IOException | InterruptedException e) {
             errorLabel.setVisible(true);
