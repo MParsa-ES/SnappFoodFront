@@ -58,7 +58,13 @@ public class LoginController implements Initializable {
             TokenManager.clearToken();
             TokenManager.saveToken(token);
 
-            SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+            if (loginResponse.getUser().getRole().equals("SELLER")) {
+                // will add the seller dashboard here
+                SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+            } else {
+                SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+            }
+
 
         } catch (IOException | InterruptedException e) {
             errorLabel.setVisible(true);

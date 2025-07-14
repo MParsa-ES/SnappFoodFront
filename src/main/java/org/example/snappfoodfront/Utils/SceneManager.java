@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -88,8 +89,9 @@ public class SceneManager {
         Parent newRoot;
         try {
             URL resourceUrl = SceneManager.class.getResource("/view/" + fxmlFileName);
-            newRoot = FXMLLoader.load(resourceUrl);
+            newRoot = FXMLLoader.load(Objects.requireNonNull(resourceUrl));
         } catch (IOException e) {
+            System.err.println("Error loading view " + fxmlFileName);
             e.printStackTrace();
             throw e;
         }
@@ -112,6 +114,13 @@ public class SceneManager {
         stage.show();
 
 
+    }
+
+    public static void switchCenterPane(BorderPane borderPane, String fxmlFileName) throws IOException {
+
+        Parent newCenter = FXMLLoader.load(Objects.requireNonNull(SceneManager.class.getResource("/view/" + fxmlFileName)));
+
+        borderPane.setCenter(newCenter);
     }
 
 }
