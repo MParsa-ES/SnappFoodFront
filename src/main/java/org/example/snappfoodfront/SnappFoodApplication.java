@@ -11,10 +11,13 @@ import java.io.IOException;
 import java.net.URL;
 
 public class SnappFoodApplication extends Application {
+
+    private static final String SPLASH_VIEW_PATH = "/view/splash-screen-view.fxml";
+
     @Override
     public void start(Stage stage) throws IOException {
 
-          SceneManager.showLoginWindow();
+          SceneManager.showWindow(SPLASH_VIEW_PATH, "", "loading", 600, 400);
 
     }
 

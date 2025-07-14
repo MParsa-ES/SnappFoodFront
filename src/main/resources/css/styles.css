@@ -18,3 +18,12 @@
     -fx-background-color: #e66900;
     -fx-cursor: hand;
 }
+
+.splash-screen {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ff7600, #FFFFFF);
+}
+
+.progress-bar > .bar {
+    -fx-accent: #00ff0c;
+    -fx-background-insets: 0;
+}

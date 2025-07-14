@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -19,6 +20,29 @@ public class SceneManager {
 
 
     private static final String LOGIN_VIEW_PATH = "/view/login-view.fxml";
+    private static final String DASHBOARD_VIEW_PATH = "/view/dashboard-view.fxml";
+
+    public static void showWindow(String path, String title, String error, int width, int height) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(SceneManager.class.getResource(path));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+
+            if (title.isEmpty()) {
+                stage.initStyle(StageStyle.UNDECORATED);
+            }
+
+            stage.setTitle(title);
+            stage.setScene(new Scene(root, width, height));
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            System.err.println("Error loading " + error +  "window");
+            e.printStackTrace();
+        }
+    }
 
     public static void showLoginWindow() {
         try {
@@ -37,6 +61,22 @@ public class SceneManager {
         }
     }
 
+    public static void showMainWindow() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(SceneManager.class.getResource(DASHBOARD_VIEW_PATH));
+            Parent root = fxmlLoader.load();
+
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Snapp Food");
+            loginStage.setScene(new Scene(root));
+            loginStage.setResizable(false);
+            loginStage.show();
+
+        } catch (IOException e) {
+            System.err.println("Error loading dashboard");
+            e.printStackTrace();
+        }
+    }
 
     public static void closeCurrentStage(Node node) {
         Stage currentStage = (Stage) node.getScene().getWindow();

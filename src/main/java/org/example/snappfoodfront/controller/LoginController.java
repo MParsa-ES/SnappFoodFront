@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.example.snappfoodfront.Service.AuthApiService;
+import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.UserLoginDto;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.Methods;
@@ -54,16 +55,18 @@ public class LoginController implements Initializable {
             errorLabel.setVisible(true);
             errorLabel.setText("Login Successful");
             String token = loginResponse.getToken();
+            TokenManager.clearToken();
+            TokenManager.saveToken(token);
 
             SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
 
         } catch (IOException | InterruptedException e) {
             errorLabel.setVisible(true);
-            errorLabel.setText("Internal Server Error");
+            errorLabel.setText("Unable to connect to server");
             throw new RuntimeException("Failed to login : " + e.getMessage(), e);
         } catch (AuthApiService.AuthException e) {
             errorLabel.setVisible(true);
-            errorLabel.setText(e.getMessage());
+            errorLabel.setText("Wrong Phone or Password");
         }
     }
 

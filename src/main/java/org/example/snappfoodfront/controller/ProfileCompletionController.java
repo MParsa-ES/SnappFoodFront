@@ -14,6 +14,7 @@ import org.example.snappfoodfront.Service.AuthApiService;
 import org.example.snappfoodfront.Utils.Methods;
 import org.example.snappfoodfront.Utils.RegistrationContext;
 import org.example.snappfoodfront.Utils.SceneManager;
+import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.UserRegisterDto;
 
 import java.io.File;
@@ -150,8 +151,10 @@ public class ProfileCompletionController implements Initializable {
         );
 
         try {
-            UserRegisterDto.Response response = authService.SignUp(requestDto);
+            UserRegisterDto.Response response = authService.signUp(requestDto);
             String token = response.getToken();
+            TokenManager.clearToken();
+            TokenManager.saveToken(token);
             errorLabel.setTextFill(Color.GREEN);
             errorLabel.setText("Sign up successful");
             SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);

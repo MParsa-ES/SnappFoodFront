@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.SignUpController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -53,6 +52,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
+            <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="220.0" style="-fx-text-fill: red;" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Already have an account?" />

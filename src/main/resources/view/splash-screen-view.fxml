@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="splash-screen" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.SplashScreenController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+    <ColumnConstraints maxWidth="260.0" minWidth="10.0" prefWidth="260.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints prefHeight="20.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="280.0" minHeight="10.0" prefHeight="260.0" vgrow="SOMETIMES" />
+    <RowConstraints prefHeight="20.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label alignment="CENTER" text="Welcome to SnappFood" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </Label>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="260.0" prefWidth="120.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxWidth="130.0" prefHeight="30.0" prefWidth="130.0" spacing="20.0">
+               <children>
+                  <Label text="Loading...">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="progressNum" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="21.0" prefWidth="40.0" text="0%">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <ProgressBar fx:id="progressBar" prefHeight="15.0" prefWidth="130.0" progress="0.0" styleClass="bar" stylesheets="@../css/styles.css" />
+         </children>
+      </VBox>
+      <Label fx:id="statusLabel" alignment="CENTER" prefHeight="40.0" prefWidth="130.0" text="Checking Token..." textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</GridPane>

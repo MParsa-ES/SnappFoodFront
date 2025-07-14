@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.snappfoodfront.model.ErrorResponseDto;
+import org.example.snappfoodfront.model.ProfileDto;
 import org.example.snappfoodfront.model.UserLoginDto;
 import org.example.snappfoodfront.model.UserRegisterDto;
 
@@ -39,7 +40,7 @@ public class AuthApiService {
 
     }
 
-    public UserRegisterDto.Response SignUp(UserRegisterDto.Request requestDto) throws IOException, InterruptedException, AuthException {
+    public UserRegisterDto.Response signUp(UserRegisterDto.Request requestDto) throws IOException, InterruptedException, AuthException {
 
         String requestBody = gson.toJson(requestDto);
 
@@ -80,6 +81,25 @@ public class AuthApiService {
         }
 
         return gson.fromJson(response.body(), UserLoginDto.Response.class);
+
+    }
+
+    public ProfileDto getProfile(String token) throws IOException, InterruptedException, AuthException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/auth/profile"))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AuthException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), ProfileDto.class);
 
     }
 

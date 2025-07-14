@@ -4,6 +4,7 @@ module org.example.snappfoodfront {
     requires lombok;
     requires java.net.http;
     requires com.google.gson;
+    requires java.prefs;
 
 
     opens org.example.snappfoodfront to javafx.fxml;
