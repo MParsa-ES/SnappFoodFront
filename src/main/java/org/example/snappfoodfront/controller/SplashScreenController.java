@@ -80,6 +80,10 @@ public class SplashScreenController implements Initializable {
 
                     SceneManager.closeCurrentStage(progressBar);
 
+                    // TODO : remove after testing
+                    isTokenValid = false;
+
+
                     if (isTokenValid) {
                         SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
                     } else {

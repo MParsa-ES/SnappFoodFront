@@ -13,7 +13,6 @@ import org.example.snappfoodfront.Utils.Methods;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
 public class LoginController implements Initializable {
 
@@ -60,7 +59,9 @@ public class LoginController implements Initializable {
 
             if (loginResponse.getUser().getRole().equals("SELLER")) {
                 // will add the seller dashboard here
-                SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+                SceneManager.switchScene(event, "seller-main-view.fxml", 1050, 720);
+            } else if (loginResponse.getUser().getRole().equals("BUYER")) {
+                SceneManager.switchScene(event, "customer-main-view.fxml", 1024, 720);
             } else {
                 SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
             }
