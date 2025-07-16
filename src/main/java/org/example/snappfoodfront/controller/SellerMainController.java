@@ -30,8 +30,6 @@ public class SellerMainController implements Initializable {
     private ScrollPane contentScrollPane;
 
 
-
-
     public SellerMainController() {
         this.restaurantApiService = new RestaurantApiService();
         this.token = TokenManager.getToken();
@@ -62,14 +60,13 @@ public class SellerMainController implements Initializable {
 
                 Platform.runLater(() -> {
 
-                    Node errorNode = createErrorNode(location, resources, e.getErrorResponseDto());
-                    contentScrollPane.setContent(errorNode);
+                    Node errorView = createErrorView(e.getErrorResponseDto().getError(), location, resources);
+                    contentScrollPane.setContent(errorView);
 
-                    });
+                });
             } catch (Exception e) {
                 e.printStackTrace();
                 System.err.println("Error in getting restaurant list");
-                // errorLabel.setText("Failed to load restaurants");
             }
 
         }
@@ -101,36 +98,29 @@ public class SellerMainController implements Initializable {
         }
     }
 
-    private Node createErrorNode(URL location, ResourceBundle resources, ErrorResponseDto errorResponseDto) {
+    // In SellerMainController.java
+
+    private Node createErrorView(String errorMessage, URL location, ResourceBundle resources) {
         try {
-            // Create an FXMLLoader to load your component FXML
-            FXMLLoader loader = new FXMLLoader(SellerMainController.class.getResource("/view/SellerViews/empty-state-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SellerViews/error-state-view.fxml"));
             Node errorNode = loader.load();
 
 
-            Button retryButton = (Button) loader.getNamespace().get("actionButton");
-            retryButton.setText("Retry");
+            Label messageLabel = (Label) loader.getNamespace().get("errorMessageLabel");
+            Button actionButton = (Button) loader.getNamespace().get("errorActionButton");
 
 
-
-            Label errorLabel = (Label) loader.getNamespace().get("messageLabel");
-
-            errorLabel.setText(errorResponseDto.getError());
-            errorLabel.setTextFill(new Color(0,0,0,1));
-
-
-            retryButton.setOnAction(event -> {
+            messageLabel.setText(errorMessage);
+            actionButton.setText("Retry");
+            actionButton.setOnAction(event -> {
                 initialize(location, resources);
             });
 
             return errorNode;
         } catch (IOException e) {
             e.printStackTrace();
-            // Return a simple error label if the FXML can't be loaded
-            System.err.println("Error in creating error state view");
-            return new Label("Error: Could not load UI component.");
+            return new Label("Fatal Error: Could not load error screen.");
         }
     }
-
 
 }

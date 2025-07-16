@@ -27,3 +27,30 @@
     -fx-accent: #00ff0c;
     -fx-background-insets: 0;
 }
+
+.empty-state-headline {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333; /* Dark grey for text */
+}
+
+.empty-state-subtext {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666; /* Lighter grey */
+    -fx-max-width: 350px;  /* Prevents the text from becoming too wide */
+    -fx-text-alignment: center;
+}
+
+.error-state-headline {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d35400;
+}
+
+
+.error-state-subtext {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+    -fx-max-width: 350px;
+    -fx-text-alignment: center;
+}
