@@ -38,7 +38,7 @@ public class RestaurantApiService {
 
         Type listType = new TypeToken<List<RestaurantDto.Response>>(){}.getType();
 
-        return List.of(gson.fromJson(response.body(), listType));
+        return gson.fromJson(response.body(), listType);
 
     }
 

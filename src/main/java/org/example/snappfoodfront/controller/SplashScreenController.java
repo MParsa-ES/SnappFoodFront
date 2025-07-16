@@ -9,6 +9,7 @@ import javafx.scene.control.ProgressBar;
 import org.example.snappfoodfront.Service.AuthApiService;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
+import org.example.snappfoodfront.model.ProfileDto;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -80,12 +81,22 @@ public class SplashScreenController implements Initializable {
 
                     SceneManager.closeCurrentStage(progressBar);
 
-                    // TODO : remove after testing
-                    isTokenValid = false;
-
-
                     if (isTokenValid) {
-                        SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+                        try {
+                            ProfileDto profile = authService.getProfile(TokenManager.getToken());
+
+                            if (profile.getRole().equals("BUYER")) {
+                                SceneManager.showWindow("/view/customer-main-view.fxml","SnappFood","customer", 1024,720);
+                            } else if (profile.getRole().equals("SELLER")) {
+                                SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml","SnappFood","seller", 1050,720);
+
+                            } else {
+                                SceneManager.showWindow(DASHBOARD_VIEW_PATH,"SnappFood","dashboard", 1024,720);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         SceneManager.showWindow(LOGIN_VIEW_PATH, "SnappFood", "login", 600, 400);
                     }

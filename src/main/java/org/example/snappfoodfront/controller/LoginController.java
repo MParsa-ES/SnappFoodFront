@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
 
             if (loginResponse.getUser().getRole().equals("SELLER")) {
                 // will add the seller dashboard here
-                SceneManager.switchScene(event, "seller-main-view.fxml", 1050, 720);
+                SceneManager.switchScene(event, "SellerViews/seller-main-view.fxml", 1050, 720);
             } else if (loginResponse.getUser().getRole().equals("BUYER")) {
                 SceneManager.switchScene(event, "customer-main-view.fxml", 1024, 720);
             } else {
