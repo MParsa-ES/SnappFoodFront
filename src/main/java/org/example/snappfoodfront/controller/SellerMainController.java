@@ -98,8 +98,6 @@ public class SellerMainController implements Initializable {
         }
     }
 
-    // In SellerMainController.java
-
     private Node createErrorView(String errorMessage, URL location, ResourceBundle resources) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SellerViews/error-state-view.fxml"));
