@@ -7,6 +7,7 @@ module org.example.snappfoodfront {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
     requires org.controlsfx.controls;
+    requires java.net.http;
 
 
     opens org.example.snappfoodfront to javafx.fxml;

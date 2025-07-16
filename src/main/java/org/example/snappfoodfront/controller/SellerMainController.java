@@ -9,10 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.paint.Color;
 import org.example.snappfoodfront.Service.RestaurantApiService;
+import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
-import org.example.snappfoodfront.model.ErrorResponseDto;
 import org.example.snappfoodfront.model.RestaurantDto;
 
 import java.io.IOException;
@@ -85,8 +84,12 @@ public class SellerMainController implements Initializable {
 
 
             createButton.setOnAction(event -> {
-                System.out.println("Go to create restaurant page...");
-                // SceneManager.switchScene(...)
+                try {
+                    SceneManager.switchScene(event, "SellerViews/create-restaurant-view.fxml",600,452);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.err.println("Error in switching to creating restaurant view");
+                }
             });
 
             return emptyStateNode;

@@ -2,44 +2,61 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.textfield.CustomTextField?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantCreationController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" spacing="20.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantCreationController">
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/styles.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label text="Create a New Restaurant">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+
+      <GridPane hgap="15.0" vgap="15.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <HBox alignment="CENTER" focusTraversable="true" prefHeight="100.0" prefWidth="560.0" spacing="45.0">
-               <children>
-                  <CustomTextField fx:id="nameTextField" prefHeight="25.0" prefWidth="216.0" promptText="Name" />
-                  <CustomTextField fx:id="phoneTextField" prefHeight="25.0" prefWidth="216.0" promptText="Phone" />
-               </children>
-            </HBox>
-            <TextArea fx:id="addressTextField" prefHeight="70.0" prefWidth="216.0" promptText="Address">
-               <VBox.margin>
-                  <Insets left="40.0" right="40.0" />
-               </VBox.margin>
-            </TextArea>
-            <HBox alignment="CENTER" focusTraversable="true" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
-               <children>
-                  <CustomTextField fx:id="additionalFeeTextField" prefHeight="25.0" prefWidth="216.0" promptText="Additional Fee" />
-                  <CustomTextField fx:id="taxFeeTextField" prefHeight="25.0" prefWidth="216.0" promptText="Tax Fee" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0">
-               <children>
-                  <Button fx:id="chooseLogoButton" mnemonicParsing="false" onAction="#handleChoosingLogo" styleClass="custom-button" text="Choose Logo" />
-                  <ImageView fx:id="logoImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </HBox>
+            <TextField fx:id="nameTextField" promptText="Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="phoneTextField" promptText="Phone" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextArea fx:id="addressTextField" prefHeight="70.0" promptText="Address" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <TextField fx:id="additionalFeeTextField" promptText="Additional Fee (e.g., 1500)" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="taxFeeTextField" promptText="Tax Fee (e.g., 500)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </VBox>
+      </GridPane>
+
+      <HBox alignment="CENTER_LEFT" spacing="20.0">
+         <children>
+            <Button fx:id="chooseLogoButton" mnemonicParsing="false" onAction="#handleChoosingLogo" styleClass="custom-button" text="Choose Logo" />
+            <ImageView fx:id="logoImage" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+            <Label text="Optional: Upload a logo for your restaurant." textFill="#868686" wrapText="true" />
+         </children>
+      </HBox>
+
+      <Label fx:id="feedbackLabel" />
+
+      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="550.0">
+         <children>
+            <Button fx:id="createRestaurantButton" mnemonicParsing="false" onAction="#handleCreateRestaurant" styleClass="custom-button" text="Create Restaurant" />
+         </children>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>
