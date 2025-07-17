@@ -1,6 +1,7 @@
 package org.example.snappfoodfront.controller;
 
 import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -41,7 +43,7 @@ public class RestaurantCreationController implements Initializable {
     private Button chooseLogoButton;
 
     @FXML
-    private Button createRestaurantButton;
+    private HBox feedbackBox;
 
     @FXML
     private Label feedbackLabel;
@@ -58,10 +60,13 @@ public class RestaurantCreationController implements Initializable {
     @FXML
     private TextField taxFeeTextField;
 
+    @FXML
+    private Button createRestaurantButton;
+
 
     private String logoBase64;
 
-    private RestaurantApiService restaurantApiService;
+    private final RestaurantApiService restaurantApiService;
 
 
     public RestaurantCreationController() {
@@ -84,7 +89,6 @@ public class RestaurantCreationController implements Initializable {
             return Base64.getEncoder().encodeToString(fileContent);
         }
     }
-
 
 
     @FXML
@@ -125,19 +129,19 @@ public class RestaurantCreationController implements Initializable {
 
 
         if (name.isBlank()) {
-            showFeedback("Please enter a valid name", Color.RED);
+            showFeedback("Please enter a valid name", true);
             return;
         } else if (phone.isBlank()) {
-            showFeedback("Please enter a valid phone number", Color.RED);
+            showFeedback("Please enter a valid phone number", true);
             return;
         } else if (address.isBlank()) {
-            showFeedback("Please enter a valid address", Color.RED);
-            return;
-        } else if (taxFee.isBlank()) {
-            showFeedback("Please enter a valid tax fee", Color.RED);
+            showFeedback("Please enter a valid address", true);
             return;
         } else if (additionalFee.isBlank()) {
-            showFeedback("Please enter a valid additional fee", Color.RED);
+            showFeedback("Please enter a valid additional fee", true);
+            return;
+        } else if (taxFee.isBlank()) {
+            showFeedback("Please enter a valid tax fee", true);
             return;
         }
 
@@ -156,24 +160,20 @@ public class RestaurantCreationController implements Initializable {
                 restaurantApiService.addRestaurant(TokenManager.getToken(), requestDto);
 
                 Platform.runLater(() -> {
-                    showFeedback("Restaurant Created", Color.BLACK);
+                    showFeedback("Restaurant Created", false);
                     SceneManager.closeCurrentStage((Node) event.getSource());
-                    SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml","SnappFood", "Main Seller view", 1024, 720);
+                    SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1024, 720);
                 });
 
 
             } catch (RestaurantApiService.RestaurantException e) {
-                Platform.runLater(() -> {
-                    showFeedback(e.getErrorResponseDto().getError(), Color.RED);
-                });
+                Platform.runLater(() -> showFeedback(e.getErrorResponseDto().getError(), true));
 
                 e.printStackTrace();
                 System.err.println("Restaurant creation failed");
             } catch (Exception e) {
 
-                Platform.runLater(() -> {
-                    showFeedback("System error while creating the restaurant", Color.RED);
-                });
+                Platform.runLater(() -> showFeedback("System error while creating the restaurant", true));
 
                 e.printStackTrace();
                 System.err.println("Restaurant creation failed with exception");
@@ -183,12 +183,28 @@ public class RestaurantCreationController implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources) {
+
+        // making so that theses fields only accept numbers
         Methods.filterPhoneField(phoneTextField);
         Methods.filterPhoneField(additionalFeeTextField);
         Methods.filterPhoneField(taxFeeTextField);
 
-        Circle clip = new Circle(40,40,40);
+
+        // adding a circle to the restaurant logo
+        Circle clip = new Circle(40, 40, 40);
         logoImage.setClip(clip);
+
+
+        // binding the activation of button to fields
+        BooleanBinding formIsInvalid =
+                nameTextField.textProperty().isEmpty()
+                        .or(phoneTextField.textProperty().isEmpty())
+                        .or(addressTextField.textProperty().isEmpty())
+                        .or(taxFeeTextField.textProperty().isEmpty())
+                        .or(additionalFeeTextField.textProperty().isEmpty());
+
+        createRestaurantButton.disableProperty().bind(formIsInvalid);
+
 
         try {
             logoBase64 = loadDefaultLogoBase64();
@@ -200,11 +216,21 @@ public class RestaurantCreationController implements Initializable {
     }
 
 
-    private void showFeedback(String message, Color color) {
+    private void showFeedback(String message, boolean isError) {
         feedbackLabel.setText(message);
-        feedbackLabel.setTextFill(color);
-    }
 
+
+        feedbackBox.getStyleClass().removeAll("feedback-box-success", "feedback-box-error");
+        if (isError) {
+            feedbackBox.getStyleClass().add("feedback-box-error");
+        } else {
+            feedbackBox.getStyleClass().add("feedback-box-success");
+        }
+
+
+        feedbackBox.setVisible(true);
+        feedbackBox.setManaged(true);
+    }
 
 
 }

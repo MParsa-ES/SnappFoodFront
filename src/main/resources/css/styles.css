@@ -54,3 +54,56 @@
     -fx-max-width: 350px;
     -fx-text-alignment: center;
 }
+
+/* --- Style for Labels next to TextFields in a form --- */
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-alignment: center-right; /* Aligns text to the right, next to the field */
+}
+
+
+/* --- Highlight the border of a field when it is focused --- */
+.text-field, .text-area {
+    -fx-border-color: transparent; /* Has a border, but it's invisible */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+/* Focused state: just change the border color to your brand's orange */
+.text-field:focused,
+.text-area:focused {
+    -fx-border-color: #ff7600;
+}
+
+
+/* --- Styles for a noticeable feedback/alert box --- */
+.feedback-box {
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
+/* Style for successful feedback (e.g., light green) */
+.feedback-box-success {
+    -fx-background-color: #e9f5e9;
+    -fx-border-color: #5cb85c;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+.feedback-box-success .label {
+    -fx-text-fill: #3d7a3d;
+}
+
+/* Style for error feedback (e.g., light red) */
+.feedback-box-error {
+    -fx-background-color: #fdeeee;
+    -fx-border-color: #d9534f;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+.feedback-box-error .label {
+    -fx-text-fill: #a94442;
+}

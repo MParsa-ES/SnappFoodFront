@@ -85,7 +85,7 @@ public class SellerMainController implements Initializable {
 
             createButton.setOnAction(event -> {
                 try {
-                    SceneManager.switchScene(event, "SellerViews/create-restaurant-view.fxml",600,452);
+                    SceneManager.switchScene(event, "SellerViews/create-restaurant-view.fxml",700,490);
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.err.println("Error in switching to creating restaurant view");
@@ -113,9 +113,7 @@ public class SellerMainController implements Initializable {
 
             messageLabel.setText(errorMessage);
             actionButton.setText("Retry");
-            actionButton.setOnAction(event -> {
-                initialize(location, resources);
-            });
+            actionButton.setOnAction(event -> initialize(location, resources));
 
             return errorNode;
         } catch (IOException e) {
