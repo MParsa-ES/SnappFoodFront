@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefWidth="700.0" spacing="20.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantCreationController">
+<VBox alignment="TOP_CENTER" prefWidth="700.0" spacing="20.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantCreationController">
    <padding>
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
@@ -50,7 +57,7 @@
 
       <HBox alignment="CENTER_LEFT" spacing="20.0">
          <children>
-            <Button fx:id="chooseLogoButton" mnemonicParsing="false" onAction="#handleChoosingLogo" styleClass="custom-button" text="Choose Logo" />
+            <JFXButton fx:id="chooseLogoButton" buttonType="RAISED" onAction="#handleChoosingLogo" styleClass="custom-button" text="Choose Logo" />
             <ImageView fx:id="logoImage" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
             <Label text="Optional: Upload a logo for your restaurant." textFill="#868686" wrapText="true" />
          </children>
@@ -64,7 +71,7 @@
 
       <HBox alignment="CENTER" prefHeight="40.0">
          <children>
-            <Button fx:id="createRestaurantButton" disable="true" mnemonicParsing="false" onAction="#handleCreateRestaurant" styleClass="custom-button" text="Create Restaurant" />
+            <JFXButton fx:id="createRestaurantButton" buttonType="RAISED" onAction="#handleCreateRestaurant" styleClass="custom-button" text="Create Restaurant" />
          </children>
       </HBox>
    </children>
