@@ -40,6 +40,8 @@ public class ProfileCompletionController implements Initializable {
 
     private final AuthApiService authService = new AuthApiService();
 
+    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
+
     private String fullName;
     private String email;
     private String bankName;
@@ -157,7 +159,8 @@ public class ProfileCompletionController implements Initializable {
             TokenManager.saveToken(token);
             errorLabel.setTextFill(Color.GREEN);
             errorLabel.setText("Sign up successful");
-            SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+            SceneManager.closeCurrentStage(errorLabel);
+            SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
         } catch (IOException | InterruptedException e) {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Sign up failed");

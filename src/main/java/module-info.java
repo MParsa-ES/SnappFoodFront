@@ -8,6 +8,8 @@ module org.example.snappfoodfront {
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
+    requires org.controlsfx.controls;
+    requires com.jfoenix;
 
 
     opens org.example.snappfoodfront to javafx.fxml;

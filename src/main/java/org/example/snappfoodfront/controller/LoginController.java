@@ -1,5 +1,6 @@
 package org.example.snappfoodfront.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +32,8 @@ public class LoginController implements Initializable {
         this.authApiService = new AuthApiService();
     }
 
+    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Methods.filterPhoneField(phoneField);
@@ -49,31 +52,22 @@ public class LoginController implements Initializable {
             return;
         }
 
-        try {
-            errorLabel.setVisible(false);
-            UserLoginDto.Response loginResponse = authApiService.login(phone, password);
-            errorLabel.setVisible(true);
-            errorLabel.setText("Login Successful");
-            String token = loginResponse.getToken();
-            TokenManager.clearToken();
-            TokenManager.saveToken(token);
+        new Thread(() -> {
+            try {
+                UserLoginDto.Response loginResponse = authApiService.login(phone, password);
+                TokenManager.saveToken(loginResponse.getToken());
 
-            if (loginResponse.getUser().getRole().equals("SELLER")) {
-                // will add the seller dashboard here
-                SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
-            } else {
-                SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+                Platform.runLater(() -> {
+                    errorLabel.setText("Login Successful!");
+                    SceneManager.closeCurrentStage(errorLabel);
+                    SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "main window", 1024, 720);
+                });
+            } catch (AuthApiService.AuthException e) {
+                Platform.runLater(() -> errorLabel.setText("Wrong phone number or password."));
+            } catch (IOException | InterruptedException e) {
+                Platform.runLater(() -> errorLabel.setText("Unable to connect to the server."));
             }
-
-
-        } catch (IOException | InterruptedException e) {
-            errorLabel.setVisible(true);
-            errorLabel.setText("Unable to connect to server");
-            throw new RuntimeException("Failed to login : " + e.getMessage(), e);
-        } catch (AuthApiService.AuthException e) {
-            errorLabel.setVisible(true);
-            errorLabel.setText("Wrong Phone or Password");
-        }
+        }).start();
     }
 
     @FXML

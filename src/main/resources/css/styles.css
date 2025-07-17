@@ -28,10 +28,20 @@
     -fx-background-insets: 0;
 }
 
-.restaurant-card {
+.round-image {
     -fx-background-radius: 10;
     -fx-background-color: white;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
+}
+
+.circular-image {
+    /*
+     * شعاع گردی را روی یک عدد بسیار بزرگ (بزرگتر از نصف عرض/ارتفاع) تنظیم می‌کنیم
+     * تا گوشه‌ها به طور کامل گرد شوند و یک دایره تشکیل دهند.
+     * این مقدار برای اکثر اندازه‌ها کار می‌کند.
+    */
+    -fx-background-radius: 100;
+    -fx-border-radius: 100;
 }
 
 .main-tab-pane .tab {
