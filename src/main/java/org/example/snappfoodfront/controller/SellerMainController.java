@@ -4,15 +4,21 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.RestaurantDto;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,8 +51,47 @@ public class SellerMainController implements Initializable {
 
                 Platform.runLater(() -> {
                     if (!restaurants.isEmpty()) {
-                        // show the restaurants in the center pane
-                        System.out.println("Restaurants found");
+
+
+                        VBox restaurantContainer = new VBox(20);
+                        restaurantContainer.setPadding(new Insets(20));
+                        restaurantContainer.setAlignment(Pos.TOP_LEFT);
+
+                        HBox headerBox = new HBox(10);
+                        headerBox.setAlignment(Pos.CENTER);
+
+                        FontIcon headerIcon = new FontIcon("fas-store-alt");
+                        headerIcon.setIconSize(25);
+                        headerIcon.setIconColor(Color.web("#2c3e50"));
+
+                        Label headerLabel = new Label("My Restaurant");
+                        headerLabel.getStyleClass().add("dashboard-header");
+
+                        headerBox.getChildren().addAll(headerIcon, headerLabel);
+
+                        restaurantContainer.getChildren().add(headerBox);
+
+                        for (RestaurantDto.Response restaurant : restaurants) {
+
+                            try {
+                                FXMLLoader loader = new FXMLLoader(SellerMainController.class.getResource("/view/SellerViews/restaurant-card.fxml"));
+                                Node restaurantCard = loader.load();
+
+                                RestaurantCardController controller = loader.getController();
+                                controller.setData(restaurant);
+
+                                restaurantContainer.getChildren().add(restaurantCard);
+
+                            } catch (IOException e){
+                                e.printStackTrace();
+                                System.err.println("Error loading restaurant card");
+                            }
+
+                        }
+
+                        contentScrollPane.setContent(restaurantContainer);
+
+
                     } else {
 
                         Node emptyNode = createEmptyStateView();
@@ -75,7 +120,7 @@ public class SellerMainController implements Initializable {
 
     private Node createEmptyStateView() {
         try {
-            // Create an FXMLLoader to load your component FXML
+
             FXMLLoader loader = new FXMLLoader(SellerMainController.class.getResource("/view/SellerViews/empty-state-view.fxml"));
             Node emptyStateNode = loader.load();
 

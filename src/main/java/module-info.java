@@ -8,6 +8,7 @@ module org.example.snappfoodfront {
     requires org.kordamp.ikonli.fontawesome5;
     requires org.controlsfx.controls;
     requires java.net.http;
+    requires com.jfoenix;
 
 
     opens org.example.snappfoodfront to javafx.fxml;

@@ -51,11 +51,28 @@ public class RestaurantApiService {
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + token).build();
 
-        HttpResponse<String> response = null;
-
-        response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 201) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), RestaurantDto.Response.class);
+
+    }
+
+    public RestaurantDto.Response updateRestaurant(String token, Long restaurantId, RestaurantDto.Request restaurantDto) throws RestaurantException, IOException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/restaurants/" + restaurantId))
+                .PUT(HttpRequest.BodyPublishers.ofString(gson.toJson(restaurantDto)))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
             throw new RestaurantException(errorResponseDto);
         }

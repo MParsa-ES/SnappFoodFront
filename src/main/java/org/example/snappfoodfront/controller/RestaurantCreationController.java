@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import lombok.Setter;
 import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.Methods;
 import org.example.snappfoodfront.Utils.SceneManager;
@@ -32,6 +33,9 @@ import java.util.Base64;
 import java.util.ResourceBundle;
 
 public class RestaurantCreationController implements Initializable {
+
+    @FXML
+    private Label titleLabel;
 
     @FXML
     private TextField additionalFeeTextField;
@@ -67,6 +71,10 @@ public class RestaurantCreationController implements Initializable {
     private String logoBase64;
 
     private final RestaurantApiService restaurantApiService;
+
+
+    @Setter
+    private static RestaurantDto.Response  restaurantToEdit;
 
 
     public RestaurantCreationController() {
@@ -157,26 +165,40 @@ public class RestaurantCreationController implements Initializable {
 
         new Thread(() -> {
             try {
-                restaurantApiService.addRestaurant(TokenManager.getToken(), requestDto);
 
-                Platform.runLater(() -> {
-                    showFeedback("Restaurant Created", false);
-                    SceneManager.closeCurrentStage((Node) event.getSource());
-                    SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1024, 720);
-                });
+                if (restaurantToEdit == null) {
+                    restaurantApiService.addRestaurant(TokenManager.getToken(), requestDto);
+                    cleanup();
+                    Platform.runLater(() -> {
+                        showFeedback("Restaurant Created", false);
+                        SceneManager.closeCurrentStage((Node) event.getSource());
+                        SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1024, 720);
+                    });
+
+
+                } else {
+                    restaurantApiService.updateRestaurant(TokenManager.getToken(), restaurantToEdit.getId(), requestDto);
+                    Platform.runLater(() -> {
+                        showFeedback("Restaurant Edited", false);
+                        SceneManager.closeCurrentStage((Node) event.getSource());
+                        SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1024, 720);
+                    });
+
+                }
+
 
 
             } catch (RestaurantApiService.RestaurantException e) {
                 Platform.runLater(() -> showFeedback(e.getErrorResponseDto().getError(), true));
 
                 e.printStackTrace();
-                System.err.println("Restaurant creation failed");
+                System.err.println("Restaurant creation or failed");
             } catch (Exception e) {
 
-                Platform.runLater(() -> showFeedback("System error while creating the restaurant", true));
+                Platform.runLater(() -> showFeedback("System error while creating or editing the restaurant", true));
 
                 e.printStackTrace();
-                System.err.println("Restaurant creation failed with exception");
+                System.err.println("Restaurant creation or edit failed with exception");
             }
         }).start();
 
@@ -205,14 +227,35 @@ public class RestaurantCreationController implements Initializable {
 
         createRestaurantButton.disableProperty().bind(formIsInvalid);
 
+        if (restaurantToEdit != null) {
 
-        try {
-            logoBase64 = loadDefaultLogoBase64();
-        } catch (IOException e) {
-            logoBase64 = "";
-            e.printStackTrace();
-            System.err.println("Error loading default logo");
+            titleLabel.setText("Edit Restaurant");
+            createRestaurantButton.setText("Save Changes");
+
+
+            nameTextField.setText(restaurantToEdit.getName());
+            phoneTextField.setText(restaurantToEdit.getPhone());
+            addressTextField.setText(restaurantToEdit.getAddress());
+            taxFeeTextField.setText(String.valueOf(restaurantToEdit.getTax_fee()));
+            additionalFeeTextField.setText(String.valueOf(restaurantToEdit.getAdditional_fee()));
+
+            byte[] imageBytes = Base64.getDecoder().decode(restaurantToEdit.getLogoBase64());
+            logoImage.setImage(new Image(new ByteArrayInputStream(imageBytes)));
+
+
+        } else {
+
+            titleLabel.setText("Create a New Restaurant");
+            createRestaurantButton.setText("Create Restaurant");
+            try {
+                logoBase64 = loadDefaultLogoBase64();
+            } catch (IOException e) {
+                logoBase64 = "";
+                e.printStackTrace();
+                System.err.println("Error loading default logo");
+            }
         }
+
     }
 
 
@@ -230,6 +273,10 @@ public class RestaurantCreationController implements Initializable {
 
         feedbackBox.setVisible(true);
         feedbackBox.setManaged(true);
+    }
+
+    private void cleanup() {
+        restaurantToEdit = null;
     }
 
 
