@@ -60,15 +60,12 @@ public class SignUpController implements Initializable {
         new Thread(() -> {
 
             try {
-
                 authService.validatePhone(phone);
 
                 Platform.runLater(() -> {
-
                     RegistrationContext.setPhone(phone);
                     RegistrationContext.setPassword(password);
                     RegistrationContext.setRole(role);
-
                     try {
                         SceneManager.switchScene(event, "profile-completion-view.fxml", 600, 400);
                     } catch (IOException e) {

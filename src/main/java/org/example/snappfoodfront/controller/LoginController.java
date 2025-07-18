@@ -30,6 +30,8 @@ public class LoginController implements Initializable {
         this.authApiService = new AuthApiService();
     }
 
+    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Methods.filterPhoneField(phoneField);

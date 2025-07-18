@@ -1,6 +1,7 @@
 package org.example.snappfoodfront.Utils;
 
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import org.example.snappfoodfront.Service.AuthApiService;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +23,7 @@ public class SceneManager {
 
 
     private static final String LOGIN_VIEW_PATH = "/view/login-view.fxml";
-    private static final String DASHBOARD_VIEW_PATH = "/view/dashboard-view.fxml";
+    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
 
     public static void showWindow(String path, String title, String error, int width, int height) {
         try {
@@ -114,6 +116,27 @@ public class SceneManager {
         stage.show();
 
 
+    }
+
+    public static void logout(Node node) {
+        AuthApiService authService = new AuthApiService();
+        String token = TokenManager.getToken();
+
+        new Thread(() -> {
+            try {
+                if (token != null) {
+                    authService.logout(token);
+                }
+            } catch (Exception e) {
+                System.err.println("error while logging out" + e.getMessage());
+            } finally {
+                TokenManager.clearToken();
+                Platform.runLater(() -> {
+                    closeCurrentStage(node);
+                    showWindow(LOGIN_VIEW_PATH, "SnappFood", "login", 600, 400);
+                });
+            }
+        }).start();
     }
 
     public static void switchCenterPane(BorderPane borderPane, String fxmlFileName) throws IOException {

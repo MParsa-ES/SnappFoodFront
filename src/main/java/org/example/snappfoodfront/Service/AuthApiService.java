@@ -84,12 +84,12 @@ public class AuthApiService {
 
     }
 
-    public ProfileDto getProfile(String token) throws IOException, InterruptedException, AuthException {
+    public void logout(String token) throws IOException, InterruptedException, AuthException {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER_URL + "/auth/profile"))
-                .header("Authorization", "Bearer " + token)
-                .GET()
+                .uri(URI.create(SERVER_URL + "/auth/logout"))
+                .header("Authorization", token)
+                .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -98,8 +98,6 @@ public class AuthApiService {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
             throw new AuthException(errorResponseDto);
         }
-
-        return gson.fromJson(response.body(), ProfileDto.class);
 
     }
 

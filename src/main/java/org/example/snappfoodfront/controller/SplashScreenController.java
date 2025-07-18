@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import org.example.snappfoodfront.Service.AuthApiService;
+import org.example.snappfoodfront.Service.ProfileApiService;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.ProfileDto;
@@ -22,9 +23,10 @@ public class SplashScreenController implements Initializable {
     @FXML public Label statusLabel;
 
     private final AuthApiService authService = new AuthApiService();
+    private final ProfileApiService profileService = new ProfileApiService();
 
     private static final String LOGIN_VIEW_PATH = "/view/login-view.fxml";
-    private static final String DASHBOARD_VIEW_PATH = "/view/dashboard-view.fxml";
+    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -54,7 +56,7 @@ public class SplashScreenController implements Initializable {
                 Thread.sleep(1000);
 
                 try {
-                    authService.getProfile(token);
+                    profileService.getProfile(token);
                     updateMessage("Welcome back!");
                     updateProgress(100, 100);
                     updateProgressNum(100);
