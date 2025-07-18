@@ -1,5 +1,6 @@
 package org.example.snappfoodfront.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,33 +51,46 @@ public class LoginController implements Initializable {
             return;
         }
 
-        try {
-            errorLabel.setVisible(false);
-            UserLoginDto.Response loginResponse = authApiService.login(phone, password);
-            errorLabel.setVisible(true);
-            errorLabel.setText("Login Successful");
-            String token = loginResponse.getToken();
-            TokenManager.clearToken();
-            TokenManager.saveToken(token);
+        new Thread(() -> {
+            try {
+                UserLoginDto.Response loginResponse = authApiService.login(phone, password);
+                String token = loginResponse.getToken();
+                TokenManager.clearToken();
+                TokenManager.saveToken(token);
+                Platform.runLater(() -> {
+                    try {
+                        errorLabel.setVisible(true);
+                        errorLabel.setText("Login Successful");
 
-            if (loginResponse.getUser().getRole().equals("SELLER")) {
-                // will add the seller dashboard here
-                SceneManager.switchScene(event, "SellerViews/seller-main-view.fxml", 1050, 720);
-            } else if (loginResponse.getUser().getRole().equals("BUYER")) {
-                SceneManager.switchScene(event, "customer-main-view.fxml", 1024, 720);
-            } else {
-                SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+                        if (loginResponse.getUser().getRole().equals("SELLER")) {
+                            // will add the seller dashboard here
+                            SceneManager.switchScene(event, "SellerViews/seller-main-view.fxml", 1050, 720);
+                        } else if (loginResponse.getUser().getRole().equals("BUYER")) {
+                            SceneManager.switchScene(event, "customer-main-view.fxml", 1024, 720);
+                        } else {
+                            SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+                        }
+                    } catch (IOException e) {
+                        errorLabel.setVisible(true);
+                        errorLabel.setText("Unable to load dashboard");
+                    }
+                });
+
+            } catch (IOException | InterruptedException e) {
+
+                Platform.runLater(() -> {
+                    errorLabel.setVisible(true);
+                    errorLabel.setText("Unable to connect to server");
+                });
+
+                throw new RuntimeException("Failed to login : " + e.getMessage(), e);
+            } catch (AuthApiService.AuthException e) {
+                Platform.runLater(() -> {
+                    errorLabel.setVisible(true);
+                    errorLabel.setText("Wrong Phone or Password");
+                });
             }
-
-
-        } catch (IOException | InterruptedException e) {
-            errorLabel.setVisible(true);
-            errorLabel.setText("Unable to connect to server");
-            throw new RuntimeException("Failed to login : " + e.getMessage(), e);
-        } catch (AuthApiService.AuthException e) {
-            errorLabel.setVisible(true);
-            errorLabel.setText("Wrong Phone or Password");
-        }
+        }).start();
     }
 
     @FXML

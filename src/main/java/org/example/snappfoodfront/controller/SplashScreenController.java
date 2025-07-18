@@ -85,7 +85,7 @@ public class SplashScreenController implements Initializable {
 
                     if (isTokenValid) {
                         try {
-                            ProfileDto profile = authService.getProfile(TokenManager.getToken());
+                            ProfileDto profile = profileService.getProfile(TokenManager.getToken());
 
                             if (profile.getRole().equals("BUYER")) {
                                 SceneManager.showWindow("/view/customer-main-view.fxml","SnappFood","customer", 1024,720);
