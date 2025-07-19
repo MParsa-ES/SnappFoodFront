@@ -73,6 +73,7 @@ public class ProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        Methods.filterPhoneField(phoneField);
         String token = TokenManager.getToken();
         new Thread(() -> {
             try {

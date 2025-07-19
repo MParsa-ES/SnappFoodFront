@@ -17,8 +17,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import org.controlsfx.control.textfield.CustomTextField;
 import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.SceneManager;
+import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.RestaurantDto;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -43,6 +45,9 @@ public class CustomerMainController implements Initializable {
     @FXML public Region region;
     @FXML public VBox filterPanel;
     @FXML public TabPane tabPane;
+    @FXML public CustomTextField searchBar;
+    @FXML public FontIcon searchIcon;
+    @FXML public VBox favoriteList;
 
 
     @Override
@@ -70,11 +75,13 @@ public class CustomerMainController implements Initializable {
                         messageLabel.setTextFill(Color.RED);
                         messageLabel.setFont(Font.font(18));
                         messageLabel.setText("No restaurants found");
+                        messageLabel.setStyle("-fx-font-wegiht: bold");
                         messageIcon.setIconLiteral("fas-store-alt-slash");
                     }else {
                         messageLabel.setTextFill(Color.BLACK);
                         messageLabel.setFont(Font.font(14));
                         messageLabel.setText("Found " + restaurantList.size() + " restaurants");
+                        messageLabel.setStyle("-fx-font-wegiht: bold");
                         messageIcon.setIconLiteral("fas-store-alt");
                     }
 
@@ -121,11 +128,81 @@ public class CustomerMainController implements Initializable {
     }
 
     @FXML
-    protected void closeHamburger() {
+    protected void handleFavoriteRestaurants() {
+
         Platform.runLater(() -> {
             region.setPrefWidth(400);
             filterPanel.setVisible(false);
             filterPanel.setManaged(false);
+
+            searchBar.setDisable(true);
+            searchIcon.setDisable(true);
+        });
+
+        loadFavoriteRestaurants();
+
+    }
+
+    @FXML
+    protected void loadFavoriteRestaurants() {
+
+        new Thread(() -> {
+
+            try {
+                final List<RestaurantDto.Response> restaurantList = restaurantService.getFavoriteRestaurants(TokenManager.getToken());
+
+
+                    Platform.runLater(() -> {
+
+                        if(restaurantList.isEmpty()) {
+                            Label errorLabel = new Label();
+                            errorLabel.setText("No restaurants found");
+                            errorLabel.setStyle("-fx-font-wegiht: bold");
+                            errorLabel.setFont(Font.font(18));
+                            favoriteList.getChildren().clear();
+                            favoriteList.getChildren().add(errorLabel);
+                        }
+
+                        for (RestaurantDto.Response restaurant : restaurantList) {
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
+                                Node restaurantCardNode = loader.load();
+
+                                RestaurantMainCardController cardController = loader.getController();
+                                cardController.setData(restaurant);
+
+                                favoriteList.getChildren().add(restaurantCardNode);
+
+                            } catch (IOException e) {
+                                System.err.println("error while loading restaurant's card" + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        }
+
+                    });
+            } catch (IOException | InterruptedException | RestaurantApiService.RestaurantException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Label errorLabel = new Label();
+                    errorLabel.setStyle("-fx-font-wegiht: bold");
+                    errorLabel.setFont(Font.font(24));
+                    errorLabel.setText(e.getMessage());
+                    favoriteList.getChildren().add(errorLabel);
+                });
+            }
+
+        }).start();
+
+    }
+
+    @FXML
+    protected void handleMainPage() {
+        Platform.runLater(() -> {
+            region.setPrefWidth(410);
+
+            searchBar.setDisable(false);
+            searchIcon.setDisable(false);
+            loadAllRestaurants();
         });
     }
 

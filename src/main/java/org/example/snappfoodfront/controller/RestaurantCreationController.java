@@ -192,7 +192,7 @@ public class RestaurantCreationController implements Initializable {
                 Platform.runLater(() -> showFeedback(e.getErrorResponseDto().getError(), true));
 
                 e.printStackTrace();
-                System.err.println("Restaurant creation or failed");
+                System.err.println("Restaurant creation or edit failed");
             } catch (Exception e) {
 
                 Platform.runLater(() -> showFeedback("System error while creating or editing the restaurant", true));

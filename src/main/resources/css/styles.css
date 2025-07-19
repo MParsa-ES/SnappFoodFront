@@ -195,61 +195,28 @@
     -fx-background-color: #e66a00; /* A slightly darker orange for hover */
 }
 
-.round-image {
-    -fx-background-radius: 10;
-    -fx-background-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
-}
-
-.circular-image {
-    /*
-     * شعاع گردی را روی یک عدد بسیار بزرگ (بزرگتر از نصف عرض/ارتفاع) تنظیم می‌کنیم
-     * تا گوشه‌ها به طور کامل گرد شوند و یک دایره تشکیل دهند.
-     * این مقدار برای اکثر اندازه‌ها کار می‌کند.
-    */
-    -fx-background-radius: 100;
-    -fx-border-radius: 100;
-}
-
 .main-tab-pane .tab {
     -fx-min-height: 20px;
     -fx-pref-height: 20px;
     -fx-max-height: 20px;
-    -fx-background-color: #f0f0f0; /* رنگ پس‌زمینه تب غیرفعال */
-    -fx-content-display: RIGHT;    /* آیکون را به سمت راست متن می‌برد */
-    -fx-graphic-text-gap: 8px;   /* فاصله بین متن و آیکون */
-    -fx-padding: 8px 20px;         /* فاصله‌گذاری داخلی برای ظاهر بهتر */
-}
-
-/* ۲. استایل برای لیبل (متن) داخل تب غیرفعال */
-.main-tab-pane .tab .tab-label {
-    -fx-text-fill: black;          /* رنگ متن سیاه */
-    -fx-font-weight: bold;
-}
-
-/* ۳. استایل برای آیکون داخل تب غیرفعال */
-.main-tab-pane .tab .tab-label .ikonli-font-icon {
-    -fx-icon-color: #555555;      /* رنگ آیکون خاکستری تیره */
+    -fx-background-color: #f0f0f0;
+    -fx-content-display: RIGHT;
+    -fx-graphic-text-gap: 8px;
+    -fx-padding: 8px 20px;
 }
 
 
-/* =================================================================
-   استایل‌ها برای تب انتخاب شده (Selected)
-   ================================================================= */
 
-/* ۴. استایل برای خود تب وقتی انتخاب شده است */
 .main-tab-pane .tab:selected {
-    -fx-background-color: #ff7600; /* رنگ اصلی شما برای تب فعال */
+    -fx-background-color: #ff7600;
 }
 
-/* ۵. استایل برای لیبل (متن) داخل تب فعال */
 .main-tab-pane .tab:selected .tab-label {
-    -fx-text-fill: white;          /* رنگ متن سفید */
+    -fx-text-fill: white;
 }
 
-/* ۶. استایل برای آیکون داخل تب فعال (مهم‌ترین بخش) */
 .main-tab-pane .tab:selected .tab-label .ikonli-font-icon {
-    -fx-icon-color: white;         /* رنگ آیکون سفید */
+    -fx-icon-color: white;
 }
 
 .empty-state-headline {
