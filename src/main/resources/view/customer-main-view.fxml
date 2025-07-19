@@ -97,7 +97,7 @@
    <left>
    </left>
    <center>
-      <TabPane maxHeight="680.0" maxWidth="1024.0" side="BOTTOM" style="-fx-tab-min-width: 314; -fx-tab-max-width: 500;" styleClass="main-tab-pane" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" maxHeight="680.0" maxWidth="1024.0" side="BOTTOM" styleClass="main-tab-pane" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
             <Tab closable="false" style="fx-cursor: hand;" text="Main Page">
                <content>
@@ -107,7 +107,11 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
                                  <children>
-                                    <JFXHamburger fx:id="hamburger" prefHeight="20.0" prefWidth="20.0" />
+                                    <JFXHamburger fx:id="hamburger" onMouseClicked="#toggleHamburger" prefHeight="30.0" prefWidth="25.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXHamburger>
                                     <Region fx:id="region" prefHeight="200.0" prefWidth="400.0" />
                                     <Label fx:id="messageLabel" prefHeight="30.0">
                                        <graphic>
@@ -116,7 +120,11 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0" />
+                              <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
                            </children>
                         </VBox>
                      </content>
@@ -126,7 +134,7 @@
                   <FontIcon iconLiteral="fas-store-alt" />
                </graphic>
             </Tab>
-            <Tab closable="false" text="Favorite Restaurants">
+            <Tab closable="false" onSelectionChanged="#closeHamburger" text="Favorite Restaurants">
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                     <content>
@@ -142,7 +150,7 @@
       </TabPane>
    </center>
    <left>
-      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="filterPanel" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets top="30.0" />
          </padding>
@@ -258,6 +266,9 @@
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fas-check-square" />
                </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </VBox>

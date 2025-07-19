@@ -11,7 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class CustomerMainController implements Initializable {
 
@@ -37,10 +40,16 @@ public class CustomerMainController implements Initializable {
     @FXML public FontIcon messageIcon;
     @FXML public VBox restaurantContainer;
     @FXML public JFXHamburger hamburger;
+    @FXML public Region region;
+    @FXML public VBox filterPanel;
+    @FXML public TabPane tabPane;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        filterPanel.setVisible(false);
+        filterPanel.setManaged(false);
 
         loadAllRestaurants();
 
@@ -91,6 +100,33 @@ public class CustomerMainController implements Initializable {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    @FXML
+    protected void toggleHamburger() {
+        if(filterPanel.isVisible()) {
+            Platform.runLater(() -> {
+                region.setPrefWidth(400);
+                filterPanel.setVisible(false);
+                filterPanel.setManaged(false);
+
+            });
+        } else if (!filterPanel.isVisible()) {
+            Platform.runLater(() -> {
+                region.setPrefWidth(250);
+                filterPanel.setVisible(true);
+                filterPanel.setManaged(true);
+            });
+        }
+    }
+
+    @FXML
+    protected void closeHamburger() {
+        Platform.runLater(() -> {
+            region.setPrefWidth(400);
+            filterPanel.setVisible(false);
+            filterPanel.setManaged(false);
+        });
     }
 
     @FXML
