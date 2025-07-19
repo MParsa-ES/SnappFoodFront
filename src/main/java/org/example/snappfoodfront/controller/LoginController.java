@@ -31,7 +31,9 @@ public class LoginController implements Initializable {
         this.authApiService = new AuthApiService();
     }
 
-    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
+    private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
+    private static final String SELLER_MAIN_VIEW_PATH = "/view/SellerViews/seller-main-view.fxml";
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,9 +66,11 @@ public class LoginController implements Initializable {
 
                         if (loginResponse.getUser().getRole().equals("SELLER")) {
                             // will add the seller dashboard here
-                            SceneManager.switchScene(event, "SellerViews/seller-main-view.fxml", 1050, 720);
+                            SceneManager.closeCurrentStage(errorLabel);
+                            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "Dashboard", "dashboard", 1024, 720);
                         } else if (loginResponse.getUser().getRole().equals("BUYER")) {
-                            SceneManager.switchScene(event, "customer-main-view.fxml", 1024, 720);
+                            SceneManager.closeCurrentStage(errorLabel);
+                            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "SnappFood", 1024, 720);
                         } else {
                             SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
                         }

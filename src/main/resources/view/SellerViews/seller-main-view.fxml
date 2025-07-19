@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import org.controlsfx.control.textfield.*?>
-<?import org.kordamp.ikonli.javafx.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.SellerMainController">
+<BorderPane prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.SellerMainController">
     <center>
         <ScrollPane fx:id="contentScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
     </center>
@@ -19,30 +25,55 @@
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
-                <Region prefHeight="30.0" prefWidth="50.0" />
-                <CustomTextField prefHeight="30.0" prefWidth="400.0" promptText="Search..." />
-                <FontIcon iconColor="#ff7b00" iconLiteral="fas-search">
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </FontIcon>
-                <Region prefHeight="30.0" prefWidth="130.0" />
-                <Button contentDisplay="RIGHT" mnemonicParsing="false" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Profile ">
-                    <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="fas-user-circle" text="" />
-                    </graphic>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
-                <Button contentDisplay="RIGHT" layoutX="862.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Logout ">
-                    <graphic>
-                        <FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" text="" />
-                    </graphic>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
+                <Region prefHeight="30.0" prefWidth="600.0" />
+            <JFXButton fx:id="profileButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goToProfile" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Profile">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-user-circle" text="" />
+               </graphic>
+               <ripplerFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.10000000149011612" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color green="0.8333333134651184" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </ripplerFill>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="logoutButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#logout" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Logout">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" />
+               </graphic>
+               <ripplerFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </ripplerFill>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
             </items>
         </ToolBar>
     </top>

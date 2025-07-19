@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<GridPane prefHeight="150.0" prefWidth="720.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantMainCardController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <HBox alignment="CENTER_LEFT" prefWidth="600.0" spacing="15.0" styleClass="restaurant-card" stylesheets="@../css/styles.css">
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+         <children>
+            <StackPane alignment="TOP_RIGHT">
+               <children>
+                  <ImageView fx:id="logoImageView" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                  <Circle fx:id="statusIndicatorCircle" fill="#7aff00" radius="8.0" stroke="WHITE">
+                     <StackPane.margin>
+                        <Insets right="5.0" top="5.0" />
+                     </StackPane.margin>
+                  </Circle>
+               </children>
+            </StackPane>
+            <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="restaurantNameLabel" styleClass="card-title" text="Restaurant Name" />
+                  <HBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <FontIcon iconColor="#6b6b6b" iconLiteral="fas-map-marker-alt" />
+                        <Label fx:id="addressLabel" styleClass="card-subtitle" text="Restaurant Address" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="5.0">
+                     <children>
+                        <FontIcon iconColor="#6b6b6b" iconLiteral="fas-phone-alt" />
+                        <Label fx:id="phoneLabel" styleClass="card-subtitle" text="Restaurant Phone" />
+                     </children>
+                  </HBox>
+                  <Region VBox.vgrow="ALWAYS" />
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</GridPane>

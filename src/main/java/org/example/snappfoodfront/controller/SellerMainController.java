@@ -1,6 +1,8 @@
 package org.example.snappfoodfront.controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,12 +29,14 @@ import java.util.ResourceBundle;
 
 public class SellerMainController implements Initializable {
 
+    private static final String PROFILE_VIEW_PATH = "/view/profile-view.fxml";
+
     private final RestaurantApiService restaurantApiService;
     private final String token;
 
-
-    @FXML
-    private ScrollPane contentScrollPane;
+    @FXML public JFXButton logoutButton;
+    @FXML public JFXButton profileButton;
+    @FXML private ScrollPane contentScrollPane;
 
 
     public SellerMainController() {
@@ -165,6 +169,17 @@ public class SellerMainController implements Initializable {
             e.printStackTrace();
             return new Label("Fatal Error: Could not load error screen.");
         }
+    }
+
+    @FXML
+    protected void goToProfile(ActionEvent event) throws IOException {
+        SceneManager.closeCurrentStage(profileButton);
+        SceneManager.showWindow(PROFILE_VIEW_PATH, "Profile", "profile", 1024, 720);
+    }
+
+    @FXML
+    protected void logout(ActionEvent event) throws IOException {
+        SceneManager.logout(logoutButton);
     }
 
 }
