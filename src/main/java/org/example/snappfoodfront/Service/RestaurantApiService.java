@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.snappfoodfront.model.BuyerDto;
 import org.example.snappfoodfront.model.ErrorResponseDto;
 import org.example.snappfoodfront.model.RestaurantDto;
 
@@ -104,6 +105,25 @@ public class RestaurantApiService {
                 .uri(URI.create(SERVER_URL + "/favorites"))
                 .header("Authorization", "Bearer " + token)
                 .GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<RestaurantDto.Response>>(){}.getType());
+
+    }
+
+    public List<RestaurantDto.Response> searchRestaurants(BuyerDto.ItemSearch requestDto) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/vendors/search"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(requestDto)))
+                .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 

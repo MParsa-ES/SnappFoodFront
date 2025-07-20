@@ -1,6 +1,7 @@
 package org.example.snappfoodfront.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import javafx.application.Platform;
@@ -21,11 +22,13 @@ import org.controlsfx.control.textfield.CustomTextField;
 import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
+import org.example.snappfoodfront.model.BuyerDto;
 import org.example.snappfoodfront.model.RestaurantDto;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -48,6 +51,17 @@ public class CustomerMainController implements Initializable {
     @FXML public CustomTextField searchBar;
     @FXML public FontIcon searchIcon;
     @FXML public VBox favoriteList;
+
+    @FXML public CustomTextField minPriceField;
+    @FXML public CustomTextField maxPriceField;
+    @FXML public JFXCheckBox kababBox;
+    @FXML public JFXCheckBox poloBox;
+    @FXML public JFXCheckBox khoreshtBox;
+    @FXML public JFXCheckBox daryaiiBox;
+    @FXML public JFXCheckBox fastFoodBox;
+    @FXML public JFXCheckBox sokhariBox;
+    @FXML public JFXCheckBox pizzaBox;
+    @FXML public JFXCheckBox burgerBox;
 
 
     @Override
@@ -192,6 +206,79 @@ public class CustomerMainController implements Initializable {
             }
 
         }).start();
+
+    }
+
+    @FXML
+    protected void handleSearchAndFilter() throws IOException, RestaurantApiService.RestaurantException, InterruptedException {
+
+        int minPrice = 0;
+        int maxPrice = 0;
+        if (!minPriceField.getText().isEmpty()) {
+            minPrice = Integer.parseInt(minPriceField.getText());
+        }
+        if (!maxPriceField.getText().isEmpty()) {
+            maxPrice = Integer.parseInt(maxPriceField.getText());
+        }
+
+        String search = searchBar.getText();
+
+        List<String> keywords = new ArrayList<>();
+        if (kababBox.isSelected()) { keywords.add("کباب"); }
+        if (poloBox.isSelected()) { keywords.add("پلو"); }
+        if (khoreshtBox.isSelected()) { keywords.add("خورشت"); }
+        if (daryaiiBox.isSelected()) { keywords.add("دریایی"); }
+        if (fastFoodBox.isSelected()) { keywords.add("فست فود"); }
+        if (sokhariBox.isSelected()) { keywords.add("سوخاری"); }
+        if (pizzaBox.isSelected()) { keywords.add("پیتزا"); }
+        if (burgerBox.isSelected()) { keywords.add("برگر"); }
+
+        BuyerDto.ItemSearch request = new BuyerDto.ItemSearch(search, minPrice, maxPrice, keywords);
+
+        new Thread(() -> {
+
+            try {
+                final List<RestaurantDto.Response> restaurantList = restaurantService.searchRestaurants(request);
+
+
+                Platform.runLater(() -> {
+                    restaurantContainer.getChildren().clear();
+
+                    if(restaurantList.isEmpty()) {
+                        Label errorLabel = new Label();
+                        errorLabel.setText("No restaurants found");
+                        errorLabel.setStyle("-fx-font-wegiht: bold");
+                        errorLabel.setFont(Font.font(18));
+                        restaurantContainer.getChildren().add(errorLabel);
+                    }
+
+                    for (RestaurantDto.Response restaurant : restaurantList) {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
+                            Node restaurantCardNode = loader.load();
+                            RestaurantMainCardController cardController = loader.getController();
+                            cardController.setData(restaurant);
+                            restaurantContainer.getChildren().add(restaurantCardNode);
+                        } catch (IOException e) {
+                            System.err.println("error while loading restaurant's card" + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            } catch (RestaurantApiService.RestaurantException | IOException | InterruptedException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Label errorLabel = new Label();
+                    errorLabel.setStyle("-fx-font-wegiht: bold");
+                    errorLabel.setFont(Font.font(24));
+                    errorLabel.setText(e.getMessage());
+                    restaurantContainer.getChildren().clear();
+                    restaurantContainer.getChildren().add(errorLabel);
+                });
+            }
+
+        }).start();
+
 
     }
 
