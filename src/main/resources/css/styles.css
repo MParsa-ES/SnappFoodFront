@@ -278,3 +278,84 @@
     -fx-max-width: 350px;
     -fx-text-alignment: center;
 }
+
+
+
+/* =================================================================
+   Food item table styles
+   ================================================================= */
+
+
+.edit-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.edit-button .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.delete-button .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
+/* --- Overall Table Style --- */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 5;
+}
+
+/* --- Table Header --- */
+.table-view .column-header-background {
+    -fx-background-color: #f4f7f9; /* Light grey background for the header */
+}
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent #dcdcdc transparent transparent;
+    -fx-size: 40; /* A bit more vertical space */
+}
+.table-view .column-header .label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 10px;
+}
+
+/* --- Table Rows and Cells --- */
+.table-view .table-cell {
+    -fx-border-color: transparent; /* Remove vertical grid lines */
+    -fx-padding: 10px;
+}
+
+/* Zebra-striping for rows to improve readability */
+.table-view .table-row-cell:odd{
+    -fx-background-color: #ffffff;
+}
+.table-view .table-row-cell:even{
+    -fx-background-color: #fdfdfd;
+}
+
+/* --- Row Selection Style --- */
+/* Changes the selection color from the default blue to your app's orange */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #ffead9; /* A light orange */
+}
+.table-view .table-row-cell:selected .text {
+    -fx-fill: #d35400; /* A darker orange for the text */
+}
+.table-row-cell:selected .edit-button .text,
+.table-row-cell:selected .delete-button .text {
+    -fx-fill: white; /* Keep the text white */
+}
+#actionsColumn .label {
+
+    -fx-pref-width: 100%;
+    -fx-alignment: center;
+}

@@ -42,7 +42,7 @@ public class SceneManager {
             stage.show();
 
         } catch (IOException e) {
-            System.err.println("Error loading " + error +  "window");
+            System.err.println("Error loading " + error + "window");
             e.printStackTrace();
         }
     }
@@ -86,21 +86,26 @@ public class SceneManager {
         currentStage.close();
     }
 
-    public static void switchScene(ActionEvent event, String fxmlFileName, double width, double height) throws IOException {
+    public static <T> T switchScene(ActionEvent event, String fxmlFileName, double width, double height) throws IOException {
+
+        URL resourceUrl = SceneManager.class.getResource("/view/" + fxmlFileName);
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(resourceUrl));
 
         Parent newRoot;
         try {
-            URL resourceUrl = SceneManager.class.getResource("/view/" + fxmlFileName);
-            newRoot = FXMLLoader.load(Objects.requireNonNull(resourceUrl));
+            newRoot = loader.load();
         } catch (IOException e) {
             System.err.println("Error loading view " + fxmlFileName);
             e.printStackTrace();
             throw e;
         }
 
+        T controller = loader.getController();
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene newScene = new Scene(newRoot);
+        Scene scene = stage.getScene();
+        scene.setRoot(newRoot);
 
         newRoot.setOpacity(0.0);
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), newRoot);
@@ -108,14 +113,14 @@ public class SceneManager {
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
-        stage.setScene(newScene);
+
         stage.setWidth(width);
         stage.setHeight(height);
-
         stage.centerOnScreen();
         stage.show();
 
 
+        return controller;
     }
 
     public static void logout(Node node) {

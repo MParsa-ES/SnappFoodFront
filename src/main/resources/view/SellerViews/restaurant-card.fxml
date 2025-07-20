@@ -55,7 +55,7 @@
                      </graphic>
                   </JFXButton>
 
-                  <JFXButton fx:id="menuButton" buttonType="RAISED" styleClass="card-button" text="Menu">
+                  <JFXButton fx:id="menuButton" buttonType="RAISED" onAction="#handleMenuButton" styleClass="card-button" text="Menu">
                      <graphic>
                         <FontIcon iconColor="#424242" iconLiteral="fas-book-open" />
                      </graphic>

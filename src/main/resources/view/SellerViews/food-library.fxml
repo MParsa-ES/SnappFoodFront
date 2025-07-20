@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<BorderPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.FoodLibraryController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-border-color: transparent transparent #e0e0e0 transparent; -fx-border-width: 1;">
+            <children>
+                <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButton" styleClass="subtle-button" text="Back">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-arrow-left" />
+                    </graphic>
+                </Button>
+                <Label styleClass="dashboard-header" text="Food Management" />
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+            </padding>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="foodTableView" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="nameColumn" prefWidth="250.0" text="Name" />
+                <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Price" />
+                <TableColumn fx:id="supplyColumn" prefWidth="100.0" text="Supply" />
+                <TableColumn fx:id="actionsColumn" prefWidth="200.0" text="Actions" />
+            </columns>
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="addNewFoodButton" mnemonicParsing="false" onAction="#handleAddButton" styleClass="custom-button" text="+ Add New Food Item" />
+            </children>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+        </HBox>
+    </bottom>
+</BorderPane>

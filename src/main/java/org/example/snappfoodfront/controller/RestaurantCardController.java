@@ -56,7 +56,8 @@ public class RestaurantCardController {
     }
 
 
-    public void handleEditButton(ActionEvent event) {
+    @FXML
+    void handleEditButton(ActionEvent event) {
 
         if (restaurant == null) {
             return;
@@ -73,6 +74,20 @@ public class RestaurantCardController {
 
 
     }
+
+    @FXML
+    void handleMenuButton(ActionEvent event) {
+
+        try {
+            FoodLibraryController controller = SceneManager.switchScene(event, "SellerViews/food-library.fxml",1024,720);
+            controller.initData(restaurant.getId());
+        } catch (IOException e){
+            e.printStackTrace();
+            System.err.println("Error opening the menu");
+        }
+
+    }
+
 
 
 }
