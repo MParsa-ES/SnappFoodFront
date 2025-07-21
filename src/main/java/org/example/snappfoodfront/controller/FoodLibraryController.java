@@ -5,12 +5,17 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.SceneManager;
@@ -62,7 +67,29 @@ public class FoodLibraryController implements Initializable {
 
     @FXML
     private void handleAddButton(ActionEvent event) {
-        // TODO : switch to the food item add page
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SellerViews/food-creation-view.fxml"));
+            Parent root = loader.load();
+
+
+            AddFoodController addFoodController = loader.getController();
+
+
+            addFoodController.setRestaurantId(this.restaurantId);
+
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add New Food Item");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+            loadFoodItems();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -89,10 +116,6 @@ public class FoodLibraryController implements Initializable {
             try {
 
                 List<FoodItemDto.Response> foodItems = restaurantApiService.getAllFoodItems(this.token, this.restaurantId);
-
-                for (FoodItemDto.Response food : foodItems){
-                    System.out.println(food.getId());
-                }
 
                 Platform.runLater(() -> {
 

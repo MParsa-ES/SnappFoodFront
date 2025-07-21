@@ -136,6 +136,26 @@ public class RestaurantApiService {
 
     }
 
+    public FoodItemDto.Response addFoodItem(String token, Long restaurantId, FoodItemDto.Request foodItemDto) throws RestaurantException, IOException, InterruptedException {
+
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/restaurants/" + restaurantId + "/item"))
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(foodItemDto)))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), FoodItemDto.Response.class);
+
+    }
+
     @Getter
     @AllArgsConstructor
     public static class RestaurantException extends Exception {

@@ -295,6 +295,11 @@
     -fx-icon-color: white;
 }
 
+.edit-button .text,
+.delete-button .text {
+    -fx-fill: white;
+}
+
 .delete-button {
     -fx-background-color: #e74c3c;
     -fx-text-fill: white;
@@ -358,4 +363,107 @@
 
     -fx-pref-width: 100%;
     -fx-alignment: center;
+}
+
+/* =================================================================
+   Modern Dialog Styles (for Add Food View)
+   ================================================================= */
+
+/* --- Modern Dialog Styles --- */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e_e0;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 20, 0, 0, 0);
+}
+.dialog-header {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+.dialog-header-icon {
+    -fx-icon-color: #2c3e50;
+}
+
+/* --- Style for standard TextFields --- */
+/* --- Modern Text Field & Text Area Style --- */
+.styled-textfield, .styled-textarea {
+    -fx-background-color: #f4f7f9;
+    -fx-background-insets: 0;
+    -fx-background-radius: 4px;
+    -fx-border-width: 1px;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 4px;
+    -fx-font-size: 14px;
+    -fx-padding: 7px;
+}
+
+/* This removes the inner border on TextAreas so they look clean */
+.styled-textarea .scroll-pane {
+    -fx-background-color: transparent;
+}
+.styled-textarea .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+/* Focus style for both Text Field & Text Area */
+.styled-textfield:focused, .styled-textarea:focused {
+    -fx-border-color: #ff7600; /* Your brand's orange */
+    -fx-effect: dropshadow(gaussian, rgba(255, 118, 0, 0.3), 10, 0, 0, 0);
+}
+
+/* --- JFXCheckBox Style --- */
+.jfx-check-box:selected {
+    -jfx-checked-color: #ff7600; /* Your brand's orange */
+}
+
+/* --- Button Styles (will work for JFXButton) --- */
+.primary-action-button {
+    -fx-background-color: #ff7600;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.secondary-action-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #555555;
+    -fx-font-weight: bold;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1.5px;
+}
+
+.keyword-pane {
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4px;
+}
+
+/* --- Header/Title area --- */
+.keyword-pane > .title {
+    -fx-background-color: #f4f7f9; /* A light, clean grey */
+    -fx-background-radius: 4px 4px 0 0;
+    -fx-border-color: transparent;
+}
+
+/* --- Title text style --- */
+.keyword-pane > .title > .text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-fill: #2c3e50;
+}
+
+/* --- Content area where the checkboxes are --- */
+.keyword-pane > .content {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px; /* Adds more space around the checkboxes */
+    -fx-border-radius: 0 0 4px 4px;
+}
+
+/* Targets all checkboxes inside your keyword grid */
+.keyword-grid .jfx-check-box {
+    -fx-font-size: 14px;
+
+    /* Sets the color for the box and checkmark when SELECTED */
+    -jfx-checked-color: #ff7600;
+
+    /* Sets the color for the box border when UNCHECKED */
+    -jfx-unchecked-color: #555555;
 }
