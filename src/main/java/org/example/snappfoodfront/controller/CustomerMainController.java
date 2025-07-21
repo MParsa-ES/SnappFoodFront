@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
@@ -20,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.CustomTextField;
 import org.example.snappfoodfront.Service.RestaurantApiService;
+import org.example.snappfoodfront.Utils.MainViewState;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.BuyerDto;
@@ -51,6 +53,7 @@ public class CustomerMainController implements Initializable {
     @FXML public CustomTextField searchBar;
     @FXML public FontIcon searchIcon;
     @FXML public VBox favoriteList;
+    @FXML public Tab favoritesTab;
 
     @FXML public CustomTextField minPriceField;
     @FXML public CustomTextField maxPriceField;
@@ -67,10 +70,49 @@ public class CustomerMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        filterPanel.setVisible(false);
-        filterPanel.setManaged(false);
+        if (MainViewState.cameFromFavorites) {
 
-        loadAllRestaurants();
+            tabPane.getSelectionModel().select(favoritesTab);
+            loadFavoriteRestaurants();
+
+            MainViewState.clearState();
+            return;
+        }
+
+        if (MainViewState.hasState) {
+
+            List<String> keywords = MainViewState.getLastKeywords();
+
+            searchBar.setText(MainViewState.getLastSearchTerm());
+            minPriceField.setText(MainViewState.getLastMinPrice().toString());
+            maxPriceField.setText(MainViewState.getLastMaxPrice().toString());
+            if (keywords.size() > 0) {
+                if (keywords.contains("kebab")) {kababBox.setSelected(true);}
+                if (keywords.contains("polo")) {poloBox.setSelected(true);}
+                if (keywords.contains("khoresht")) {khoreshtBox.setSelected(true);}
+                if (keywords.contains("daryaii")) {daryaiiBox.setSelected(true);}
+                if (keywords.contains("fastfood")) {fastFoodBox.setSelected(true);}
+                if (keywords.contains("sokhari")) {sokhariBox.setSelected(true);}
+                if (keywords.contains("pizza")) {pizzaBox.setSelected(true);}
+                if (keywords.contains("burger")) {burgerBox.setSelected(true);}
+            }
+
+            filterPanel.setVisible(false);
+            filterPanel.setManaged(false);
+
+            try {
+                handleSearchAndFilter();
+            } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            MainViewState.clearState();
+
+        } else {
+            filterPanel.setVisible(false);
+            filterPanel.setManaged(false);
+            loadAllRestaurants();
+        }
 
     }
 
@@ -99,21 +141,8 @@ public class CustomerMainController implements Initializable {
                         messageIcon.setIconLiteral("fas-store-alt");
                     }
 
-                    for (RestaurantDto.Response restaurant : restaurantList) {
-                        try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
-                            Node restaurantCardNode = loader.load();
+                    listRestaurants(restaurantList, restaurantContainer, false);
 
-                            RestaurantMainCardController cardController = loader.getController();
-                            cardController.setData(restaurant);
-
-                            restaurantContainer.getChildren().add(restaurantCardNode);
-
-                        } catch (IOException e) {
-                            System.err.println("error while loading restaurant's card" + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    }
                 });
 
             } catch (Exception e) {
@@ -177,21 +206,7 @@ public class CustomerMainController implements Initializable {
                             favoriteList.getChildren().add(errorLabel);
                         }
 
-                        for (RestaurantDto.Response restaurant : restaurantList) {
-                            try {
-                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
-                                Node restaurantCardNode = loader.load();
-
-                                RestaurantMainCardController cardController = loader.getController();
-                                cardController.setData(restaurant);
-
-                                favoriteList.getChildren().add(restaurantCardNode);
-
-                            } catch (IOException e) {
-                                System.err.println("error while loading restaurant's card" + e.getMessage());
-                                e.printStackTrace();
-                            }
-                        }
+                        listRestaurants(restaurantList, favoriteList, true);
 
                     });
             } catch (IOException | InterruptedException | RestaurantApiService.RestaurantException e) {
@@ -240,7 +255,6 @@ public class CustomerMainController implements Initializable {
             try {
                 final List<RestaurantDto.Response> restaurantList = restaurantService.searchRestaurants(request);
 
-
                 Platform.runLater(() -> {
                     restaurantContainer.getChildren().clear();
 
@@ -252,18 +266,7 @@ public class CustomerMainController implements Initializable {
                         restaurantContainer.getChildren().add(errorLabel);
                     }
 
-                    for (RestaurantDto.Response restaurant : restaurantList) {
-                        try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
-                            Node restaurantCardNode = loader.load();
-                            RestaurantMainCardController cardController = loader.getController();
-                            cardController.setData(restaurant);
-                            restaurantContainer.getChildren().add(restaurantCardNode);
-                        } catch (IOException e) {
-                            System.err.println("error while loading restaurant's card" + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    }
+                    listRestaurants(restaurantList, restaurantContainer, false);
                 });
             } catch (RestaurantApiService.RestaurantException | IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -279,6 +282,67 @@ public class CustomerMainController implements Initializable {
 
         }).start();
 
+    }
+
+    private void listRestaurants(List<RestaurantDto.Response> restaurantList, VBox restaurantContainer, boolean isFavorite) {
+        for (RestaurantDto.Response restaurant : restaurantList) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
+                Node restaurantCardNode = loader.load();
+
+                RestaurantMainCardController cardController = loader.getController();
+                cardController.setData(restaurant);
+
+                restaurantContainer.getChildren().add(restaurantCardNode);
+                restaurantCardNode.setOnMouseClicked(event -> {
+                    try {
+                        handleRestaurantClicked(restaurantCardNode, restaurant.getId());
+                        if (isFavorite) {
+                            MainViewState.setCameFromFavorites(true);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (IOException e) {
+                System.err.println("error while loading restaurant's card" + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    protected void handleRestaurantClicked(Node restaurantNode, Long restaurantId) throws IOException {
+
+        int minPrice = 0;
+        int maxPrice = 0;
+        if (!minPriceField.getText().isEmpty()) {
+            minPrice = Integer.parseInt(minPriceField.getText());
+        }
+        if (!maxPriceField.getText().isEmpty()) {
+            maxPrice = Integer.parseInt(maxPriceField.getText());
+        }
+        String search = searchBar.getText();
+        List<String> keywords = new ArrayList<>();
+        if (kababBox.isSelected()) { keywords.add("کباب"); }
+        if (poloBox.isSelected()) { keywords.add("پلو"); }
+        if (khoreshtBox.isSelected()) { keywords.add("خورشت"); }
+        if (daryaiiBox.isSelected()) { keywords.add("دریایی"); }
+        if (fastFoodBox.isSelected()) { keywords.add("فست فود"); }
+        if (sokhariBox.isSelected()) { keywords.add("سوخاری"); }
+        if (pizzaBox.isSelected()) { keywords.add("پیتزا"); }
+        if (burgerBox.isSelected()) { keywords.add("برگر"); }
+
+        boolean isFilterActive = (search != null && !search.isBlank()) ||
+                (minPrice > 0) || (maxPrice > 0) || (!keywords.isEmpty());
+
+
+        if (isFilterActive) {
+            MainViewState.saveState(search, minPrice, maxPrice, keywords, restaurantId);
+        }
+
+        SceneManager.closeCurrentStage(restaurantNode);
+        SceneManager.showWindow("/view/restaurant-main-view.fxml", "SnappFood", "SnappFood", 1024, 720);
 
     }
 
@@ -296,7 +360,7 @@ public class CustomerMainController implements Initializable {
     @FXML
     protected void goToProfile(ActionEvent event) throws IOException {
         SceneManager.closeCurrentStage(profileButton);
-        SceneManager.showWindow(PROFILE_VIEW_PATH, "Profile", "profile", 1024, 720);
+        Platform.runLater(() -> SceneManager.showWindow(PROFILE_VIEW_PATH, "Profile", "profile", 1024, 720));
     }
 
     @FXML
