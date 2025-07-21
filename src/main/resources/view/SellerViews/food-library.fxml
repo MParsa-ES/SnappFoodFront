@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -36,12 +37,12 @@
     </center>
     <bottom>
         <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
-            <children>
-                <Button fx:id="addNewFoodButton" mnemonicParsing="false" onAction="#handleAddButton" styleClass="custom-button" text="+ Add New Food Item" />
-            </children>
             <padding>
                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
             </padding>
+         <children>
+            <JFXButton buttonType="RAISED" onAction="#handleAddButton" ripplerFill="#1aff00" styleClass="custom-button" text="+ Add New Food Item" />
+         </children>
         </HBox>
     </bottom>
 </BorderPane>

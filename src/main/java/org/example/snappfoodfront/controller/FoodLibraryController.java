@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -157,11 +158,39 @@ public class FoodLibraryController implements Initializable {
                     }
 
                     {
-                        // Action for the "Edit" button
+
                         editBtn.setOnAction((ActionEvent event) -> {
-                            FoodItemDto.Response foodItem = getTableView().getItems().get(getIndex());
-                            System.out.println("Editing item: " + foodItem.getName());
-                            // TODO: Navigate to the food edit screen, passing this foodItem's data
+
+                            FoodItemDto.Response foodItemToEdit = getTableView().getItems().get(getIndex());
+
+                            try {
+
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SellerViews/food-creation-view.fxml"));
+                                Parent root = loader.load();
+
+
+                                AddFoodController addFoodController = loader.getController();
+
+
+                                addFoodController.initForEdit(foodItemToEdit, restaurantId);
+
+
+                                Stage dialogStage = new Stage();
+                                dialogStage.setTitle("Edit Food Item");
+                                dialogStage.initModality(Modality.APPLICATION_MODAL);
+                                dialogStage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                                dialogStage.setScene(new Scene(root));
+
+
+                                dialogStage.showAndWait();
+
+
+                                loadFoodItems();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
                         });
 
 

@@ -15,7 +15,7 @@
         <HBox alignment="CENTER" spacing="10.0">
             <children>
                 <FontIcon iconLiteral="fas-plus-circle" iconSize="22" styleClass="dialog-header-icon" />
-                <Label styleClass="dialog-header" text="Add New Food Item" />
+                <Label fx:id="titleLabel" styleClass="dialog-header" text="Add New Food Item" />
             </children>
         </HBox>
 

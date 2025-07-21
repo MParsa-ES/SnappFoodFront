@@ -27,6 +27,7 @@ import org.example.snappfoodfront.model.FoodItemDto;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -59,6 +60,9 @@ public class AddFoodController {
     private JFXButton cancelButton;
 
     @FXML
+    private Label titleLabel;
+
+    @FXML
     private JFXButton saveButton;
 
 
@@ -68,6 +72,35 @@ public class AddFoodController {
     private Long restaurantId;
 
     private String ImageBase64;
+
+    private FoodItemDto.Response foodToEdit = null;
+
+
+    public void initForEdit(FoodItemDto.Response foodToEdit, Long restaurantId) {
+        this.foodToEdit = foodToEdit;
+        this.restaurantId = restaurantId;
+
+
+        nameField.setText(foodToEdit.getName());
+        priceField.setText(String.valueOf(foodToEdit.getPrice()));
+        supplyField.setText(String.valueOf(foodToEdit.getSupply()));
+        descriptionArea.setText(foodToEdit.getDescription());
+
+        byte[] imageBytes = Base64.getDecoder().decode(foodToEdit.getImageBase64());
+        foodImageView.setImage(new Image(new ByteArrayInputStream(imageBytes)));
+
+        saveButton.setText("Save Changes");
+        titleLabel.setText("Edit Food");
+
+
+        Set<String> keywords = foodToEdit.getKeywords();
+        for (Node node : keywordsGridPane.getChildren()) {
+            if (node instanceof JFXCheckBox checkBox && keywords.contains(checkBox.getText())) {
+                checkBox.setSelected(true);
+            }
+        }
+
+    }
 
 
     @FXML
@@ -83,7 +116,6 @@ public class AddFoodController {
         clip.radiusProperty().bind(foodImageView.fitWidthProperty().divide(2));
         foodImageView.setClip(clip);
 
-
         BooleanBinding formIsInvalid =
                 nameField.textProperty().isEmpty()
                         .or(priceField.textProperty().isEmpty())
@@ -91,6 +123,17 @@ public class AddFoodController {
                         .or(descriptionArea.textProperty().isEmpty());
 
         saveButton.disableProperty().bind(formIsInvalid);
+
+        if (foodToEdit == null) {
+            try {
+                ImageBase64 = loadDefaultLogoBase64();
+            } catch (IOException e) {
+                e.printStackTrace();
+                ImageBase64 = "";
+                System.err.println("Failed to load default food picture");
+            }
+        }
+
     }
 
     @FXML
@@ -141,21 +184,35 @@ public class AddFoodController {
         foodItemDto.setPrice(Integer.parseInt(priceField.getText()));
         foodItemDto.setSupply(Integer.parseInt(supplyField.getText()));
         foodItemDto.setDescription(descriptionArea.getText());
-        foodItemDto.setImageBase64(ImageBase64);
         foodItemDto.setKeywords(keywords);
 
+        if (this.ImageBase64 == null && this.foodToEdit != null) {
+            foodItemDto.setImageBase64(foodToEdit.getImageBase64());
+        } else {
+            foodItemDto.setImageBase64(this.ImageBase64);
+        }
 
         new Thread(() -> {
             try {
-                restaurantApiService.addFoodItem(TokenManager.getToken(), restaurantId, foodItemDto);
-                Platform.runLater(() -> {
-                    showFeedback("Successfully added food item.", false);
-                    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    currentStage.close();
-                });
+                if (foodToEdit == null) {
+                    restaurantApiService.addFoodItem(TokenManager.getToken(), restaurantId, foodItemDto);
+                    Platform.runLater(() -> {
+                        showFeedback("Successfully added food item.", false);
+                        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        currentStage.close();
+                    });
+                } else {
+                    restaurantApiService.editFoodItem(TokenManager.getToken(), restaurantId, foodToEdit.getId(), foodItemDto);
+                    Platform.runLater(() -> {
+                        showFeedback("Successfully edited food item.", false);
+                        foodToEdit = null;
+                        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        currentStage.close();
+                    });
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.err.println("Error saving food item :" + e.getMessage());
+                System.err.println("Error saving or editing food item :" + e.getMessage());
                 Platform.runLater(() -> {
                     showFeedback(e.getMessage(), true);
                 });
@@ -177,5 +234,21 @@ public class AddFoodController {
         feedbackBox.getStyleClass().add(isError ? "feedback-box-error" : "feedback-box-success");
         feedbackBox.setVisible(true);
         feedbackBox.setManaged(true);
+    }
+
+    private String loadDefaultLogoBase64() throws IOException {
+
+        String defaultImagePath = "/images/default-food.jpg";
+
+        try (InputStream inputStream = getClass().getResourceAsStream(defaultImagePath)) {
+
+            if (inputStream == null) {
+                throw new IOException("Cannot find default avatar image at path: " + defaultImagePath);
+            }
+
+            byte[] fileContent = inputStream.readAllBytes();
+            foodImageView.setImage(new Image(new ByteArrayInputStream(fileContent)));
+            return Base64.getEncoder().encodeToString(fileContent);
+        }
     }
 }
