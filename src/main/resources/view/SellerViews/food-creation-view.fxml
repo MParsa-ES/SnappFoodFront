@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox alignment="TOP_CENTER" maxWidth="500.0" spacing="15.0" styleClass="dialog-pane" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.AddFoodController">
+    <padding>
+        <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+    </padding>
+    <children>
+        <HBox alignment="CENTER" spacing="10.0">
+            <children>
+                <FontIcon iconLiteral="fas-plus-circle" iconSize="22" styleClass="dialog-header-icon" />
+                <Label styleClass="dialog-header" text="Add New Food Item" />
+            </children>
+        </HBox>
+
+        <GridPane hgap="20.0" vgap="15.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints prefHeight="80.0" />
+            </rowConstraints>
+            <children>
+                <TextField fx:id="nameField" promptText="Name" styleClass="styled-textfield" GridPane.columnSpan="2" />
+                <TextField fx:id="priceField" promptText="Price" styleClass="styled-textfield" GridPane.rowIndex="1" />
+                <TextField fx:id="supplyField" promptText="Supply" styleClass="styled-textfield" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextArea fx:id="descriptionArea" promptText="A short, tasty description..." styleClass="styled-textarea" wrapText="true" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            </children>
+        </GridPane>
+
+        <HBox alignment="CENTER_LEFT" spacing="15.0">
+            <children>
+                <Button fx:id="chooseImageButton" onAction="#handleChooseImage" styleClass="secondary-action-button" text="Choose Image" />
+                <ImageView fx:id="foodImageView" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </HBox>
+
+        <TitledPane animated="false" text="Keywords">
+            <content>
+                <FlowPane fx:id="keywordsFlowPane" hgap="10.0" vgap="10.0">
+                    <padding>
+                        <Insets top="5.0" />
+                    </padding>
+                    <children>
+                        <CheckBox text="Pizza" />
+                        <CheckBox text="Burger" />
+                        <CheckBox text="Sandwich" />
+                        <CheckBox text="Salad" />
+                    </children>
+                </FlowPane>
+            </content>
+        </TitledPane>
+
+        <Region VBox.vgrow="ALWAYS" />
+
+        <HBox fx:id="feedbackBox" alignment="CENTER" managed="false" visible="false">
+            <children>
+                <Label fx:id="feedbackLabel" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+            <children>
+                <Button fx:id="cancelButton" onAction="#handleCancel" styleClass="secondary-action-button" text="Cancel" />
+                <Button fx:id="saveButton" onAction="#handleSave" styleClass="primary-action-button" text="Save Food" />
+            </children>
+        </HBox>
+    </children>
+</VBox>
