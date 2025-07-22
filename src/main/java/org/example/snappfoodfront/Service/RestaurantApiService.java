@@ -1,13 +1,12 @@
 package org.example.snappfoodfront.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.example.snappfoodfront.model.ErrorResponseDto;
-import org.example.snappfoodfront.model.FoodItemDto;
-import org.example.snappfoodfront.model.MessageDto;
-import org.example.snappfoodfront.model.RestaurantDto;
+import org.example.snappfoodfront.Utils.ItemListDeserializer;
+import org.example.snappfoodfront.model.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -171,6 +170,103 @@ public class RestaurantApiService {
         }
 
         return gson.fromJson(response.body(), FoodItemDto.Response.class);
+
+    }
+
+    public BuyerDto.ItemList getMenusWithItems(String token, Long restaurantId) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/vendors/" + restaurantId))
+                .GET()
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        String responseBody = response.body();
+
+        Gson customGson = new GsonBuilder()
+                .registerTypeAdapter(BuyerDto.ItemList.class, new ItemListDeserializer())
+                .create();
+
+        return customGson.fromJson(responseBody, BuyerDto.ItemList.class);
+    }
+
+    public MenuDto.Response addMenu(String token, Long restaurantId, MenuDto.Request menuDto) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/restaurants/" + restaurantId + "/menu"))
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(menuDto)))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token)
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), MenuDto.Response.class);
+    }
+
+    public MessageDto deleteMenu(String token, Long restaurantId, String menuTitle) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/restaurants/" + restaurantId + "/menu/" + menuTitle))
+                .DELETE()
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), MessageDto.class);
+
+    }
+
+    public MessageDto addFoodToMenu(String token, Long restaurantId, String menuTitle, MenuDto.AddItemRequest itemRequest) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/restaurants/" + restaurantId + "/menu/" + menuTitle))
+                .PUT(HttpRequest.BodyPublishers.ofString(gson.toJson(itemRequest)))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), MessageDto.class);
+
+    }
+
+    public MessageDto deleteFoodFromMenu(String token, Long restaurantId, String menuTitle, Long itemId) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/restaurants/" + restaurantId + "/menu/" + menuTitle + "/" + itemId))
+                .DELETE()
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), MessageDto.class);
 
     }
 

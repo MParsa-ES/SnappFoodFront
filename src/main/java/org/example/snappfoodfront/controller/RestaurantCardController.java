@@ -79,7 +79,9 @@ public class RestaurantCardController {
     void handleMenuButton(ActionEvent event) {
 
         try {
-            FoodLibraryController controller = SceneManager.switchScene(event, "SellerViews/food-library.fxml",1024,720);
+//            FoodLibraryController controller = SceneManager.switchScene(event, "SellerViews/food-library.fxml",1024,720);
+//            controller.initData(restaurant.getId());
+            MenuManagementController controller = SceneManager.switchScene(event, "SellerViews/menu-management-view.fxml", 1024, 720);
             controller.initData(restaurant.getId());
         } catch (IOException e){
             e.printStackTrace();

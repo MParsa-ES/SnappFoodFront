@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="rootPane" alignment="CENTER_LEFT" spacing="10.0" styleClass="food-chip" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.FoodChipController">
+    <children>
+        <ImageView fx:id="foodImageView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="foodNameLabel" styleClass="food-chip-label" text="Food Name" />
+    </children>
+</HBox>

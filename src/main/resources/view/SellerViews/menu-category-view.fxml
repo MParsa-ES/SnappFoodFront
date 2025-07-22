@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<VBox fx:id="rootPane" styleClass="menu-category" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.MenuCategoryController">
+    <children>
+        <HBox alignment="CENTER_LEFT" styleClass="menu-category-header">
+            <children>
+                <Label fx:id="categoryNameLabel" styleClass="menu-category-title" text="Category Name" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="deleteCategoryButton" mnemonicParsing="false" styleClass="subtle-icon-button">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-trash-alt" onMouseClicked="#handleDeleteMenuButton" />
+                    </graphic>
+                </Button>
+            </children>
+        </HBox>
+        <VBox fx:id="itemsContainer" spacing="5.0" styleClass="menu-category-content">
+        </VBox>
+    </children>
+</VBox>
