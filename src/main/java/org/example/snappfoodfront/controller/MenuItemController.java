@@ -17,17 +17,17 @@ public class MenuItemController {
     @FXML private Label itemNameLabel;
     @FXML private Button removeButton;
 
+    private MenuManagementController mainController;
     private Long restaurantId;
     private String menuTitle;
     private FoodItemDto.Response foodItem;
-    private Runnable refreshCallback;
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();
 
-    public void setData(Long restaurantId, String menuTitle, FoodItemDto.Response foodItem, Runnable refreshCallback) {
+    public void setData(MenuManagementController mainController, Long restaurantId, String menuTitle, FoodItemDto.Response foodItem) {
+        this.mainController = mainController;
         this.restaurantId = restaurantId;
         this.menuTitle = menuTitle;
         this.foodItem = foodItem;
-        this.refreshCallback = refreshCallback;
         itemNameLabel.setText(foodItem.getName());
     }
 
@@ -35,10 +35,9 @@ public class MenuItemController {
     void handleRemoveItem(ActionEvent event) {
         new Thread(() -> {
             try {
-                // FIX: URL-encode the title and replace '+' with '%20'.
                 String encodedMenuTitle = URLEncoder.encode(menuTitle, StandardCharsets.UTF_8).replace("+", "%20");
                 restaurantApiService.deleteFoodFromMenu(TokenManager.getToken(), restaurantId, encodedMenuTitle, foodItem.getId());
-                Platform.runLater(refreshCallback);
+                Platform.runLater(() -> mainController.refreshDataAndUI());
             } catch (Exception e) {
                 e.printStackTrace();
             }

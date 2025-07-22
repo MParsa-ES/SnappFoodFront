@@ -554,3 +554,86 @@
 .remove-item-button:hover .ikonli-font-icon {
     -fx-icon-color: #e74c3c; /* Red on hover */
 }
+
+/* =================================================================
+   Menu Management Styles (Refined)
+   ================================================================= */
+
+/* --- Main Panel & Header Styles --- */
+/* Adds a subtle border to the panel containers for better definition */
+.panel-container {
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8px;
+}
+
+/* Styles the titles "Available Foods" and "Menu List" */
+.panel-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+/* --- Food Chip (Left Panel) Refinements --- */
+/* A slightly stronger hover effect for the draggable food chips */
+.food-chip:hover {
+    -fx-border-color: #ff7600;
+    -fx-background-color: #fff7ed; /* A very light orange tint */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
+}
+
+.food-chip-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+}
+
+
+/* --- Menu Category (Right Panel) Refinements --- */
+/* Makes the delete icon turn red when you hover over it */
+.subtle-icon-button:hover .ikonli-font-icon {
+    -fx-icon-color: #e74c3c; /* Red color for delete on hover */
+}
+
+
+/* --- Menu Item (Inside a Category) Styles --- */
+/* This is the new, more stylish look for the food items inside a menu */
+.menu-item {
+    -fx-background-color: #f9fafb; /* A very light grey background */
+    -fx-padding: 8px 12px;
+    -fx-background-radius: 6px;
+    -fx-border-width: 1px;
+    -fx-border-color: transparent;
+}
+
+/* On hover, the item gets a subtle border and background change */
+.menu-item:hover {
+    -fx-background-color: #f3f4f6;
+    -fx-border-color: #e5e7eb;
+}
+
+/* Makes the remove button invisible by default */
+.remove-item-button {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;
+    -fx-cursor: hand;
+    -fx-padding: 2px;
+}
+
+/* The remove button becomes visible only when hovering over the item */
+.menu-item:hover .remove-item-button {
+    -fx-opacity: 1;
+}
+
+.remove-item-button .ikonli-font-icon {
+    -fx-icon-color: #9ca3af; /* A muted grey */
+}
+.remove-item-button:hover .ikonli-font-icon {
+    -fx-icon-color: #e74c3c; /* Red on hover */
+}
+
+
+/* --- Inline Add Box --- */
+/* Adds a clean top border to separate it from the content above */
+.inline-add-box {
+    -fx-border-color: #e5e7eb transparent transparent transparent;
+    -fx-padding: 15px 0 0 0;
+}

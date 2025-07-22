@@ -28,15 +28,16 @@ public class MenuCategoryController {
     @FXML private Button deleteCategoryButton;
     @FXML private VBox itemsContainer;
 
+    private MenuManagementController mainController; // Reference to the main controller
     private Long restaurantId;
     private String menuTitle;
-    private Runnable refreshCallback;
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();
 
-    public void setData(Long restaurantId, String title, List<FoodItemDto.Response> items, Runnable refreshCallback) {
+    // Now accepts the main controller instance
+    public void setData(MenuManagementController mainController, Long restaurantId, String title, List<FoodItemDto.Response> items) {
+        this.mainController = mainController;
         this.restaurantId = restaurantId;
         this.menuTitle = title;
-        this.refreshCallback = refreshCallback;
         categoryNameLabel.setText(title);
         itemsContainer.getChildren().clear();
         if (items != null) {
@@ -45,7 +46,7 @@ public class MenuCategoryController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SellerViews/menu-item-view.fxml"));
                     Node menuItemNode = loader.load();
                     MenuItemController controller = loader.getController();
-                    controller.setData(restaurantId, menuTitle, item, refreshCallback);
+                    controller.setData(mainController, restaurantId, menuTitle, item);
                     itemsContainer.getChildren().add(menuItemNode);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -69,11 +70,10 @@ public class MenuCategoryController {
                 Long foodItemId = Long.parseLong(db.getString());
                 new Thread(() -> {
                     try {
-                        // FIX: URL-encode the title and replace '+' with '%20' for URL path safety.
                         String encodedMenuTitle = URLEncoder.encode(menuTitle, StandardCharsets.UTF_8).replace("+", "%20");
-                        MenuDto.AddItemRequest menuItemRequest = new MenuDto.AddItemRequest(foodItemId);
-                        restaurantApiService.addFoodToMenu(TokenManager.getToken(), restaurantId, encodedMenuTitle, menuItemRequest);
-                        Platform.runLater(refreshCallback);
+                        MenuDto.AddItemRequest addItemRequest = new MenuDto.AddItemRequest(foodItemId);
+                        restaurantApiService.addFoodToMenu(TokenManager.getToken(), restaurantId, encodedMenuTitle, addItemRequest);
+                        Platform.runLater(() -> mainController.refreshDataAndUI());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -93,10 +93,9 @@ public class MenuCategoryController {
             if (response == ButtonType.YES) {
                 new Thread(() -> {
                     try {
-                        // FIX: URL-encode the title and replace '+' with '%20'.
                         String encodedMenuTitle = URLEncoder.encode(menuTitle, StandardCharsets.UTF_8).replace("+", "%20");
                         restaurantApiService.deleteMenu(TokenManager.getToken(), restaurantId, encodedMenuTitle);
-                        Platform.runLater(refreshCallback);
+                        Platform.runLater(() -> mainController.refreshDataAndUI());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

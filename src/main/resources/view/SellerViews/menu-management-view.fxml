@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -9,12 +10,12 @@
     <top>
         <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="header-bar">
             <children>
-                <Button fx:id="backButton" mnemonicParsing="false" styleClass="subtle-button" text="Back">
+                <Button mnemonicParsing="false" onAction="#handleBackButton" styleClass="subtle-button" text="Back">
                     <graphic>
                         <FontIcon iconLiteral="fas-arrow-left" />
                     </graphic>
                 </Button>
-                <Label styleClass="dashboard-header" text="Menu Assembler" />
+                <Label styleClass="dashboard-header" text="Menu Management" />
             </children>
             <padding>
                 <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
@@ -30,28 +31,34 @@
                             <children>
                                 <Label styleClass="panel-header" text="Available Foods" />
                                 <Region HBox.hgrow="ALWAYS" />
-                                <Button fx:id="createNewFoodButton" mnemonicParsing="false" styleClass="primary-action-button" text="+ New Food" />
+                                <JFXButton buttonType="RAISED" mnemonicParsing="false" onAction="#handleAddFoodButton" styleClass="primary-action-button" text="+ New Food" />
                             </children>
                         </HBox>
                         <ScrollPane fitToWidth="true" styleClass="panel-scroll-pane" VBox.vgrow="ALWAYS">
                             <content>
                                 <VBox fx:id="availableFoodsContainer" spacing="5.0" />
                             </content>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
                         </ScrollPane>
                     </children>
                 </VBox>
                 <VBox styleClass="panel-container">
                     <children>
-                        <Label styleClass="panel-header" text="Menu Categories" />
+                        <Label styleClass="panel-header" text="Menu List" />
                         <ScrollPane fitToWidth="true" styleClass="panel-scroll-pane" VBox.vgrow="ALWAYS">
                             <content>
                                 <VBox fx:id="menuCategoriesContainer" spacing="15.0" />
                             </content>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
                         </ScrollPane>
-                        <HBox fx:id="addCategoryBox" alignment="CENTER" spacing="10.0" styleClass="inline-add-box">
+                        <HBox fx:id="addMenuBox" alignment="CENTER" spacing="10.0" styleClass="inline-add-box">
                             <children>
-                                <TextField fx:id="newCategoryTextField" promptText="New Category Name..." HBox.hgrow="ALWAYS" />
-                                <Button fx:id="addCategoryButton" mnemonicParsing="false" onAction="#handleAddMenuButton" styleClass="primary-action-button" text="Add" />
+                                <TextField fx:id="newMenuTextField" promptText="New Category Name..." styleClass="styled-textfield" HBox.hgrow="ALWAYS" />
+                                <JFXButton buttonType="RAISED" mnemonicParsing="false" onAction="#handleAddMenuButton" prefHeight="31.0" prefWidth="40.0" styleClass="primary-action-button" text="Add" />
                             </children>
                         </HBox>
                     </children>

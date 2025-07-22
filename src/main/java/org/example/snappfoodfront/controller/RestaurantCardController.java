@@ -79,15 +79,31 @@ public class RestaurantCardController {
     void handleMenuButton(ActionEvent event) {
 
         try {
-//            FoodLibraryController controller = SceneManager.switchScene(event, "SellerViews/food-library.fxml",1024,720);
-//            controller.initData(restaurant.getId());
             MenuManagementController controller = SceneManager.switchScene(event, "SellerViews/menu-management-view.fxml", 1024, 720);
             controller.initData(restaurant.getId());
         } catch (IOException e){
             e.printStackTrace();
-            System.err.println("Error opening the menu");
+            System.err.println("Error opening the menu management view");
         }
 
+    }
+
+    @FXML
+    void handleFoodManagementButton(ActionEvent event) {
+
+        try {
+            FoodLibraryController controller = SceneManager.switchScene(event, "SellerViews/food-library.fxml",1024,720);
+            controller.initData(restaurant.getId());
+        } catch (IOException e){
+            e.printStackTrace();
+            System.err.println("Error opening the food management view");
+        }
+
+    }
+
+    @FXML
+    void handleOrdersButton(ActionEvent event) {
+        // TODO : add the handle orders view
     }
 
 

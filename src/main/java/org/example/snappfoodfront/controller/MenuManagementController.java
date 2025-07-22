@@ -1,57 +1,77 @@
 package org.example.snappfoodfront.controller;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.example.snappfoodfront.Service.RestaurantApiService;
+import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.BuyerDto;
 import org.example.snappfoodfront.model.FoodItemDto;
 import org.example.snappfoodfront.model.MenuDto;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class MenuManagementController {
 
-    @FXML private VBox availableFoodsContainer;
-    @FXML private VBox menuCategoriesContainer;
-    @FXML private TextField newCategoryTextField;
-    @FXML private Button addCategoryButton;
+    @FXML
+    private VBox availableFoodsContainer;
+
+    @FXML
+    private VBox menuCategoriesContainer;
+
+    @FXML
+    private TextField newMenuTextField;
 
     private Long restaurantId;
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();
 
+    // --- Data Cache ---
+    // We store the data here to avoid re-fetching from the API on every action.
+    private List<FoodItemDto.Response> allFoodsCache;
+    private BuyerDto.ItemList allMenusWithItemsCache;
+
     public void initData(Long restaurantId) {
         this.restaurantId = restaurantId;
-        loadAllData();
+        loadAllData(); // Initial data fetch
     }
 
+    // This method now only fetches data from the API. UI updates are separate.
     private void loadAllData() {
         new Thread(() -> {
             try {
-                List<FoodItemDto.Response> allFoods = restaurantApiService.getAllFoodItems(TokenManager.getToken(), restaurantId);
-                BuyerDto.ItemList allMenusWithItems = restaurantApiService.getMenusWithItems(TokenManager.getToken(), restaurantId);
+                this.allFoodsCache = restaurantApiService.getAllFoodItems(TokenManager.getToken(), restaurantId);
+                this.allMenusWithItemsCache = restaurantApiService.getMenusWithItems(TokenManager.getToken(), restaurantId);
 
                 Platform.runLater(() -> {
-                    populateAvailableFoods(allFoods);
-                    populateMenuCategories(allMenusWithItems);
+                    populateAvailableFoods();
+                    populateMenuCategories();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
-                // TODO: Show an error message on the UI
             }
         }).start();
     }
 
-    private void populateAvailableFoods(List<FoodItemDto.Response> foods) {
+    // --- UI Population Methods ---
+    // These methods now read from the in-memory cache, making them very fast.
+    private void populateAvailableFoods() {
         availableFoodsContainer.getChildren().clear();
-        for (FoodItemDto.Response food : foods) {
+        if (allFoodsCache == null) return;
+        for (FoodItemDto.Response food : allFoodsCache) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SellerViews/food-chip-view.fxml"));
                 Node foodChip = loader.load();
@@ -64,10 +84,15 @@ public class MenuManagementController {
         }
     }
 
-    private void populateMenuCategories(BuyerDto.ItemList allMenus) {
+    private void populateMenuCategories() {
         menuCategoriesContainer.getChildren().clear();
-        List<String> titles = allMenus.getMenu_titles();
-        Map<String, List<FoodItemDto.Response>> itemsMap = allMenus.getMenu_title();
+        if (allMenusWithItemsCache == null) return;
+        List<String> titles = allMenusWithItemsCache.getMenu_titles();
+        Map<String, List<FoodItemDto.Response>> itemsMap = allMenusWithItemsCache.getMenu_title();
+
+        if (titles != null) {
+            Collections.sort(titles);
+        }
 
         for (String title : titles) {
             try {
@@ -76,8 +101,8 @@ public class MenuManagementController {
                 MenuCategoryController controller = loader.getController();
                 List<FoodItemDto.Response> itemsForThisMenu = itemsMap.get(title);
 
-                controller.setData(restaurantId, title, itemsForThisMenu, this::loadAllData);
-
+                // Pass a reference to this main controller for targeted updates
+                controller.setData(this, restaurantId, title, itemsForThisMenu);
                 menuCategoriesContainer.getChildren().add(menuCategoryNode);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -85,24 +110,66 @@ public class MenuManagementController {
         }
     }
 
+    // --- Targeted Update Method ---
+    // This is a new public method that child controllers can call to refresh the data.
+    public void refreshDataAndUI() {
+        loadAllData();
+    }
+
     @FXML
     void handleAddMenuButton() {
-        String newTitle = newCategoryTextField.getText();
+        String newTitle = newMenuTextField.getText();
         if (newTitle == null || newTitle.isBlank()) return;
 
         new Thread(() -> {
             try {
-                // For adding a menu, the title is in the request body, so no encoding is needed here.
-                MenuDto.Request menuRequest = new MenuDto.Request(newTitle);
+                String encodedTitle = URLEncoder.encode(newTitle, StandardCharsets.UTF_8).replace("+", "%20");
+                MenuDto.Request menuRequest = new MenuDto.Request(encodedTitle);
                 restaurantApiService.addMenu(TokenManager.getToken(), restaurantId, menuRequest);
-                Platform.runLater(() -> {
-                    newCategoryTextField.clear();
-                    loadAllData(); // Refresh everything
-                });
+                // After a successful API call, just refresh everything.
+                // This is still a full refresh, but it's the simplest way to ensure consistency.
+                Platform.runLater(this::loadAllData);
+                Platform.runLater(newMenuTextField::clear);
             } catch (Exception e) {
                 e.printStackTrace();
-                // TODO: Show error feedback
             }
         }).start();
+    }
+
+    @FXML
+    void handleBackButton(ActionEvent event) {
+        try {
+            SceneManager.switchScene(event, "SellerViews/seller-main-view.fxml", 1024, 720);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading seller view");
+        }
+    }
+
+    @FXML
+    void handleAddFoodButton(ActionEvent event) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SellerViews/food-creation-view.fxml"));
+            Parent root = loader.load();
+
+
+            AddFoodController addFoodController = loader.getController();
+
+
+            addFoodController.setRestaurantId(this.restaurantId);
+
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add New Food Item");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+            loadAllData();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
