@@ -149,6 +149,7 @@ public class RestaurantMainController implements Initializable {
                 for (MenuDto.Response menu : menuList) {
                     MenuButton menuButton = new MenuButton(menu.getTitle());
                     menuButtons.add(menuButton);
+                    final MenuDto.Response currentMenu = menu;
                     menuButton.setOnAction(event -> {
 
                         for (MenuButton btn : menuButtons) {
@@ -159,7 +160,7 @@ public class RestaurantMainController implements Initializable {
 
                         menuButton.setSelected(true);
                         try {
-                            loadMenuItems(menu.getId());
+                            loadMenuItems(currentMenu.getId());
                         } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -229,6 +230,8 @@ public class RestaurantMainController implements Initializable {
 
                 Platform.runLater(() -> {
 
+                    foodContainer.getChildren().clear();
+
                     if (itemList.isEmpty()) {
                         Label errorLabel = new Label("No items found");
                         errorLabel.setStyle("-fx-text-fill: red;");
@@ -256,7 +259,7 @@ public class RestaurantMainController implements Initializable {
 
         for (FoodItemDto.Response item : itemList) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/food-card.fxml"));
                 Node foodCardNode = loader.load();
                 final FoodItemDto.Response currentItem = item;
 

@@ -114,11 +114,11 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
+                              <ScrollPane>
+                                 <content>
+                                    <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0" />
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </VBox>
                      </content>

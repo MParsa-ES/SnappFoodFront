@@ -153,7 +153,11 @@
                            </padding></HBox>
                      </content>
                   </ScrollPane>
-                  <VBox fx:id="foodContainer" prefWidth="1024.0" />
+                  <ScrollPane hbarPolicy="NEVER">
+                     <content>
+                        <VBox fx:id="foodContainer" prefWidth="1024.0" />
+                     </content>
+                  </ScrollPane>
                </children>
             </VBox>
          </children>

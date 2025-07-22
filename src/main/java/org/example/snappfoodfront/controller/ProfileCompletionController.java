@@ -40,7 +40,8 @@ public class ProfileCompletionController implements Initializable {
 
     private final AuthApiService authService = new AuthApiService();
 
-    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
+    private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
+    private static final String DASHBOARD_VIEW_PATH = "/view/SellerViews/seller-main-view.fxml";
 
     private String fullName;
     private String email;
@@ -160,7 +161,11 @@ public class ProfileCompletionController implements Initializable {
             errorLabel.setTextFill(Color.GREEN);
             errorLabel.setText("Sign up successful");
             SceneManager.closeCurrentStage(errorLabel);
-            SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+            if (role.equals("BUYER")) {
+                SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+            } else if (role.equals("SELLER")) {
+                SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+            }
         } catch (IOException | InterruptedException e) {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Sign up failed");
