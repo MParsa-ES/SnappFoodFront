@@ -23,17 +23,21 @@ import java.util.List;
 
 public class MenuCategoryController {
 
-    @FXML private VBox rootPane;
-    @FXML private Label categoryNameLabel;
-    @FXML private Button deleteCategoryButton;
-    @FXML private VBox itemsContainer;
+    @FXML
+    private VBox rootPane;
 
-    private MenuManagementController mainController; // Reference to the main controller
+    @FXML
+    private Label categoryNameLabel;
+
+    @FXML
+    private VBox itemsContainer;
+
+    private MenuManagementController mainController;
     private Long restaurantId;
     private String menuTitle;
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();
 
-    // Now accepts the main controller instance
+
     public void setData(MenuManagementController mainController, Long restaurantId, String title, List<FoodItemDto.Response> items) {
         this.mainController = mainController;
         this.restaurantId = restaurantId;

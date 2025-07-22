@@ -3,7 +3,6 @@ package org.example.snappfoodfront.controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.TokenManager;
@@ -14,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 
 public class MenuItemController {
 
-    @FXML private Label itemNameLabel;
-    @FXML private Button removeButton;
+    @FXML
+    private Label itemNameLabel;
 
     private MenuManagementController mainController;
     private Long restaurantId;

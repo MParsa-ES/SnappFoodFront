@@ -39,17 +39,16 @@ public class MenuManagementController {
     private Long restaurantId;
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();
 
-    // --- Data Cache ---
-    // We store the data here to avoid re-fetching from the API on every action.
+
     private List<FoodItemDto.Response> allFoodsCache;
     private BuyerDto.ItemList allMenusWithItemsCache;
 
     public void initData(Long restaurantId) {
         this.restaurantId = restaurantId;
-        loadAllData(); // Initial data fetch
+        loadAllData();
     }
 
-    // This method now only fetches data from the API. UI updates are separate.
+
     private void loadAllData() {
         new Thread(() -> {
             try {
@@ -66,8 +65,7 @@ public class MenuManagementController {
         }).start();
     }
 
-    // --- UI Population Methods ---
-    // These methods now read from the in-memory cache, making them very fast.
+
     private void populateAvailableFoods() {
         availableFoodsContainer.getChildren().clear();
         if (allFoodsCache == null) return;
@@ -101,7 +99,7 @@ public class MenuManagementController {
                 MenuCategoryController controller = loader.getController();
                 List<FoodItemDto.Response> itemsForThisMenu = itemsMap.get(title);
 
-                // Pass a reference to this main controller for targeted updates
+
                 controller.setData(this, restaurantId, title, itemsForThisMenu);
                 menuCategoriesContainer.getChildren().add(menuCategoryNode);
             } catch (IOException e) {
@@ -110,8 +108,7 @@ public class MenuManagementController {
         }
     }
 
-    // --- Targeted Update Method ---
-    // This is a new public method that child controllers can call to refresh the data.
+
     public void refreshDataAndUI() {
         loadAllData();
     }
@@ -126,8 +123,6 @@ public class MenuManagementController {
                 String encodedTitle = URLEncoder.encode(newTitle, StandardCharsets.UTF_8).replace("+", "%20");
                 MenuDto.Request menuRequest = new MenuDto.Request(encodedTitle);
                 restaurantApiService.addMenu(TokenManager.getToken(), restaurantId, menuRequest);
-                // After a successful API call, just refresh everything.
-                // This is still a full refresh, but it's the simplest way to ensure consistency.
                 Platform.runLater(this::loadAllData);
                 Platform.runLater(newMenuTextField::clear);
             } catch (Exception e) {
