@@ -3,8 +3,11 @@ package org.example.snappfoodfront.Utils;
 import javafx.fxml.FXML;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.snappfoodfront.model.RestaurantDto;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class MainViewState {
@@ -22,20 +25,22 @@ public class MainViewState {
     private static List<String> lastKeywords;
     @Getter
     @Setter
-    private static Long selectedRestaurantId;
+    private static RestaurantDto.Response selectedRestaurant;
     @Getter
     @Setter
     public static boolean hasState = false;
     @Getter
     @Setter
     public static boolean cameFromFavorites = false;
+    @Getter
+    @Setter
+    public static Set<Long> favoriteRestaurantIds = new HashSet<>();
 
-    public static void saveState(String searchTerm, Integer minPrice, Integer maxPrice, List<String> keywords, Long restaurantId) {
+    public static void saveState(String searchTerm, Integer minPrice, Integer maxPrice, List<String> keywords) {
         lastSearchTerm = searchTerm;
         lastMinPrice = minPrice;
         lastMaxPrice = maxPrice;
         lastKeywords = keywords;
-        selectedRestaurantId = restaurantId;
         hasState = true;
     }
 
@@ -44,7 +49,7 @@ public class MainViewState {
         lastMinPrice = null;
         lastMaxPrice = null;
         lastKeywords = null;
-        selectedRestaurantId = null;
+        selectedRestaurant = null;
         cameFromFavorites = false;
         hasState = false;
     }

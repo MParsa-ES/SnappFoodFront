@@ -1,20 +1,29 @@
 package org.example.snappfoodfront.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.sun.tools.javac.Main;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.MainViewState;
+import org.example.snappfoodfront.Utils.Methods;
 import org.example.snappfoodfront.Utils.SceneManager;
+import org.example.snappfoodfront.Utils.TokenManager;
+import org.example.snappfoodfront.model.MenuDto;
+import org.example.snappfoodfront.model.RestaurantDto;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,8 +43,14 @@ public class RestaurantMainController implements Initializable {
     @FXML public Label phoneLabel;
     @FXML public HBox menuContainer;
     @FXML public VBox foodContainer;
+    @FXML public JFXButton favoriteButton;
 
     private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
+
+    private RestaurantDto.Response restaurant;
+    private boolean isFavorite;
+
+    private final RestaurantApiService restaurantService = new RestaurantApiService();
 
     public class MenuButton extends JFXButton {
 
@@ -86,28 +101,114 @@ public class RestaurantMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Long id = MainViewState.getSelectedRestaurantId();
-        menuContainer.getChildren().clear();
-        List<MenuButton> menuButtons = new ArrayList<>();
+        restaurant = MainViewState.getSelectedRestaurant();
+        try {
+            loadRestaurantDetails(restaurant);
+            loadRestaurantMenus(restaurant.getId());
+        } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+            e.printStackTrace();
 
-        for (int i = 0; i < 10; i++) {
-            MenuButton menuButton = new MenuButton("Restaurant Menu");
-            menuButtons.add(menuButton);
+        }
 
-            menuButton.setOnAction(event -> {
+    }
 
-                for (MenuButton btn : menuButtons) {
-                    if (btn != menuButton) {
-                        btn.setSelected(false);
-                    }
+    protected void loadRestaurantDetails(RestaurantDto.Response restaurant) throws IOException, RestaurantApiService.RestaurantException {
+
+        isFavorite = MainViewState.isCameFromFavorites();
+        MainViewState.setCameFromFavorites(false);
+        Platform.runLater(() -> {
+            restaurantNameLabel.setText(restaurant.getName());
+            addressLabel.setText(restaurant.getAddress());
+            phoneLabel.setText(restaurant.getPhone());
+
+            Image logo = Methods.convertToImage(restaurant.getLogoBase64());
+            logoImageView.setImage(logo);
+
+            if (isFavorite) {
+                favoriteButton.setStyle("-fx-background-color: #ff0000;");
+                favoriteButton.setText("Remove from Favorites");
+            } else {
+                favoriteButton.setStyle("-fx-background-color: #00ff05;");
+                favoriteButton.setText("Add to Favorites");
+            }
+
+        });
+    }
+
+    protected void loadRestaurantMenus(Long restaurantId) throws IOException, RestaurantApiService.RestaurantException, InterruptedException {
+
+        new Thread(() -> {
+
+            try {
+                List<MenuDto.Response> menuList = restaurantService.getRestaurantMenus(restaurantId);
+                List<MenuButton> menuButtons = new ArrayList<>();
+
+                for (MenuDto.Response menu : menuList) {
+                    MenuButton menuButton = new MenuButton(menu.getTitle());
+                    menuButtons.add(menuButton);
+                    menuButton.setOnAction(event -> {
+
+                        for (MenuButton btn : menuButtons) {
+                            if (btn != menuButton) {
+                                btn.setSelected(false);
+                            }
+                        }
+
+                        menuButton.setSelected(true);
+                        //loadMenuItems(menu.getId());
+
+                    });
                 }
 
-                menuButton.setSelected(true);
+                if(menuList.isEmpty()) {
+                    Platform.runLater(() -> {
+                        menuContainer.getChildren().clear();
+                        menuContainer.setMinWidth(1020);
+                        Label errorLabel = new Label("No restaurant menus found");
+                        errorLabel.setStyle("-fx-text-fill: red;");
+                        menuContainer.getChildren().add(errorLabel);
+                    });
+                } else {
+                    Platform.runLater(() -> {
+                        menuContainer.getChildren().clear();
+                        menuContainer.getChildren().addAll(menuButtons);
+                    });
+                }
+            } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+                e.printStackTrace();
+            }
 
-            });
+        }).start();
 
-            menuContainer.getChildren().add(menuButton);
-        }
+    }
+
+    @FXML
+    protected void toggleFavorite(ActionEvent event) throws IOException, RestaurantApiService.RestaurantException, InterruptedException {
+
+        String token = TokenManager.getToken();
+
+        Platform.runLater(() -> {
+            if (!isFavorite) {
+                favoriteButton.setStyle("-fx-background-color: #ff0000;");
+                favoriteButton.setText("Remove from favorites");
+                isFavorite = true;
+                try {
+                    restaurantService.addFavoriteRestaurant(token, restaurant.getId());
+                } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                favoriteButton.setStyle("-fx-background-color: #00ff05;");
+                favoriteButton.setText("Add to favorites");
+                isFavorite = false;
+                try {
+                    restaurantService.removeFavoriteRestaurant(token, restaurant.getId());
+                    MainViewState.favoriteRestaurantIds.remove(restaurant.getId());
+                } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 

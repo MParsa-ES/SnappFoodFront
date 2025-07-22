@@ -9,6 +9,7 @@ module org.example.snappfoodfront {
     requires org.controlsfx.controls;
     requires java.net.http;
     requires com.jfoenix;
+    requires jdk.compiler;
 
 
     opens org.example.snappfoodfront to javafx.fxml;

@@ -70,6 +70,8 @@ public class CustomerMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        getFavoriteRestaurantIds();
+
         if (MainViewState.cameFromFavorites) {
 
             tabPane.getSelectionModel().select(favoritesTab);
@@ -141,7 +143,7 @@ public class CustomerMainController implements Initializable {
                         messageIcon.setIconLiteral("fas-store-alt");
                     }
 
-                    listRestaurants(restaurantList, restaurantContainer, false);
+                    listRestaurants(restaurantList, restaurantContainer);
 
                 });
 
@@ -197,6 +199,8 @@ public class CustomerMainController implements Initializable {
 
                     Platform.runLater(() -> {
 
+                        favoriteList.getChildren().clear();
+
                         if(restaurantList.isEmpty()) {
                             Label errorLabel = new Label();
                             errorLabel.setText("No restaurants found");
@@ -206,7 +210,7 @@ public class CustomerMainController implements Initializable {
                             favoriteList.getChildren().add(errorLabel);
                         }
 
-                        listRestaurants(restaurantList, favoriteList, true);
+                        listRestaurants(restaurantList, favoriteList);
 
                     });
             } catch (IOException | InterruptedException | RestaurantApiService.RestaurantException e) {
@@ -266,7 +270,7 @@ public class CustomerMainController implements Initializable {
                         restaurantContainer.getChildren().add(errorLabel);
                     }
 
-                    listRestaurants(restaurantList, restaurantContainer, false);
+                    listRestaurants(restaurantList, restaurantContainer);
                 });
             } catch (RestaurantApiService.RestaurantException | IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -284,22 +288,20 @@ public class CustomerMainController implements Initializable {
 
     }
 
-    private void listRestaurants(List<RestaurantDto.Response> restaurantList, VBox restaurantContainer, boolean isFavorite) {
+    private void listRestaurants(List<RestaurantDto.Response> restaurantList, VBox restaurantContainer) {
         for (RestaurantDto.Response restaurant : restaurantList) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
                 Node restaurantCardNode = loader.load();
+                final RestaurantDto.Response currentRestaurant = restaurant;
 
                 RestaurantMainCardController cardController = loader.getController();
-                cardController.setData(restaurant);
+                cardController.setData(currentRestaurant);
 
                 restaurantContainer.getChildren().add(restaurantCardNode);
                 restaurantCardNode.setOnMouseClicked(event -> {
                     try {
-                        handleRestaurantClicked(restaurantCardNode, restaurant.getId());
-                        if (isFavorite) {
-                            MainViewState.setCameFromFavorites(true);
-                        }
+                        handleRestaurantClicked(restaurantCardNode, currentRestaurant);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -312,7 +314,7 @@ public class CustomerMainController implements Initializable {
     }
 
     @FXML
-    protected void handleRestaurantClicked(Node restaurantNode, Long restaurantId) throws IOException {
+    protected void handleRestaurantClicked(Node restaurantNode, RestaurantDto.Response restaurant) throws IOException {
 
         int minPrice = 0;
         int maxPrice = 0;
@@ -338,9 +340,13 @@ public class CustomerMainController implements Initializable {
 
 
         if (isFilterActive) {
-            MainViewState.saveState(search, minPrice, maxPrice, keywords, restaurantId);
+            MainViewState.saveState(search, minPrice, maxPrice, keywords);
         }
 
+        boolean isFavorite = MainViewState.getFavoriteRestaurantIds().contains(restaurant.getId());
+
+        MainViewState.setCameFromFavorites(isFavorite);
+        MainViewState.setSelectedRestaurant(restaurant);
         SceneManager.closeCurrentStage(restaurantNode);
         SceneManager.showWindow("/view/restaurant-main-view.fxml", "SnappFood", "SnappFood", 1024, 720);
 
@@ -348,6 +354,7 @@ public class CustomerMainController implements Initializable {
 
     @FXML
     protected void handleMainPage() {
+        getFavoriteRestaurantIds();
         Platform.runLater(() -> {
             region.setPrefWidth(410);
 
@@ -355,6 +362,20 @@ public class CustomerMainController implements Initializable {
             searchIcon.setDisable(false);
             loadAllRestaurants();
         });
+    }
+
+    private void getFavoriteRestaurantIds() {
+        String token = TokenManager.getToken();
+        new Thread(() -> {
+            try {
+                final List<RestaurantDto.Response> restaurants = restaurantService.getFavoriteRestaurants(token);
+                for (RestaurantDto.Response restaurant : restaurants) {
+                    MainViewState.favoriteRestaurantIds.add(restaurant.getId());
+                }
+            } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @FXML

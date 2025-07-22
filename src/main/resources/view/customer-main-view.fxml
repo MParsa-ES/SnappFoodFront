@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-<?import org.controlsfx.control.textfield.*?>
-<?import org.kordamp.ikonli.javafx.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="720.0" prefHeight="720.0" prefWidth="1024.0" scaleShape="false" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CustomerMainController">
+<BorderPane maxHeight="720.0" prefHeight="720.0" prefWidth="1024.0" scaleShape="false" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CustomerMainController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
          <items>
@@ -84,7 +99,7 @@
                      <content>
                         <VBox>
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
                                  <children>
                                     <JFXHamburger fx:id="hamburger" onMouseClicked="#toggleHamburger" prefHeight="30.0" prefWidth="25.0">
                                        <cursor>
@@ -119,7 +134,7 @@
                      <content>
                         <VBox alignment="TOP_CENTER" prefWidth="1024.0">
                            <children>
-                              <Label text="Favorite Restaurants">
+                              <Label prefHeight="20.0" text="Favorite Restaurants">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
