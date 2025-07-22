@@ -172,7 +172,7 @@ public class RestaurantCreationController implements Initializable {
                     Platform.runLater(() -> {
                         showFeedback("Restaurant Created", false);
                         SceneManager.closeCurrentStage((Node) event.getSource());
-                        SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1024, 720);
+                        SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1050, 720);
                     });
 
 
@@ -181,7 +181,7 @@ public class RestaurantCreationController implements Initializable {
                     Platform.runLater(() -> {
                         showFeedback("Restaurant Edited", false);
                         SceneManager.closeCurrentStage((Node) event.getSource());
-                        SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1024, 720);
+                        SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "Main Seller view", 1050, 720);
                     });
 
                 }

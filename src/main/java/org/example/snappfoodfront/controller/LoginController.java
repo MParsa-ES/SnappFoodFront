@@ -67,12 +67,12 @@ public class LoginController implements Initializable {
                         if (loginResponse.getUser().getRole().equals("SELLER")) {
                             // will add the seller dashboard here
                             SceneManager.closeCurrentStage(errorLabel);
-                            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "Dashboard", "dashboard", 1024, 720);
+                            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "Dashboard", "dashboard", 1050, 720);
                         } else if (loginResponse.getUser().getRole().equals("BUYER")) {
                             SceneManager.closeCurrentStage(errorLabel);
-                            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "SnappFood", 1024, 720);
+                            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "SnappFood", 1050, 720);
                         } else {
-                            SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+                            SceneManager.switchScene(event, "dashboard-view.fxml", 1050, 720);
                         }
                     } catch (IOException e) {
                         errorLabel.setVisible(true);

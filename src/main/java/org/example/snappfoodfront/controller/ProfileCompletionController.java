@@ -160,7 +160,11 @@ public class ProfileCompletionController implements Initializable {
             errorLabel.setTextFill(Color.GREEN);
             errorLabel.setText("Sign up successful");
             SceneManager.closeCurrentStage(errorLabel);
-            SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+            if (role.equals("BUYER")) {
+                SceneManager.showWindow(DASHBOARD_VIEW_PATH, "SnappFood", "dashboard", 1050, 720);
+            } else {
+                SceneManager.showWindow("view/SellerViews/seller-main-view.fxml", "SnappFood", "dashboard", 1050, 720);
+            }
         } catch (IOException | InterruptedException e) {
             errorLabel.setTextFill(Color.RED);
             errorLabel.setText("Sign up failed");

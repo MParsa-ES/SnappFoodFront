@@ -348,7 +348,7 @@ public class CustomerMainController implements Initializable {
         MainViewState.setCameFromFavorites(isFavorite);
         MainViewState.setSelectedRestaurant(restaurant);
         SceneManager.closeCurrentStage(restaurantNode);
-        SceneManager.showWindow("/view/restaurant-main-view.fxml", "SnappFood", "SnappFood", 1024, 720);
+        SceneManager.showWindow("/view/restaurant-main-view.fxml", "SnappFood", "SnappFood", 1050, 720);
 
     }
 
@@ -381,7 +381,7 @@ public class CustomerMainController implements Initializable {
     @FXML
     protected void goToProfile(ActionEvent event) throws IOException {
         SceneManager.closeCurrentStage(profileButton);
-        Platform.runLater(() -> SceneManager.showWindow(PROFILE_VIEW_PATH, "Profile", "profile", 1024, 720));
+        Platform.runLater(() -> SceneManager.showWindow(PROFILE_VIEW_PATH, "Profile", "profile", 1050, 720));
     }
 
     @FXML

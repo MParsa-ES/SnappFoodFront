@@ -181,9 +181,9 @@ public class ProfileController implements Initializable {
     protected void goBack(ActionEvent event) throws IOException {
         SceneManager.closeCurrentStage(goBackButton);
         if (roleField.getText().equals("BUYER")) {
-            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1050, 720);
         } else if (roleField.getText().equals("SELLER")) {
-            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1050, 720);
         }
     }
 
