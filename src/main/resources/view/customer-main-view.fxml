@@ -10,7 +10,6 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -26,18 +25,13 @@
 <?import org.controlsfx.control.textfield.CustomTextField?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane prefHeight="720.0" prefWidth="1024.0" scaleShape="false" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CustomerMainController">
+<BorderPane maxHeight="720.0" prefHeight="720.0" prefWidth="1024.0" scaleShape="false" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CustomerMainController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
          <items>
-            <Label prefHeight="30.0" prefWidth="250.0" text="Welcome">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Region prefHeight="30.0" prefWidth="50.0" />
-            <CustomTextField prefHeight="30.0" prefWidth="400.0" promptText="Search..." />
-            <FontIcon iconColor="#ff7b00" iconLiteral="fas-search">
+            <Region prefHeight="30.0" prefWidth="300.0" />
+            <CustomTextField fx:id="searchBar" onAction="#handleSearchAndFilter" prefHeight="30.0" prefWidth="400.0" promptText="Search..." />
+            <FontIcon fx:id="searchIcon" iconColor="#ff7b00" iconLiteral="fas-search" onMouseClicked="#handleSearchAndFilter">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -97,26 +91,34 @@
    <left>
    </left>
    <center>
-      <TabPane maxHeight="680.0" maxWidth="1024.0" side="BOTTOM" style="-fx-tab-min-width: 314; -fx-tab-max-width: 500;" styleClass="main-tab-pane" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" maxHeight="680.0" maxWidth="1024.0" side="BOTTOM" styleClass="main-tab-pane" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
-            <Tab closable="false" style="fx-cursor: hand;" text="Main Page">
+            <Tab closable="false" onSelectionChanged="#handleMainPage" style="fx-cursor: hand;" text="Main Page">
                <content>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="680.0" maxWidth="1024.0" prefHeight="655.0" prefWidth="824.0">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="655.0" prefWidth="824.0">
                      <content>
                         <VBox>
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
+                              <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
                                  <children>
-                                    <JFXHamburger fx:id="hamburger" prefHeight="20.0" prefWidth="20.0" />
-                                    <Region fx:id="region" prefHeight="200.0" prefWidth="400.0" />
-                                    <Label fx:id="messageLabel" prefHeight="30.0">
+                                    <JFXHamburger fx:id="hamburger" onMouseClicked="#toggleHamburger" prefHeight="30.0" prefWidth="25.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXHamburger>
+                                    <Region fx:id="region" prefHeight="200.0" prefWidth="410.0" />
+                                    <Label fx:id="messageLabel" prefHeight="30.0" style="-fx-font-weight: bold;">
                                        <graphic>
                                           <FontIcon fx:id="messageIcon" />
                                        </graphic>
                                     </Label>
                                  </children>
                               </HBox>
-                              <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0" />
+                              <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
                            </children>
                         </VBox>
                      </content>
@@ -126,12 +128,31 @@
                   <FontIcon iconLiteral="fas-store-alt" />
                </graphic>
             </Tab>
-            <Tab closable="false" text="Favorite Restaurants">
+            <Tab fx:id="favoritesTab" closable="false" onSelectionChanged="#handleFavoriteRestaurants" text="Favorite Restaurants">
                <content>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
+                  <ScrollPane>
+                     <content>
+                        <VBox alignment="TOP_CENTER" prefWidth="1024.0">
+                           <children>
+                              <Label prefHeight="20.0" text="Favorite Restaurants">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-star" />
+                                 </graphic>
+                              </Label>
+                              <VBox fx:id="favoriteList" alignment="TOP_CENTER">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </VBox>
+                     </content>
                   </ScrollPane>
                </content>
                <graphic>
@@ -142,7 +163,7 @@
       </TabPane>
    </center>
    <left>
-      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="filterPanel" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="300.0" spacing="20.0" visible="false" BorderPane.alignment="CENTER">
          <padding>
             <Insets top="30.0" />
          </padding>
@@ -181,7 +202,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <CustomTextField alignment="CENTER" prefHeight="25.0" prefWidth="80.0" />
+                        <CustomTextField fx:id="minPriceField" alignment="CENTER" prefHeight="25.0" prefWidth="80.0" />
                         <Label layoutX="30.0" layoutY="33.0" text="To: ">
                            <font>
                               <Font name="System Bold" size="16.0" />
@@ -190,7 +211,7 @@
                               <Insets left="25.0" />
                            </padding>
                         </Label>
-                        <CustomTextField alignment="CENTER" layoutX="74.0" layoutY="33.0" prefHeight="25.0" prefWidth="80.0" />
+                        <CustomTextField fx:id="maxPriceField" alignment="CENTER" layoutX="74.0" layoutY="33.0" prefHeight="25.0" prefWidth="80.0" />
                      </children>
                   </HBox>
                </children>
@@ -223,19 +244,19 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <JFXCheckBox checkedColor="#00ff80" text="کباب" textAlignment="CENTER" GridPane.halignment="LEFT" />
-                        <JFXCheckBox checkedColor="#00ff80" text="پلو" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-                        <JFXCheckBox checkedColor="#00ff80" text="خورشت" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-                        <JFXCheckBox checkedColor="#00ff80" text="دریایی" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-                        <JFXCheckBox checkedColor="#00ff80" text="فست فود" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                        <JFXCheckBox checkedColor="#00ff80" text="سوخاری" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                        <JFXCheckBox checkedColor="#00ff80" text="پیتزا" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-                        <JFXCheckBox checkedColor="#00ff80" text="برگر" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+                        <JFXCheckBox fx:id="kababBox" checkedColor="#00ff80" text="کباب" textAlignment="CENTER" GridPane.halignment="LEFT" />
+                        <JFXCheckBox fx:id="poloBox" checkedColor="#00ff80" text="پلو" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                        <JFXCheckBox fx:id="khoreshtBox" checkedColor="#00ff80" text="خورشت" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+                        <JFXCheckBox fx:id="daryaiiBox" checkedColor="#00ff80" text="دریایی" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+                        <JFXCheckBox fx:id="fastFoodBox" checkedColor="#00ff80" text="فست فود" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                        <JFXCheckBox fx:id="sokhariBox" checkedColor="#00ff80" text="سوخاری" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                        <JFXCheckBox fx:id="pizzaBox" checkedColor="#00ff80" text="پیتزا" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+                        <JFXCheckBox fx:id="burgerBox" checkedColor="#00ff80" text="برگر" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
             </VBox>
-            <JFXButton buttonType="RAISED" contentDisplay="RIGHT" prefWidth="150.0" style="-fx-background-color: #ff7600;" text="Apply Filters" textFill="WHITE">
+            <JFXButton buttonType="RAISED" contentDisplay="RIGHT" onAction="#handleSearchAndFilter" prefWidth="150.0" style="-fx-background-color: #ff7600;" text="Apply Filters" textFill="WHITE">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
@@ -258,6 +279,9 @@
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fas-check-square" />
                </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </VBox>

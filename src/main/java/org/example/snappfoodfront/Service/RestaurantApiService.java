@@ -270,6 +270,109 @@ public class RestaurantApiService {
 
     }
 
+    public List<RestaurantDto.Response> getFavoriteRestaurants(String token) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/favorites"))
+                .header("Authorization", "Bearer " + token)
+                .GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<RestaurantDto.Response>>(){}.getType());
+
+    }
+
+    public List<RestaurantDto.Response> searchRestaurants(BuyerDto.ItemSearch requestDto) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/vendors/search"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(requestDto)))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<RestaurantDto.Response>>(){}.getType());
+
+    }
+
+    public List<MenuDto.Response> getRestaurantMenus(Long restaurantId) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/vendors/menus/" + restaurantId.toString()))
+                .GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<MenuDto.Response>>(){}.getType());
+
+    }
+
+    public List<FoodItemDto.Response> getMenuItems(Long menuId) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/menus/" + menuId.toString() + "/items"))
+                .GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<FoodItemDto.Response>>(){}.getType());
+
+    }
+
+    public void addFavoriteRestaurant(String token, Long restaurantId) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/favorites/" + restaurantId.toString()))
+                .header("Authorization", "Bearer " + token)
+                .PUT(HttpRequest.BodyPublishers.noBody()).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+    }
+
+    public void removeFavoriteRestaurant(String token, Long restaurantId) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/favorites/" + restaurantId.toString()))
+                .header("Authorization", "Bearer " + token)
+                .DELETE().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+    }
+
     @Getter
     @AllArgsConstructor
     public static class RestaurantException extends Exception {
