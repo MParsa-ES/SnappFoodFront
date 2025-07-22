@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.example.snappfoodfront.model.BuyerDto;
-import org.example.snappfoodfront.model.ErrorResponseDto;
-import org.example.snappfoodfront.model.MenuDto;
-import org.example.snappfoodfront.model.RestaurantDto;
+import org.example.snappfoodfront.model.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -151,6 +148,23 @@ public class RestaurantApiService {
         }
 
         return gson.fromJson(response.body(), new TypeToken<List<MenuDto.Response>>(){}.getType());
+
+    }
+
+    public List<FoodItemDto.Response> getMenuItems(Long menuId) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/menus/" + menuId.toString() + "/items"))
+                .GET().build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<FoodItemDto.Response>>(){}.getType());
 
     }
 

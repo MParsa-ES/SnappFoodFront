@@ -7,9 +7,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +24,7 @@ import org.example.snappfoodfront.Utils.MainViewState;
 import org.example.snappfoodfront.Utils.Methods;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
+import org.example.snappfoodfront.model.FoodItemDto;
 import org.example.snappfoodfront.model.MenuDto;
 import org.example.snappfoodfront.model.RestaurantDto;
 
@@ -155,7 +158,11 @@ public class RestaurantMainController implements Initializable {
                         }
 
                         menuButton.setSelected(true);
-                        //loadMenuItems(menu.getId());
+                        try {
+                            loadMenuItems(menu.getId());
+                        } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
                     });
                 }
@@ -209,6 +216,61 @@ public class RestaurantMainController implements Initializable {
                 }
             }
         });
+
+    }
+
+    private void loadMenuItems(Long menuId) throws IOException, RestaurantApiService.RestaurantException, InterruptedException {
+
+        new Thread(() -> {
+
+            try{
+
+                final List<FoodItemDto.Response> itemList = restaurantService.getMenuItems(menuId);
+
+                Platform.runLater(() -> {
+
+                    if (itemList.isEmpty()) {
+                        Label errorLabel = new Label("No items found");
+                        errorLabel.setStyle("-fx-text-fill: red;");
+                        foodContainer.getChildren().add(errorLabel);
+                    } else {
+                        listItems(itemList, foodContainer);
+                    }
+
+                });
+
+
+
+
+
+
+            } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+
+    }
+
+    private void listItems(List<FoodItemDto.Response> itemList, VBox foodContainer) {
+
+        for (FoodItemDto.Response item : itemList) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/restaurant-card.fxml"));
+                Node foodCardNode = loader.load();
+                final FoodItemDto.Response currentItem = item;
+
+                FoodCardController cardController = loader.getController();
+                cardController.setData(currentItem);
+
+                foodContainer.getChildren().add(foodCardNode);
+                foodCardNode.setOnMouseClicked(event -> {
+                });
+            } catch (IOException e) {
+                System.err.println("error while loading restaurant's card" + e.getMessage());
+                e.printStackTrace();
+            }
+        }
 
     }
 

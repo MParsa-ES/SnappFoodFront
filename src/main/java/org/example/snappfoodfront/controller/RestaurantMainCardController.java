@@ -16,6 +16,7 @@ public class RestaurantMainCardController {
     @FXML public Label addressLabel;
     @FXML public Label phoneLabel;
 
+
     public void setData(RestaurantDto.Response restaurant) {
         restaurantNameLabel.setText(restaurant.getName());
         addressLabel.setText(restaurant.getAddress());
