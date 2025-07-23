@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<BorderPane prefHeight="720.0" prefWidth="1050.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.OrderManagementController">
+    <top>
+        <VBox>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="header-bar">
+                    <children>
+                        <JFXButton buttonType="RAISED" mnemonicParsing="false" onAction="#handleBackButton" style="-fx-background-color: #ff7600;" text="Back" textFill="WHITE">
+                            <graphic>
+                                <FontIcon iconColor="WHITE" iconLiteral="fas-arrow-left" />
+                            </graphic>
+                        </JFXButton>
+                        <Label styleClass="dashboard-header" text="Order Management" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                    </padding>
+                </HBox>
+                <!-- Filter buttons and search bar -->
+                <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="filter-bar">
+                    <children>
+                        <Label styleClass="filter-label" text="Status:" />
+                        <ToggleButton fx:id="allFilterButton" mnemonicParsing="false" selected="true" styleClass="filter-button" text="All">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="statusToggleGroup" />
+                            </toggleGroup>
+                        </ToggleButton>
+                        <ToggleButton fx:id="pendingFilterButton" mnemonicParsing="false" styleClass="filter-button" text="Pending" toggleGroup="$statusToggleGroup" />
+                        <ToggleButton fx:id="acceptedFilterButton" mnemonicParsing="false" styleClass="filter-button" text="Accepted" toggleGroup="$statusToggleGroup" />
+                        <ToggleButton fx:id="readyFilterButton" mnemonicParsing="false" styleClass="filter-button" text="Ready for Courier" toggleGroup="$statusToggleGroup" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <!-- Search field added to handle the 'search' query -->
+                        <HBox alignment="CENTER_LEFT" styleClass="search-box">
+                            <children>
+                                <TextField fx:id="searchTextField" prefWidth="300.0" promptText="Search by Customer, Courier..." />
+                                <FontIcon fx:id="searchButton" iconLiteral="fas-search" onMouseClicked="#handleSearch" />
+                            </children>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="ordersTableView" styleClass="modern-table-view" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="orderIdColumn" prefWidth="100.0" text="Order ID" />
+                <TableColumn fx:id="customerColumn" prefWidth="200.0" text="Customer" />
+                <TableColumn fx:id="timeColumn" prefWidth="150.0" text="Order Time" />
+                <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Total Price" />
+                <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Status" />
+                <TableColumn fx:id="actionsColumn" prefWidth="250.0" text="Actions" />
+            </columns>
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+</BorderPane>
