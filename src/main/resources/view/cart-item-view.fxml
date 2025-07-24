@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10.0" style="-fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CartItemCardController">
+    <children>
+        <Label fx:id="foodNameLabel" prefWidth="150.0" text="Food Name" />
+        <JFXButton fx:id="decrementButton" onAction="#handleDecrement" prefWidth="25.0" style="-fx-background-color: #ff7600;" text="-" textFill="WHITE" />
+        <TextField fx:id="quantityField" alignment="CENTER" editable="false" prefWidth="40.0" text="1" />
+        <JFXButton fx:id="incrementButton" buttonType="RAISED" onAction="#handleIncrement" prefWidth="25.0" style="-fx-background-color: #ff7600;" text="+" textFill="WHITE" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="totalPriceLabel" text="150,000 T" />
+        <JFXButton fx:id="removeButton" buttonType="RAISED" onAction="#handleRemove" style="-fx-background-color: #e74c3c;" textFill="WHITE">
+            <graphic>
+                <FontIcon iconColor="WHITE" iconLiteral="fas-trash" />
+            </graphic>
+         <ripplerFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" green="0.949999988079071" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </ripplerFill>
+        </JFXButton>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+    </padding>
+</HBox>

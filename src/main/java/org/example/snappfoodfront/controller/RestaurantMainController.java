@@ -19,11 +19,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import org.example.snappfoodfront.Service.OrderApiService;
 import org.example.snappfoodfront.Service.RestaurantApiService;
-import org.example.snappfoodfront.Utils.MainViewState;
-import org.example.snappfoodfront.Utils.Methods;
-import org.example.snappfoodfront.Utils.SceneManager;
-import org.example.snappfoodfront.Utils.TokenManager;
+import org.example.snappfoodfront.Utils.*;
 import org.example.snappfoodfront.model.FoodItemDto;
 import org.example.snappfoodfront.model.MenuDto;
 import org.example.snappfoodfront.model.RestaurantDto;
@@ -37,6 +35,7 @@ import java.util.ResourceBundle;
 public class RestaurantMainController implements Initializable {
 
 
+    @FXML public Label walletLabel;
     @FXML public JFXButton goBackButton;
     @FXML public JFXButton logoutButton;
     @FXML public ImageView logoImageView;
@@ -49,11 +48,13 @@ public class RestaurantMainController implements Initializable {
     @FXML public JFXButton favoriteButton;
 
     private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
+    private static final String FOOD_MAIN_VIEW_PATH = "/view/food-main-view.fxml";
 
     private RestaurantDto.Response restaurant;
     private boolean isFavorite;
 
     private final RestaurantApiService restaurantService = new RestaurantApiService();
+    private final OrderApiService orderService = new OrderApiService();
 
     public class MenuButton extends JFXButton {
 
@@ -104,6 +105,7 @@ public class RestaurantMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        setWalletBalance();
         restaurant = MainViewState.getSelectedRestaurant();
         try {
             loadRestaurantDetails(restaurant);
@@ -242,11 +244,6 @@ public class RestaurantMainController implements Initializable {
 
                 });
 
-
-
-
-
-
             } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -257,30 +254,58 @@ public class RestaurantMainController implements Initializable {
 
     private void listItems(List<FoodItemDto.Response> itemList, VBox foodContainer) {
 
-        for (FoodItemDto.Response item : itemList) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/food-card.fxml"));
-                Node foodCardNode = loader.load();
-                final FoodItemDto.Response currentItem = item;
+        Platform.runLater(() -> {
+            for (FoodItemDto.Response item : itemList) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/food-card.fxml"));
+                    Node foodCardNode = loader.load();
+                    final FoodItemDto.Response currentItem = item;
 
-                FoodCardController cardController = loader.getController();
-                cardController.setData(currentItem);
+                    FoodCardController cardController = loader.getController();
+                    cardController.setData(currentItem);
 
-                foodContainer.getChildren().add(foodCardNode);
-                foodCardNode.setOnMouseClicked(event -> {
-                });
-            } catch (IOException e) {
-                System.err.println("error while loading restaurant's card" + e.getMessage());
-                e.printStackTrace();
+                    foodContainer.getChildren().add(foodCardNode);
+                    foodCardNode.setOnMouseClicked(event -> {
+                        foodItemClicked(currentItem);
+                    });
+                } catch (IOException e) {
+                    System.err.println("error while loading restaurant's card" + e.getMessage());
+                    e.printStackTrace();
+                }
             }
-        }
+        });
 
+    }
+
+    private void foodItemClicked(FoodItemDto.Response foodItem) {
+
+        MainViewState.selectedFoodItem = foodItem;
+        MainViewState.cameFromFavorites = isFavorite;
+        SceneManager.closeCurrentStage(foodContainer);
+        SceneManager.showWindow(FOOD_MAIN_VIEW_PATH, "SnappFood", foodItem.getName(), 1024, 720);
+    }
+
+    private void setWalletBalance() {
+        try {
+            CartManager.setWalletBalance(orderService.getWalletBalance(TokenManager.getToken()));
+            Platform.runLater(() -> {
+                walletLabel.setText("Wallet Balance: " + CartManager.getWalletBalance() + " T");
+            });
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            Platform.runLater(() -> walletLabel.setText(e.getMessage()));
+        }
     }
 
     @FXML
     protected void goBack(ActionEvent event) throws IOException {
         SceneManager.closeCurrentStage(goBackButton);
         SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+    }
+
+    @FXML
+    protected void logout(ActionEvent event) throws IOException {
+        SceneManager.logout(logoutButton);
     }
 
 }

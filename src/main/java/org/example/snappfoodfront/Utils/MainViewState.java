@@ -3,6 +3,7 @@ package org.example.snappfoodfront.Utils;
 import javafx.fxml.FXML;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.snappfoodfront.model.FoodItemDto;
 import org.example.snappfoodfront.model.RestaurantDto;
 
 import java.util.HashSet;
@@ -35,6 +36,9 @@ public class MainViewState {
     @Getter
     @Setter
     public static Set<Long> favoriteRestaurantIds = new HashSet<>();
+    @Getter
+    @Setter
+    public static FoodItemDto.Response selectedFoodItem;
 
     public static void saveState(String searchTerm, Integer minPrice, Integer maxPrice, List<String> keywords) {
         lastSearchTerm = searchTerm;

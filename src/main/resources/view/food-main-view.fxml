@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXScrollPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.FoodMainController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+         <items>
+            <Label fx:id="walletLabel" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Region prefHeight="30.0" prefWidth="565.0" />
+            <JFXButton buttonType="RAISED" contentDisplay="RIGHT" onAction="#handleCartShow" style="-fx-background-color: #ff7600;" text="Cart" textFill="WHITE">
+               <ripplerFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.6000000238418579" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </ripplerFill>
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-shopping-cart" text="" />
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="goBackButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goBack" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Go Back">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-arrow-alt-circle-left" />
+               </graphic>
+               <ripplerFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.10000000149011612" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color green="0.8333333134651184" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </ripplerFill>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </items>
+      </ToolBar>
+   </top>
+   <center>
+      <JFXScrollPane BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="1024.0" spacing="15.0" style="-fx-background-color: white;" stylesheets="@../css/styles.css">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <StackPane alignment="TOP_RIGHT">
+                           <children>
+                              <ImageView fx:id="logoImageView" fitHeight="130.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </StackPane>
+                        <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label fx:id="foodNameLabel" styleClass="card-title" text="Food Name" />
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                 <children>
+                                    <FontIcon iconColor="#6b6b6b" iconLiteral="fas-tag" />
+                                    <Label styleClass="card-subtitle" text="Price: " />
+                                    <Label fx:id="priceLabel" text="priceLabel">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font></Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                 <children>
+                                    <FontIcon iconColor="#6b6b6b" iconLiteral="fas-shopping-basket" />
+                                    <Label styleClass="card-subtitle" text="Supply: " />
+                                    <Label fx:id="supplyLabel" text="Label">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font></Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="76.0" spacing="5.0">
+                                 <children>
+                                    <FontIcon iconColor="#6b6b6b" iconLiteral="fas-info" iconSize="14" />
+                                    <Label styleClass="card-subtitle" text="Description: " />
+                                    <Label fx:id="descriptionLabel" text="Label" wrapText="true">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font></Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <JFXButton fx:id="decreaseButton" buttonType="RAISED" onAction="#handleRemoveFood" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #ff7600;" text="-" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                       <ripplerFill>
+                                          <LinearGradient endX="1.0" endY="1.0">
+                                             <stops>
+                                                <Stop>
+                                                   <color>
+                                                      <Color red="1.0" />
+                                                   </color>
+                                                </Stop>
+                                                <Stop offset="0.9932885906040269">
+                                                   <color>
+                                                      <Color />
+                                                   </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                   <color>
+                                                      <Color />
+                                                   </color>
+                                                </Stop>
+                                             </stops>
+                                          </LinearGradient>
+                                       </ripplerFill>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXButton>
+                                    <TextField fx:id="numLabel" alignment="CENTER" editable="false" prefWidth="40.0" text="0" />
+                                    <JFXButton fx:id="increaseButton" buttonType="RAISED" onAction="#handleAddFood" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #ff7600;" text="+" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <ripplerFill>
+                                          <LinearGradient endX="1.0" endY="1.0">
+                                             <stops>
+                                                <Stop>
+                                                   <color>
+                                                      <Color green="1.0" blue="0.05000000074505806" />
+                                                   </color>
+                                                </Stop>
+                                                <Stop offset="1.0">
+                                                   <color>
+                                                      <Color red="1.0" green="1.0" blue="1.0" />
+                                                   </color>
+                                                </Stop>
+                                             </stops>
+                                          </LinearGradient>
+                                       </ripplerFill>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </JFXButton>
+                                    <JFXButton fx:id="addButton" buttonType="RAISED" onAction="#handleAddToCart" style="-fx-background-color: #ff7600;" text="Add to Cart" textFill="WHITE">
+                                       <HBox.margin>
+                                          <Insets left="50.0" />
+                                       </HBox.margin>
+                                       <graphic>
+                                          <FontIcon iconColor="WHITE" iconLiteral="fas-cart-plus" />
+                                       </graphic>
+                                    </JFXButton>
+                                    <Region prefHeight="30.0" prefWidth="500.0" />
+                                    <Label fx:id="ratingLabel" contentDisplay="RIGHT" text="Rating">
+                                       <graphic>
+                                          <FontIcon iconColor="#ffe100" iconLiteral="fas-star" />
+                                       </graphic>
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <ScrollPane hbarPolicy="NEVER">
+                     <content>
+                        <VBox fx:id="commentContainer" prefHeight="475.0" prefWidth="1024.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </JFXScrollPane>
+   </center>
+</BorderPane>

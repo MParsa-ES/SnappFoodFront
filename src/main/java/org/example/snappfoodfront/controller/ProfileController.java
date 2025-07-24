@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -52,6 +53,8 @@ public class ProfileController implements Initializable {
     @FXML public Label errorLabel;
     @FXML public JFXButton goBackButton;
     @FXML public JFXButton logoutButton;
+    @FXML public Region region;
+    @FXML public JFXButton balanceButton;
 
     private final ProfileApiService profileService = new ProfileApiService();
 
@@ -69,6 +72,7 @@ public class ProfileController implements Initializable {
 
     private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
     private static final String SELLER_MAIN_VIEW_PATH = "/view/SellerViews/seller-main-view.fxml";
+    private static final String WALLET_TOPUP_VIEW_PATH = "/view/wallet-topup-view.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,45 +86,58 @@ public class ProfileController implements Initializable {
                 oldPhone = profileDto.getPhone();
                 profileImageBase64 = profileDto.getProfileImageBase64();
                 Image profileImage = Methods.convertToImage(profileImageBase64);
-                imageView.setFill(new ImagePattern(profileImage));
-                fullNameField.setText(profileDto.getFull_name());
-                phoneField.setText(profileDto.getPhone());
-                String role = profileDto.getRole();
-                roleField.setText(profileDto.getRole());
-                if (profileDto.getEmail() != null) {
-                    emailField.setText(profileDto.getEmail());
-                }
-                switch (role) {
-                    case "BUYER":
-                        addressField.setVisible(true);
-                        addressField.setManaged(true);
-                        addressField.setText(profileDto.getAddress());
+                Platform.runLater(() -> {
+                    imageView.setFill(new ImagePattern(profileImage));
+                    fullNameField.setText(profileDto.getFull_name());
+                    phoneField.setText(profileDto.getPhone());
+                    String role = profileDto.getRole();
+                    roleField.setText(profileDto.getRole());
+                    if (profileDto.getEmail() != null) {
+                        emailField.setText(profileDto.getEmail());
+                    }
+                    switch (role) {
+                        case "BUYER":
+                            balanceButton.setVisible(true);
+                            balanceButton.setManaged(true);
 
-                        bankInfo.setVisible(false);
-                        bankInfo.setManaged(false);
-                        break;
+                            addressField.setVisible(true);
+                            addressField.setManaged(true);
+                            addressField.setText(profileDto.getAddress());
 
-                    case "COURIER":
-                        addressField.setVisible(false);
-                        addressField.setManaged(false);
+                            bankInfo.setVisible(false);
+                            bankInfo.setManaged(false);
+                            break;
 
-                        bankInfo.setVisible(true);
-                        bankInfo.setManaged(true);
-                        bankNameField.setText(profileDto.getBank_info().getBank_name());
-                        accountNumberField.setText(profileDto.getBank_info().getAccount_number());
-                        break;
+                        case "COURIER":
+                            balanceButton.setVisible(false);
+                            balanceButton.setManaged(false);
+                            region.setPrefWidth(600);
 
-                    case "SELLER":
-                        addressField.setVisible(true);
-                        addressField.setManaged(true);
-                        addressField.setText(profileDto.getAddress());
+                            addressField.setVisible(false);
+                            addressField.setManaged(false);
 
-                        bankInfo.setVisible(true);
-                        bankInfo.setManaged(true);
-                        bankNameField.setText(profileDto.getBank_info().getBank_name());
-                        accountNumberField.setText(profileDto.getBank_info().getAccount_number());
-                        break;
-                }
+                            bankInfo.setVisible(true);
+                            bankInfo.setManaged(true);
+                            bankNameField.setText(profileDto.getBank_info().getBank_name());
+                            accountNumberField.setText(profileDto.getBank_info().getAccount_number());
+                            break;
+
+                        case "SELLER":
+                            balanceButton.setVisible(false);
+                            balanceButton.setManaged(false);
+                            region.setPrefWidth(600);
+
+                            addressField.setVisible(true);
+                            addressField.setManaged(true);
+                            addressField.setText(profileDto.getAddress());
+
+                            bankInfo.setVisible(true);
+                            bankInfo.setManaged(true);
+                            bankNameField.setText(profileDto.getBank_info().getBank_name());
+                            accountNumberField.setText(profileDto.getBank_info().getAccount_number());
+                            break;
+                    }
+                });
             } catch (AuthApiService.AuthException e) {
                 e.printStackTrace();
             } catch (IOException | InterruptedException e) {
@@ -174,6 +191,13 @@ public class ProfileController implements Initializable {
             }
 
         }).start();
+
+    }
+
+    @FXML
+    protected void handleTopUp(ActionEvent event) throws AuthApiService.AuthException, IOException, InterruptedException {
+
+        SceneManager.showWindow(WALLET_TOPUP_VIEW_PATH, "Add Balance", "Balance", 600, 400);
 
     }
 

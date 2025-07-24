@@ -18,13 +18,18 @@
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantMainController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
          <items>
-            <Region prefHeight="30.0" prefWidth="300.0" />
+            <Label fx:id="walletLabel" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
             <Region prefHeight="30.0" prefWidth="550.0" />
             <JFXButton fx:id="goBackButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goBack" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Go Back">
                <graphic>
@@ -50,7 +55,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="logoutButton" buttonType="RAISED" contentDisplay="RIGHT" layoutX="872.0" layoutY="13.0" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Logout">
+            <JFXButton fx:id="logoutButton" buttonType="RAISED" contentDisplay="RIGHT" layoutX="872.0" layoutY="13.0" onAction="#logout" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Logout">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" />
                </graphic>
@@ -82,7 +87,7 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="160.0" prefWidth="1024.0" spacing="15.0" style="-fx-background-color: white;" stylesheets="@../css/styles.css">
+                  <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white;" stylesheets="@../css/styles.css">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>

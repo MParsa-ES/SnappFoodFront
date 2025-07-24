@@ -7,7 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import org.example.snappfoodfront.Service.AuthApiService;
+import org.example.snappfoodfront.Service.OrderApiService;
 import org.example.snappfoodfront.Service.ProfileApiService;
+import org.example.snappfoodfront.Utils.CartManager;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.ProfileDto;
@@ -22,7 +24,6 @@ public class SplashScreenController implements Initializable {
     @FXML public ProgressBar progressBar;
     @FXML public Label statusLabel;
 
-    private final AuthApiService authService = new AuthApiService();
     private final ProfileApiService profileService = new ProfileApiService();
 
     private static final String LOGIN_VIEW_PATH = "/view/login-view.fxml";

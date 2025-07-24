@@ -20,7 +20,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import org.controlsfx.control.textfield.CustomTextField;
+import org.example.snappfoodfront.Service.AuthApiService;
+import org.example.snappfoodfront.Service.OrderApiService;
+import org.example.snappfoodfront.Service.ProfileApiService;
 import org.example.snappfoodfront.Service.RestaurantApiService;
+import org.example.snappfoodfront.Utils.CartManager;
 import org.example.snappfoodfront.Utils.MainViewState;
 import org.example.snappfoodfront.Utils.SceneManager;
 import org.example.snappfoodfront.Utils.TokenManager;
@@ -40,6 +44,8 @@ public class CustomerMainController implements Initializable {
     private static final String PROFILE_VIEW_PATH = "/view/profile-view.fxml";
 
     private final RestaurantApiService restaurantService = new RestaurantApiService();
+    private final OrderApiService orderService = new OrderApiService();
+    private final ProfileApiService profileService = new ProfileApiService();
 
     @FXML public JFXButton profileButton;
     @FXML public JFXButton logoutButton;
@@ -65,12 +71,20 @@ public class CustomerMainController implements Initializable {
     @FXML public JFXCheckBox sokhariBox;
     @FXML public JFXCheckBox pizzaBox;
     @FXML public JFXCheckBox burgerBox;
+    @FXML public Label walletLabel;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        String token = TokenManager.getToken();
+        try {
+            CartManager.setBuyerAddress(profileService.getProfile(token).getAddress());
+        } catch (IOException | InterruptedException | AuthApiService.AuthException e) {
+            e.printStackTrace();
+        }
         getFavoriteRestaurantIds();
+        setWalletBalance();
 
         if (MainViewState.cameFromFavorites) {
 
@@ -362,6 +376,17 @@ public class CustomerMainController implements Initializable {
             searchIcon.setDisable(false);
             loadAllRestaurants();
         });
+    }
+    private void setWalletBalance() {
+        try {
+            CartManager.setWalletBalance(orderService.getWalletBalance(TokenManager.getToken()));
+            Platform.runLater(() -> {
+                walletLabel.setText("Wallet Balance: " + CartManager.getWalletBalance() + " T");
+            });
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            Platform.runLater(() -> walletLabel.setText(e.getMessage()));
+        }
     }
 
     private void getFavoriteRestaurantIds() {
