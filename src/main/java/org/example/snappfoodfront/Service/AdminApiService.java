@@ -4,17 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.example.snappfoodfront.model.AdminDto;
-import org.example.snappfoodfront.model.ErrorResponseDto;
-import org.example.snappfoodfront.model.MessageDto;
-import org.example.snappfoodfront.model.UserLoginDto;
+import org.example.snappfoodfront.model.*;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdminApiService {
 
@@ -74,6 +73,55 @@ public class AdminApiService {
         }
 
         return gson.fromJson(response.body(), MessageDto.class);
+    }
+
+    public List<OrderDto.OrderResponse> getAllOrders(String token, String search, String vendor, String courier, String customer, String status) throws InterruptedException, IOException, AdminException {
+
+        StringBuilder uri = new StringBuilder(SERVER_URL + "/admin/orders");
+
+        Map<String, String> params = new HashMap<>();
+
+        if (search != null && !search.isEmpty()) {
+            params.put("search", search);
+
+        }
+        if (vendor != null && !vendor.isEmpty()) {
+            params.put("vendor", vendor);
+        }
+        if (courier != null && !courier.isEmpty()) {
+            params.put("courier", courier);
+        }
+        if (customer != null && !customer.isEmpty()) {
+            params.put("customer", customer);
+        }
+        if (status != null && !status.isEmpty()) {
+            params.put("status", status);
+        }
+
+        if (!params.isEmpty()) {
+            uri.append("?");
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                uri.append("&").append(entry.getKey()).append("=").append(entry.getValue());
+            }
+        }
+
+        System.out.println(uri);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri.toString()))
+                .GET()
+                .header("Authorization", "Bearer " + token).build();
+
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AdminException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<>() {});
+
     }
 
     @Getter

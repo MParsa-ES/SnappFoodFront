@@ -49,7 +49,12 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     void handleOrdersNav(ActionEvent event) {
-
+        try {
+            SceneManager.switchCenterPane(contentArea, "AdminViews/admin-order-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading order list view :" + e.getMessage());
+        }
     }
 
     @FXML

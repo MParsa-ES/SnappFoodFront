@@ -160,7 +160,7 @@ public class UserManagementController implements Initializable {
     private void showFeedback(String message, boolean isError) {
         feedbackLabel.setText(message);
         feedbackBox.getStyleClass().removeAll("feedback-box-success", "feedback-box-error");
-        feedbackBox.getStyleClass().add(isError ? "feedback-box-error" : "feedback-box-error");
+        feedbackBox.getStyleClass().add(isError ? "feedback-box-error" : "feedback-box-success");
         feedbackBox.setVisible(true);
         feedbackBox.setManaged(true);
     }

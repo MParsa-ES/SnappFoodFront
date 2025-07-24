@@ -879,14 +879,38 @@
 }
 
 
-/* --- User Management Table Buttons --- */
+/* =================================================================
+   User Management Table Button Styles (for JFXButton)
+   ================================================================= */
+
+.accept-button {
+    -fx-background-color: #10b981; /* Green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.reject-button {
+    -fx-background-color: #e74c3c; /* Red */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
 .pending-button {
     -fx-background-color: #f39c12; /* A warning yellow/orange */
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
+
 .delete-button {
-    -fx-background-color: #e74c3c; /* Standard red for delete */
+    -fx-background-color: #95a5a6; /* A neutral grey for a less prominent action */
     -fx-text-fill: white;
     -fx-font-weight: bold;
+}
+
+/* This rule keeps the button text white when a table row is selected */
+.table-row-cell:selected .jfx-button .text {
+    -fx-fill: white;
+}
+.modern-table-view .table-cell {
+    -fx-alignment: center;
 }
