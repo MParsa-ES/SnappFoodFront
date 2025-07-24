@@ -1,20 +1,28 @@
 package org.example.snappfoodfront.controller;
 
 import javafx.application.Platform;
+import javafx.beans.value.ObservableSetValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import org.example.snappfoodfront.Service.AdminApiService;
+import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.TokenManager;
+import org.example.snappfoodfront.model.FoodItemDto;
 import org.example.snappfoodfront.model.OrderDto;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AdminOrderOverviewController implements Initializable {
@@ -69,6 +77,7 @@ public class AdminOrderOverviewController implements Initializable {
 
 
     private final AdminApiService adminApiService = new AdminApiService();
+    private final RestaurantApiService restaurantApiService = new RestaurantApiService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -174,6 +183,7 @@ public class AdminOrderOverviewController implements Initializable {
                             break;
                     }
                     setGraphic(statusBadge);
+                    setAlignment(Pos.CENTER);
                 }
             }
         });
@@ -190,8 +200,43 @@ public class AdminOrderOverviewController implements Initializable {
 
             private void showOrderDetails() {
                 OrderDto.OrderResponse order = getTableView().getItems().get(getIndex());
-                // TODO: Implement the details dialog logic, similar to the seller's order view.
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Showing details for Order #" + order.getId());
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Order Details");
+                alert.setHeaderText("Items for order " + order.getId());
+                ListView<String> items = new ListView<>();
+                items.getItems().add("Loading items...");
+                alert.getDialogPane().setContent(items);
+
+                new Thread(() -> {
+                    try {
+                        List<FoodItemDto.Response> allFoodItems = restaurantApiService.getAllFoodItems(TokenManager.getToken(), order.getVendor_id());
+                        Map<Long, String> itemsMap = new HashMap<>();
+
+                        for (FoodItemDto.Response foodItem : allFoodItems  ) {
+                            itemsMap.put(foodItem.getId(), foodItem.getName());
+                        }
+
+                        ObservableList<String> itemNames = FXCollections.observableArrayList();
+
+                        for (Long itemId : order.getItem_ids()) {
+                            itemNames.add(itemsMap.get(itemId));
+                        }
+
+                        Platform.runLater(() -> {
+                            items.setItems(itemNames);
+                        });
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Error while displaying food items for this order :" + e.getMessage());
+                        Platform.runLater(() -> {
+                            items.getItems().setAll("Failed to Load Food...");
+                        });
+                    }
+                }).start();
+
                 alert.showAndWait();
             }
 
@@ -202,6 +247,7 @@ public class AdminOrderOverviewController implements Initializable {
                     setGraphic(null);
                 } else {
                     setGraphic(detailsBtn);
+                    setAlignment(Pos.CENTER);
                 }
             }
         };
