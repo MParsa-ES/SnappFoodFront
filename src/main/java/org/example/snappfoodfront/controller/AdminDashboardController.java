@@ -44,7 +44,12 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     void handleCouponsNav(ActionEvent event) {
-
+        try {
+            SceneManager.switchCenterPane(contentArea, "AdminViews/coupon-management-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading coupon list view :" + e.getMessage());
+        }
     }
 
     @FXML

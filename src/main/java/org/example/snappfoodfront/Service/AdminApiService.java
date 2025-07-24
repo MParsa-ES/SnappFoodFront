@@ -1,9 +1,11 @@
 package org.example.snappfoodfront.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.snappfoodfront.Utils.LocalDateAdapter;
 import org.example.snappfoodfront.model.*;
 
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +21,7 @@ import java.util.Map;
 public class AdminApiService {
 
     private final HttpClient client = HttpClient.newHttpClient();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
     private final String SERVER_URL = "http://localhost:8080";
 
 
@@ -116,6 +119,59 @@ public class AdminApiService {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AdminException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<>() {});
+
+    }
+
+    public List<CouponDto.Response> getAllCoupons(String token) throws InterruptedException, IOException, AdminException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/admin/coupons"))
+                .GET()
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AdminException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<>() {});
+    }
+
+    public MessageDto deleteCoupon(String token, Long couponId) throws InterruptedException, IOException, AdminException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/admin/coupons/" + couponId))
+                .DELETE()
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AdminException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), MessageDto.class);
+    }
+
+    public CouponDto.Response createCoupon(String token, CouponDto.Request couponCreateRequest) throws InterruptedException, IOException, AdminException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/admin/coupons"))
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(couponCreateRequest)))
+                .header("content-type", "application/json")
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 201) {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
             throw new AdminException(errorResponseDto);
         }

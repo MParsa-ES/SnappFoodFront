@@ -914,3 +914,49 @@
 .modern-table-view .table-cell {
     -fx-alignment: center;
 }
+
+/* =================================================================
+   Table View & Icon Button Styles
+   ================================================================= */
+
+/* This rule centers the content of all cells in your modern table */
+.modern-table-view .table-cell {
+    -fx-alignment: center;
+}
+
+/* FIX: This new rule centers the text inside all column headers */
+.modern-table-view .column-header .label {
+    -fx-alignment: center;
+}
+
+/* Icon buttons now have a transparent background by default */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%; /* Makes the button round */
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+}
+/* FIX: The grey background is now slightly darker and more noticeable on hover */
+.icon-button:hover {
+    -fx-background-color: #dadedf;
+}
+.icon-button .ikonli-font-icon {
+    -fx-icon-color: #2c3e50; /* Dark icon color */
+    -fx-icon-size: 14;
+}
+
+/* A specific style for dangerous actions like deleting */
+.icon-button-danger:hover {
+    -fx-background-color: #e74c3c; /* Red background on hover */
+}
+.icon-button-danger:hover .ikonli-font-icon {
+    -fx-icon-color: white; /* White icon on hover */
+}
+
+/* This rule keeps the button's icon from changing color on selection */
+.table-row-cell:selected .icon-button .ikonli-font-icon {
+    -fx-icon-color: #2c3e50;
+}
+.table-row-cell:selected .icon-button-danger:hover .ikonli-font-icon {
+    -fx-icon-color: white;
+}
