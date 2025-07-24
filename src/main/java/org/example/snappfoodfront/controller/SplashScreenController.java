@@ -87,13 +87,13 @@ public class SplashScreenController implements Initializable {
                         try {
                             ProfileDto profile = profileService.getProfile(TokenManager.getToken());
 
-                            if (profile.getRole().equals("BUYER")) {
-                                SceneManager.showWindow("/view/customer-main-view.fxml","SnappFood","customer", 1024,720);
-                            } else if (profile.getRole().equals("SELLER")) {
-                                SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml","SnappFood","seller", 1024,720);
-
-                            } else {
-                                SceneManager.showWindow(DASHBOARD_VIEW_PATH,"SnappFood","dashboard", 1024,720);
+                            switch (profile.getRole()) {
+                                case "BUYER" ->
+                                        SceneManager.showWindow("/view/customer-main-view.fxml", "SnappFood", "customer", 1050, 720);
+                                case "SELLER" ->
+                                        SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "seller", 1050, 720);
+                                case "ADMIN" ->
+                                        SceneManager.showWindow("/view/AdminViews/admin-dashboard-view.fxml", "SnappFood", "admin dashboard", 1050, 720);
                             }
 
                         } catch (Exception e) {
