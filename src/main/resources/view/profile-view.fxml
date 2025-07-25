@@ -31,7 +31,31 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Region prefHeight="30.0" prefWidth="600.0" />
+            <Region fx:id="region" prefHeight="30.0" prefWidth="500.0" />
+            <JFXButton fx:id="balanceButton" buttonType="RAISED" contentDisplay="RIGHT" layoutX="808.0" layoutY="13.0" onAction="#handleTopUp" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Add Balance">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-wallet" />
+               </graphic>
+               <ripplerFill>
+                  <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.9714285731315613" green="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.21666666865348816" green="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </ripplerFill>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
             <JFXButton fx:id="goBackButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goBack" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Go Back">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fas-arrow-circle-left" />

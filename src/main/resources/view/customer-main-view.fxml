@@ -29,14 +29,18 @@
    <top>
       <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
          <items>
-            <Region prefHeight="30.0" prefWidth="300.0" />
+            <Label fx:id="walletLabel" prefHeight="30.0" prefWidth="300.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
             <CustomTextField fx:id="searchBar" onAction="#handleSearchAndFilter" prefHeight="30.0" prefWidth="400.0" promptText="Search..." />
             <FontIcon fx:id="searchIcon" iconColor="#ff7b00" iconLiteral="fas-search" onMouseClicked="#handleSearchAndFilter">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </FontIcon>
-            <Region prefHeight="30.0" prefWidth="130.0" />
+            <Region prefHeight="30.0" prefWidth="140.0" />
             <JFXButton fx:id="profileButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goToProfile" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Profile">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fas-user-circle" text="" />
@@ -114,11 +118,11 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </VBox>
+                              <ScrollPane fitToWidth="true">
+                                 <content>
+                                    <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0" />
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </VBox>
                      </content>

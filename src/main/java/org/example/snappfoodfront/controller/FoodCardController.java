@@ -23,7 +23,7 @@ public class FoodCardController {
     public void setData(FoodItemDto.Response response) {
 
         foodNameLabel.setText(response.getName());
-        priceLabel.setText(String.valueOf(response.getPrice()));
+        priceLabel.setText(String.valueOf(response.getPrice()) + " T");
         supplyLabel.setText(String.valueOf(response.getSupply()));
         ratingLabel.setText(String.valueOf(response.getRating()));
 

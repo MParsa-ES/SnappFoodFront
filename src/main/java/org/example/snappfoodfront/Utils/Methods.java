@@ -1,12 +1,15 @@
 package org.example.snappfoodfront.Utils;
 
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.Base64;
+import java.util.Locale;
 import java.util.function.UnaryOperator;
 
 public class Methods {
@@ -24,6 +27,39 @@ public class Methods {
 
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         field.setTextFormatter(textFormatter);
+    }
+
+    public static void applyThousandSeparator(TextField textField) {
+
+        filterPhoneField(textField);
+
+        final ChangeListener<String> listener = new ChangeListener<>() {
+            @Override
+            public void changed(javafx.beans.value.ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+                textField.textProperty().removeListener(this);
+
+                String cleanText = newValue.replaceAll("[,]", "");
+
+                if (!cleanText.isEmpty()) {
+                    try {
+                        long value = Long.parseLong(cleanText);
+                        NumberFormat formatter = NumberFormat.getInstance(Locale.US);
+                        String formattedText = formatter.format(value);
+                        textField.setText(formattedText);
+                        textField.positionCaret(formattedText.length());
+                    } catch (NumberFormatException e) {
+                        textField.setText(oldValue);
+                    }
+                } else {
+                    textField.clear();
+                }
+
+                textField.textProperty().addListener(this);
+            }
+        };
+
+        textField.textProperty().addListener(listener);
     }
 
     public static Image convertToImage(String base64String) {

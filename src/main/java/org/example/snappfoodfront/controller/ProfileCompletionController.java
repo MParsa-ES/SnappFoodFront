@@ -40,7 +40,8 @@ public class ProfileCompletionController implements Initializable {
 
     private final AuthApiService authService = new AuthApiService();
 
-    private static final String DASHBOARD_VIEW_PATH = "/view/customer-main-view.fxml";
+    private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
+    private static final String DASHBOARD_VIEW_PATH = "/view/SellerViews/seller-main-view.fxml";
 
     private String fullName;
     private String email;

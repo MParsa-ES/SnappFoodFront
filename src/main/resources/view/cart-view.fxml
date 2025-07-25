@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="650.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CartController">
+    <top>
+        <ToolBar prefHeight="40.0" BorderPane.alignment="CENTER">
+            <items>
+                <Label text="Your Shopping Cart">
+                    <font><Font name="System Bold" size="18.0" /></font>
+                </Label>
+            </items>
+         <padding>
+            <Insets left="120.0" />
+         </padding>
+        </ToolBar>
+    </top>
+    <center>
+      <VBox>
+         <children>
+              <ScrollPane fitToHeight="true" fitToWidth="true">
+                  <content>
+                      <VBox fx:id="cartItemsContainer" prefHeight="390.0" prefWidth="400.0" spacing="5.0">
+                          <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                      </VBox>
+                  </content>
+              </ScrollPane>
+         </children>
+      </VBox>
+    </center>
+    <bottom>
+        <VBox alignment="CENTER" prefHeight="220.0" spacing="10.0" style="-fx-border-color: #c0c0c0; -fx-border-width: 1 0 0 0;">
+            <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="couponField" promptText="Coupon Code">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <JFXButton buttonType="RAISED" onAction="#checkCoupon" style="-fx-background-color: #2ecc71;" text="Submit" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <Label fx:id="messageLabel" text="Label">
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <GridPane alignment="CENTER_LEFT" prefHeight="30.0" VBox.vgrow="NEVER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Additional Fee:  ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="additionalLabel" text="10000 T" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Tax Fee:  ">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="taxLabel" text="5000 T" />
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </HBox>
+               </children>
+            </GridPane>
+                <Label fx:id="totalPriceLabel" text="Total: 0 T">
+                    <font><Font name="System Bold" size="16.0" /></font>
+                </Label>
+            <HBox prefHeight="30.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <JFXComboBox fx:id="methodBox" prefWidth="150.0" promptText="Payment Method" visibleRowCount="2" />
+                      <JFXButton fx:id="placeOrderButton" onAction="#handlePlaceOrder" prefWidth="200.0" style="-fx-background-color: #2ecc71;" text="Place Order" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+            <JFXButton fx:id="closeButton" buttonType="RAISED" onAction="#closeCart" prefWidth="150.0" style="-fx-background-color: #ff0000;" text="Close Cart" textFill="WHITE">
+               <ripplerFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </ripplerFill>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+                <Label fx:id="errorLabel" prefHeight="5.0" textFill="RED" />
+            </children>
+            <padding><Insets bottom="10.0" /></padding>
+        </VBox>
+    </bottom>
+</BorderPane>
