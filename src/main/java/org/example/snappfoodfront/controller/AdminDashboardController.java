@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import org.example.snappfoodfront.Utils.SceneManager;
 
@@ -22,19 +21,6 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private BorderPane contentArea;
-
-    @FXML
-    private JFXButton couponsNavButton;
-
-    @FXML
-    private JFXButton ordersNavButton;
-
-    @FXML
-    private JFXButton transactionsNavButton;
-
-    @FXML
-    private JFXButton usersNavButton;
-
 
     public void initialize(URL url, ResourceBundle rb) {
         handleStatisticsNav(null);
