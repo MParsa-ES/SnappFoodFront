@@ -44,6 +44,8 @@ public class CartController implements Initializable {
 
     private final OrderApiService orderService = new OrderApiService();
 
+    int totalPrice = 0;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -52,7 +54,6 @@ public class CartController implements Initializable {
         updateCartView();
 
     }
-
 
 
     public void updateCartView() {
@@ -65,7 +66,6 @@ public class CartController implements Initializable {
             return;
         }
 
-        int totalPrice = 0;
         for (CartManager.CartItem cartItem : cartItems) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/cart-item-view.fxml"));
@@ -85,7 +85,7 @@ public class CartController implements Initializable {
         int off = 0;
         int additionalFee = MainViewState.getSelectedRestaurant().getAdditional_fee();
         int taxFee = MainViewState.getSelectedRestaurant().getTax_fee();
-        totalPrice +=  additionalFee + taxFee - off;
+        totalPrice +=  additionalFee + taxFee;
 
         additionalLabel.setText(additionalFee + " T");
         taxLabel.setText(taxFee + " T");
@@ -97,10 +97,6 @@ public class CartController implements Initializable {
 
         String couponCode = couponField.getText();
         if (couponCode.isEmpty()) {
-            Platform.runLater(() -> {
-                messageLabel.setTextFill(Color.RED);
-                messageLabel.setText("invalid code");
-            });
             return;
         }
 
@@ -111,6 +107,8 @@ public class CartController implements Initializable {
                 Platform.runLater(() -> {
                     messageLabel.setTextFill(Color.GREEN);
                     messageLabel.setText("Coupon applied");
+                    totalPrice -= coupon.getValue().intValue();
+                    totalPriceLabel.setText(String.format("Total: %d T", totalPrice));
                 });
             } catch (IOException | OrderApiService.OrderException | InterruptedException e) {
                 e.printStackTrace();

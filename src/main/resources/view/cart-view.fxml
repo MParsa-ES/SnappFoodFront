@@ -65,7 +65,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <Label fx:id="messageLabel" text="Label">
+                  <Label fx:id="messageLabel">
                      <padding>
                         <Insets left="20.0" />
                      </padding>
