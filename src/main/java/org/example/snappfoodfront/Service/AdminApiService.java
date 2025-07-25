@@ -228,9 +228,6 @@ public class AdminApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.statusCode());
-        System.out.println(response.body());
-
         if (response.statusCode() != 200) {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
             throw new AdminException(errorResponseDto);
