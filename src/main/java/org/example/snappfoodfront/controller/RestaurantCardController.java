@@ -104,6 +104,13 @@ public class RestaurantCardController {
     @FXML
     void handleOrdersButton(ActionEvent event) {
         // TODO : add the handle orders view
+        try {
+            OrderManagementController controller = SceneManager.switchScene(event, "SellerViews/order-management-view.fxml",1050,720);
+            controller.initData(restaurant.getId());
+        } catch (IOException e){
+            e.printStackTrace();
+            System.err.println("Error opening the order management view");
+        }
     }
 
 

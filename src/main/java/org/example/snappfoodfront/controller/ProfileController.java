@@ -73,6 +73,7 @@ public class ProfileController implements Initializable {
     private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
     private static final String SELLER_MAIN_VIEW_PATH = "/view/SellerViews/seller-main-view.fxml";
     private static final String WALLET_TOPUP_VIEW_PATH = "/view/wallet-topup-view.fxml";
+    private static final String ADMIN_MAIN_VIEW_PATH = "/view/AdminViews/admin-dashboard-view.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -205,9 +206,11 @@ public class ProfileController implements Initializable {
     protected void goBack(ActionEvent event) throws IOException {
         SceneManager.closeCurrentStage(goBackButton);
         if (roleField.getText().equals("BUYER")) {
-            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1050, 720);
+            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "buyer dashboard", 1050, 720);
         } else if (roleField.getText().equals("SELLER")) {
-            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1050, 720);
+            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "SnappFood", "seller dashboard", 1050, 720);
+        } else if (roleField.getText().equals("ADMIN")) {
+            SceneManager.showWindow(ADMIN_MAIN_VIEW_PATH, "SnappFood", "admin dashboard", 1050, 720);
         }
     }
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="720.0" prefWidth="804.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.UserManagementController">
+    <top>
+        <VBox>
+            <children>
+                <Label styleClass="dashboard-header" text="User Management">
+                    <padding>
+                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                    </padding>
+                </Label>
+            </children>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="usersTableView" styleClass="modern-table-view" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="User ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Full Name" />
+                <TableColumn fx:id="phoneColumn" prefWidth="120.0" text="Phone" />
+                <TableColumn fx:id="roleColumn" prefWidth="100.0" text="Role" />
+                <TableColumn fx:id="statusColumn" prefWidth="120.0" text="Status" />
+                <TableColumn fx:id="actionsColumn" prefWidth="220.0" text="Actions" />
+            </columns>
+            <BorderPane.margin>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox fx:id="feedbackBox" alignment="CENTER" managed="false" visible="false" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="feedbackLabel" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="15" right="15"/>
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+</BorderPane>

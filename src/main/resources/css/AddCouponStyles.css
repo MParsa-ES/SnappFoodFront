@@ -1,0 +1,78 @@
+/* =================================================================
+   Add/Edit Coupon Dialog Styles
+   ================================================================= */
+
+/* --- Main Dialog Container --- */
+.dialog-pane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 20, 0, 0, 0);
+}
+
+/* --- Dialog Header Text & Icon --- */
+.dialog-header {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+.dialog-header-icon {
+    -fx-icon-color: #2c3e50;
+}
+
+/* --- JFXTextField Style --- */
+.jfx-text-field {
+    -jfx-focus-color: #ff7600;
+    -jfx-label-float-color: #ff7600;
+}
+.jfx-text-field .floating-text {
+    -fx-background-color: #ffffff;
+    -fx-padding: 0 5px;
+    -fx-translate-y: -2px;
+}
+
+/* --- Modern Style for the standard DatePicker (FIXED) --- */
+.styled-datepicker {
+    -fx-background-color: #f4f7f9;
+    -fx-border-color: #dcdcdc; /* Default grey border */
+    -fx-border-radius: 4px;
+    -fx-padding: 1px;
+}
+.styled-datepicker .text-field {
+    -fx-background-color: transparent;
+}
+/* When the whole DatePicker is focused, just change its border color */
+.styled-datepicker:focused {
+    -fx-border-color: #ff7600;
+}
+/* This prevents the inner text field from getting a second, conflicting focus border */
+.styled-datepicker .text-field:focused {
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+.styled-datepicker .arrow-button {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 0 4px 4px 0;
+}
+.styled-datepicker .arrow-button .arrow {
+    -fx-background-color: #555555;
+}
+
+/* --- JFXRadioButton Style --- */
+.jfx-radio-button {
+    -jfx-selected-color: #ff7600;
+}
+
+/* --- General Button Styles for Dialogs --- */
+.primary-action-button {
+    -fx-background-color: #ff7600;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.secondary-action-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #555555;
+    -fx-font-weight: bold;
+    -fx-border-color: #dcdcdc;
+    -fx-border-width: 1.5px;
+}
