@@ -1,8 +1,10 @@
 package org.example.snappfoodfront.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.snappfoodfront.Utils.LocalDateAdapter;
 import org.example.snappfoodfront.model.CouponDto;
 import org.example.snappfoodfront.model.ErrorResponseDto;
 import org.example.snappfoodfront.model.OrderDto;
@@ -14,11 +16,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 
 public class OrderApiService {
 
     private final HttpClient client = HttpClient.newHttpClient();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
     private final String SERVER_URL = "http://localhost:8080";
 
     public BigDecimal getWalletBalance(String token) throws IOException, InterruptedException {
@@ -58,11 +61,14 @@ public class OrderApiService {
     public CouponDto.Response checkCoupon(String token, String coupon_code) throws IOException, InterruptedException, OrderException {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER_URL + "/coupon?coupon_code=" + coupon_code))
+                .uri(URI.create(SERVER_URL + "/coupons?coupon_code=" + coupon_code))
                 .header("Authorization", "Bearer " + token)
                 .GET().build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.statusCode());
+        System.out.println(response.body());
 
         if (response.statusCode() != 200) {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);

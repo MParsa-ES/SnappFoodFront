@@ -1,6 +1,5 @@
 package org.example.snappfoodfront.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -11,7 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.snappfoodfront.Service.AdminApiService;
 import org.example.snappfoodfront.Utils.TokenManager;
-import org.example.snappfoodfront.model.TransactionDto;
+import org.example.snappfoodfront.model.TransactionDTO;
 
 import java.net.URL;
 import java.util.List;
@@ -20,22 +19,22 @@ import java.util.ResourceBundle;
 public class TransactionManagementController implements Initializable {
 
     @FXML
-    private TableView<TransactionDto.PaymentResponseDTO> transactionsTableView;
+    private TableView<TransactionDTO.PaymentResponseDTO> transactionsTableView;
 
     @FXML
-    private TableColumn<TransactionDto.PaymentResponseDTO, Long> idColumn;
+    private TableColumn<TransactionDTO.PaymentResponseDTO, Long> idColumn;
 
     @FXML
-    private TableColumn<TransactionDto.PaymentResponseDTO, Long> orderIdColumn;
+    private TableColumn<TransactionDTO.PaymentResponseDTO, Long> orderIdColumn;
 
     @FXML
-    private TableColumn<TransactionDto.PaymentResponseDTO, Long> userIdColumn;
+    private TableColumn<TransactionDTO.PaymentResponseDTO, Long> userIdColumn;
 
     @FXML
-    private TableColumn<TransactionDto.PaymentResponseDTO, String> methodColumn;
+    private TableColumn<TransactionDTO.PaymentResponseDTO, String> methodColumn;
 
     @FXML
-    private TableColumn<TransactionDto.PaymentResponseDTO, String> statusColumn;
+    private TableColumn<TransactionDTO.PaymentResponseDTO, String> statusColumn;
 
     @FXML
     private TextField searchField;
@@ -104,7 +103,7 @@ public class TransactionManagementController implements Initializable {
         new Thread(() -> {
             try {
 
-                List<TransactionDto.PaymentResponseDTO> transactions = adminApiService.getTransactions(
+                List<TransactionDTO.PaymentResponseDTO> transactions = adminApiService.getTransactions(
                         TokenManager.getToken(),
                         searchFilter,
                         userFilter,

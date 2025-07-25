@@ -406,9 +406,6 @@ public class RestaurantApiService {
             urlBuilder.append("?").append(queryBuilder);
         }
 
-        System.out.println(urlBuilder);
-
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(urlBuilder.toString()))
                 .header("Authorization", "Bearer " + token)
