@@ -195,7 +195,7 @@ public class AdminApiService {
         return gson.fromJson(response.body(), CouponDto.Response.class);
     }
 
-    public List<TransactionDto.PaymentResponseDTO> getTransactions(String token, String search, String user, String method, String status) throws InterruptedException, IOException, AdminException {
+    public List<TransactionDTO.PaymentResponseDTO> getTransactions(String token, String search, String user, String method, String status) throws InterruptedException, IOException, AdminException {
 
         StringBuilder uri = new StringBuilder(SERVER_URL + "/admin/transactions");
 
@@ -227,6 +227,9 @@ public class AdminApiService {
                 .header("Authorization", "Bearer " + token).build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.statusCode());
+        System.out.println(response.body());
 
         if (response.statusCode() != 200) {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
