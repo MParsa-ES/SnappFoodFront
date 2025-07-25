@@ -17,7 +17,7 @@
                 <!-- Stat Card 1: Total Users -->
                 <VBox styleClass="stat-card">
                     <children>
-                        <FontIcon iconLiteral="fas-users" styleClass="stat-icon" />
+                        <FontIcon iconLiteral="fas-users" iconSize="32" styleClass="stat-icon" />
                         <Label fx:id="totalUsersLabel" styleClass="stat-value" text="-" />
                         <Label styleClass="stat-description" text="Total Users" />
                     </children>
@@ -25,7 +25,7 @@
                 <!-- Stat Card 2: Total Restaurants -->
                 <VBox styleClass="stat-card">
                     <children>
-                        <FontIcon iconLiteral="fas-store-alt" styleClass="stat-icon" />
+                        <FontIcon iconLiteral="fas-store-alt" iconSize="32" styleClass="stat-icon" />
                         <Label fx:id="totalRestaurantsLabel" styleClass="stat-value" text="-" />
                         <Label styleClass="stat-description" text="Total Restaurants" />
                     </children>
@@ -33,7 +33,7 @@
                 <!-- Stat Card 3: Orders Today -->
                 <VBox styleClass="stat-card">
                     <children>
-                        <FontIcon iconLiteral="fas-receipt" styleClass="stat-icon" />
+                        <FontIcon iconLiteral="fas-receipt" iconSize="32" styleClass="stat-icon" />
                         <Label fx:id="ordersTodayLabel" styleClass="stat-value" text="-" />
                         <Label styleClass="stat-description" text="Orders Today" />
                     </children>
@@ -41,7 +41,7 @@
                 <!-- Stat Card 4: Total Revenue -->
                 <VBox styleClass="stat-card">
                     <children>
-                        <FontIcon iconLiteral="fas-dollar-sign" styleClass="stat-icon" />
+                        <FontIcon iconLiteral="fas-dollar-sign" iconSize="32" styleClass="stat-icon" />
                         <Label fx:id="totalRevenueLabel" styleClass="stat-value" text="-" />
                         <Label styleClass="stat-description" text="Total Revenue" />
                     </children>
