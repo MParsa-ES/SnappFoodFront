@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.*?>
-
-<?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
 <BorderPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.AdminDashboardController">
     <left>
         <VBox prefWidth="220.0" spacing="10.0" styleClass="sidebar">
             <children>
                 <Label styleClass="sidebar-title" text="Admin Panel" />
                 <Separator />
+                <!-- NEW: Statistics Button Added -->
+                <JFXButton fx:id="statisticsNavButton" alignment="CENTER_LEFT" buttonType="RAISED" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleStatisticsNav" styleClass="sidebar-button" text="Statistics">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-chart-bar" />
+                    </graphic>
+                </JFXButton>
                 <JFXButton fx:id="usersNavButton" alignment="CENTER_LEFT" buttonType="RAISED" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleUsersNav" styleClass="sidebar-button" text="User Management">
                     <graphic>
                         <FontIcon iconLiteral="fas-users" />
@@ -43,7 +53,6 @@
             </padding>
         </VBox>
     </left>
-
     <top>
         <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
             <items>
@@ -104,7 +113,6 @@
             </items>
         </ToolBar>
     </top>
-
     <center>
         <BorderPane fx:id="contentArea" style="-fx-background-color: #f4f7f9;" BorderPane.alignment="CENTER" />
     </center>

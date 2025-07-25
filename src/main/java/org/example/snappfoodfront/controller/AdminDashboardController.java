@@ -37,7 +37,7 @@ public class AdminDashboardController implements Initializable {
 
 
     public void initialize(URL url, ResourceBundle rb) {
-        handleUsersNav(null);
+        handleStatisticsNav(null);
     }
 
 
@@ -82,6 +82,16 @@ public class AdminDashboardController implements Initializable {
             System.err.println("Error loading user management view :" + e.getMessage());
         }
 
+    }
+
+    @FXML
+    void handleStatisticsNav(ActionEvent event) {
+        try {
+            SceneManager.switchCenterPane(contentArea, "AdminViews/admin-statistics-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading statistics view :" + e.getMessage());
+        }
     }
 
 

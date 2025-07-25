@@ -241,6 +241,23 @@ public class AdminApiService {
         return gson.fromJson(response.body(), new TypeToken<>() {});
     }
 
+    public AdminDto.StatisticsResponse getStatistics(String token) throws InterruptedException, IOException, AdminException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/admin/statistics"))
+                .GET()
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AdminException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), AdminDto.StatisticsResponse.class);
+    }
+
     @Getter
     @AllArgsConstructor
     public static class AdminException extends Exception {

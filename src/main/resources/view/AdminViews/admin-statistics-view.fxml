@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<VBox stylesheets="@../../css/AdminStatisticsStyles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.AdminStatisticsController">
+    <children>
+        <Label styleClass="dashboard-header" text="System Statistics">
+            <padding>
+                <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+            </padding>
+        </Label>
+        <TilePane hgap="20.0" prefColumns="4" vgap="20.0">
+            <children>
+                <!-- Stat Card 1: Total Users -->
+                <VBox styleClass="stat-card">
+                    <children>
+                        <FontIcon iconLiteral="fas-users" styleClass="stat-icon" />
+                        <Label fx:id="totalUsersLabel" styleClass="stat-value" text="-" />
+                        <Label styleClass="stat-description" text="Total Users" />
+                    </children>
+                </VBox>
+                <!-- Stat Card 2: Total Restaurants -->
+                <VBox styleClass="stat-card">
+                    <children>
+                        <FontIcon iconLiteral="fas-store-alt" styleClass="stat-icon" />
+                        <Label fx:id="totalRestaurantsLabel" styleClass="stat-value" text="-" />
+                        <Label styleClass="stat-description" text="Total Restaurants" />
+                    </children>
+                </VBox>
+                <!-- Stat Card 3: Orders Today -->
+                <VBox styleClass="stat-card">
+                    <children>
+                        <FontIcon iconLiteral="fas-receipt" styleClass="stat-icon" />
+                        <Label fx:id="ordersTodayLabel" styleClass="stat-value" text="-" />
+                        <Label styleClass="stat-description" text="Orders Today" />
+                    </children>
+                </VBox>
+                <!-- Stat Card 4: Total Revenue -->
+                <VBox styleClass="stat-card">
+                    <children>
+                        <FontIcon iconLiteral="fas-dollar-sign" styleClass="stat-icon" />
+                        <Label fx:id="totalRevenueLabel" styleClass="stat-value" text="-" />
+                        <Label styleClass="stat-description" text="Total Revenue" />
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+        </TilePane>
+    </children>
+</VBox>
