@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -38,6 +39,14 @@ public class TransactionDTO {
     @AllArgsConstructor
     public static class TopUpRequestDTO {
         private BigDecimal amount;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TransactionsList {
+        Set<PaymentResponseDTO> transactions;
     }
 
 }
