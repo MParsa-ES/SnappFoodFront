@@ -108,8 +108,6 @@ public class AdminApiService {
             }
         }
 
-        System.out.println(uri);
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri.toString()))
                 .GET()
@@ -195,6 +193,47 @@ public class AdminApiService {
         }
 
         return gson.fromJson(response.body(), CouponDto.Response.class);
+    }
+
+    public List<TransactionDto.PaymentResponseDTO> getTransactions(String token, String search, String user, String method, String status) throws InterruptedException, IOException, AdminException {
+
+        StringBuilder uri = new StringBuilder(SERVER_URL + "/admin/transactions");
+
+        Map<String, String> params = new HashMap<>();
+
+        if (search != null && !search.isEmpty()) {
+            params.put("search", search);
+        }
+        if (user != null && !user.isEmpty()) {
+            params.put("user", user);
+        }
+        if (method != null && !method.isEmpty()) {
+            params.put("method", method);
+        }
+        if (status != null && !status.isEmpty()) {
+            params.put("status", status);
+        }
+
+        if (!params.isEmpty()) {
+            uri.append("?");
+            for (Map.Entry<String, String> entry : params.entrySet()) {
+                uri.append("&").append(entry.getKey()).append("=").append(entry.getValue());
+            }
+        }
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri.toString()))
+                .GET()
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AdminException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<>() {});
     }
 
     @Getter

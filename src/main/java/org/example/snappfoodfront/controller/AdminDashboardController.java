@@ -64,7 +64,12 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     void handleTransactionsNav(ActionEvent event) {
-
+        try {
+            SceneManager.switchCenterPane(contentArea, "AdminViews/transaction-management-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading order list view :" + e.getMessage());
+        }
     }
 
     @FXML
