@@ -216,8 +216,13 @@ public class AdminApiService {
 
         if (!params.isEmpty()) {
             uri.append("?");
+            boolean isFirst = true;
             for (Map.Entry<String, String> entry : params.entrySet()) {
-                uri.append("&").append(entry.getKey()).append("=").append(entry.getValue());
+                if (!isFirst) {
+                    uri.append("&");
+                }
+                uri.append(entry.getKey()).append("=").append(entry.getValue());
+                isFirst = false;
             }
         }
 
