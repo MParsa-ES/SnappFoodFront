@@ -40,12 +40,4 @@ public class TransactionDTO {
         private BigDecimal amount;
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class TransactionsList {
-        Set<PaymentResponseDTO> transactions;
-    }
-
 }

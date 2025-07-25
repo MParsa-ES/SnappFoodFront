@@ -82,9 +82,9 @@ public class TransactionManagementController implements Initializable {
 
         String methodFilter;
         if (walletMethodCheck.isSelected() && !onlineMethodCheck.isSelected()) {
-            methodFilter = "wallet";
+            methodFilter = "WALLET";
         } else if (!walletMethodCheck.isSelected() && onlineMethodCheck.isSelected()) {
-            methodFilter = "online";
+            methodFilter = "ONLINE";
         } else {
             methodFilter = null;
         }
@@ -92,9 +92,9 @@ public class TransactionManagementController implements Initializable {
 
         String statusFilter;
         if (successStatusCheck.isSelected() && !failedStatusCheck.isSelected()) {
-            statusFilter = "success";
+            statusFilter = "SUCCESS";
         } else if (!successStatusCheck.isSelected() && failedStatusCheck.isSelected()) {
-            statusFilter = "failed";
+            statusFilter = "FAILED";
         } else {
             statusFilter = null;
         }
@@ -133,9 +133,9 @@ public class TransactionManagementController implements Initializable {
                     statusBadge.getStyleClass().add("status-badge");
 
                     if ("success".equalsIgnoreCase(status)) {
-                        statusBadge.getStyleClass().add("status-accepted"); // Green
+                        statusBadge.getStyleClass().add("status-accepted");
                     } else if ("failed".equalsIgnoreCase(status)) {
-                        statusBadge.getStyleClass().add("status-cancelled"); // Red
+                        statusBadge.getStyleClass().add("status-cancelled");
                     }
                     setGraphic(statusBadge);
                 }
