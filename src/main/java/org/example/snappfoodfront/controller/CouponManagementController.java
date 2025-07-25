@@ -5,11 +5,16 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.snappfoodfront.Service.AdminApiService;
 
@@ -17,6 +22,7 @@ import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.CouponDto;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -113,8 +119,26 @@ public class CouponManagementController implements Initializable {
 
                 editBtn.setOnAction(event -> {
                     CouponDto.Response coupon = getTableView().getItems().get(getIndex());
-                    System.out.println("Editing coupon: " + coupon.getCoupon_code());
-                    // TODO: Open the Add/Edit Coupon dialog in "Edit" mode, passing this coupon's data
+                    try {
+
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminViews/add-coupon-view.fxml"));
+                        Parent root = loader.load();
+
+                        Stage dialogStage = new Stage();
+                        dialogStage.setTitle("Edit Coupon");
+                        dialogStage.initModality(Modality.APPLICATION_MODAL);
+                        dialogStage.setScene(new Scene(root));
+
+                        AddCouponController controller = loader.getController();
+
+                        controller.initDataForEdit(coupon);
+
+                        dialogStage.showAndWait();
+                        loadCoupons();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
 
                 deleteBtn.setOnAction(event -> {
@@ -153,8 +177,22 @@ public class CouponManagementController implements Initializable {
 
     @FXML
     void handleAddCoupon(ActionEvent event) {
-        System.out.println("Add New Coupon clicked");
-        // TODO: Open the Add/Edit Coupon dialog in "Add" mode
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminViews/add-coupon-view.fxml"));
+            Parent root = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Add New Coupon");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setScene(new Scene(root));
+            dialogStage.showAndWait();
+
+            loadCoupons();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showFeedback(String message, boolean isError) {

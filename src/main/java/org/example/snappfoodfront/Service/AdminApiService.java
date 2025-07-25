@@ -180,6 +180,23 @@ public class AdminApiService {
 
     }
 
+    public CouponDto.Response updateCoupon(String token, Long couponId, CouponDto.Request couponUpdateRequest) throws InterruptedException, IOException, AdminException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/admin/coupons/" + couponId))
+                .PUT(HttpRequest.BodyPublishers.ofString(gson.toJson(couponUpdateRequest)))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token).build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AdminException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), CouponDto.Response.class);
+    }
+
     @Getter
     @AllArgsConstructor
     public static class AdminException extends Exception {

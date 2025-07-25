@@ -18,7 +18,7 @@
         </VBox>
     </top>
     <center>
-        <TableView fx:id="couponsTableView" minHeight="575.0" styleClass="modern-table-view" BorderPane.alignment="CENTER">
+        <TableView fx:id="couponsTableView" maxHeight="530.0" minHeight="530.0" prefWidth="774.0" styleClass="modern-table-view" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="codeColumn" prefWidth="120.0" text="Coupon Code" />
                 <TableColumn fx:id="typeColumn" prefWidth="100.0" text="Type" />
