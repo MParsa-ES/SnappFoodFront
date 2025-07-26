@@ -42,7 +42,7 @@ public class CouponManagementController implements Initializable {
     private TableColumn<CouponDto.Response, Double> valueColumn;
 
     @FXML
-    private TableColumn<CouponDto.Response, Integer> minPriceColumn;
+    private TableColumn<CouponDto.Response, Integer> userCountColumn;
 
     @FXML
     private TableColumn<CouponDto.Response, String> startDateColumn;
@@ -52,9 +52,6 @@ public class CouponManagementController implements Initializable {
 
     @FXML
     private TableColumn<CouponDto.Response, Void> actionsColumn;
-
-    @FXML
-    private JFXButton addCouponButton;
 
     @FXML
     private HBox feedbackBox;
@@ -71,7 +68,7 @@ public class CouponManagementController implements Initializable {
         codeColumn.setCellValueFactory(new PropertyValueFactory<>("coupon_code"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-        minPriceColumn.setCellValueFactory(new PropertyValueFactory<>("min_price"));
+        userCountColumn.setCellValueFactory(new PropertyValueFactory<>("user_count"));
         startDateColumn.setCellValueFactory(new PropertyValueFactory<>("start_date"));
         endDateColumn.setCellValueFactory(new PropertyValueFactory<>("end_date"));
 

@@ -77,6 +77,10 @@ public class LoginController implements Initializable {
                             SceneManager.closeCurrentStage(errorLabel);
                             SceneManager.showWindow(ADMIN_VIEW_PATH, "SnappFood", "admin dashboard", 1050, 720);
                         }
+                        case "COURIER" -> {
+                            SceneManager.closeCurrentStage(errorLabel);
+                            SceneManager.showWindow("/view/CourierViews/courier-dashboard-view.fxml", "SnappFood", "courier dashboard", 1050, 720);
+                        }
                     }
                 });
 

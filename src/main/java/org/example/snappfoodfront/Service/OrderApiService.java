@@ -89,10 +89,11 @@ public class OrderApiService {
                 .uri(URI.create(SERVER_URL + "/orders"))
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(requestDto)))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
 
         if (response.statusCode() != 200) {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);

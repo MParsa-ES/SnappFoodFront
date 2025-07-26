@@ -1,0 +1,35 @@
+/* =================================================================
+   Admin Statistics Page Styles
+   ================================================================= */
+
+/* --- Stat Card Container --- */
+/* This is the main style for each VBox that acts as a card */
+.stat-card {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-alignment: center;
+    -fx-spacing: 5;
+    -fx-min-width: 180px; /* Ensures cards have a minimum width */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);
+}
+
+/* --- Icon Style --- */
+.stat-icon .ikonli-font-icon {
+    -fx-icon-size: 32; /* Increased from 24 to make the icon bigger */
+    -fx-icon-color: #9ca3af; /* A muted grey */
+}
+
+/* --- Value (Number) Style --- */
+.stat-value {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827; /* Dark text */
+}
+
+/* --- Description Style --- */
+.stat-description {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6b7280; /* Lighter grey text */
+}

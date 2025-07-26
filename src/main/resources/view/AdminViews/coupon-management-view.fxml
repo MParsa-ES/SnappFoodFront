@@ -23,7 +23,7 @@
                 <TableColumn fx:id="codeColumn" prefWidth="120.0" text="Coupon Code" />
                 <TableColumn fx:id="typeColumn" prefWidth="100.0" text="Type" />
                 <TableColumn fx:id="valueColumn" prefWidth="100.0" text="Value" />
-                <TableColumn fx:id="minPriceColumn" prefWidth="120.0" text="Min. Purchase" />
+                <TableColumn fx:id="userCountColumn" prefWidth="120.0" text="User Count" />
                 <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Start Date" />
                 <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="End Date" />
                 <TableColumn fx:id="actionsColumn" prefWidth="100.0" text="Actions" />

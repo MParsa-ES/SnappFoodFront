@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import org.example.snappfoodfront.Utils.SceneManager;
 
@@ -23,21 +22,8 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private BorderPane contentArea;
 
-    @FXML
-    private JFXButton couponsNavButton;
-
-    @FXML
-    private JFXButton ordersNavButton;
-
-    @FXML
-    private JFXButton transactionsNavButton;
-
-    @FXML
-    private JFXButton usersNavButton;
-
-
     public void initialize(URL url, ResourceBundle rb) {
-        handleUsersNav(null);
+        handleStatisticsNav(null);
     }
 
 
@@ -82,6 +68,16 @@ public class AdminDashboardController implements Initializable {
             System.err.println("Error loading user management view :" + e.getMessage());
         }
 
+    }
+
+    @FXML
+    void handleStatisticsNav(ActionEvent event) {
+        try {
+            SceneManager.switchCenterPane(contentArea, "AdminViews/admin-statistics-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading statistics view :" + e.getMessage());
+        }
     }
 
 
