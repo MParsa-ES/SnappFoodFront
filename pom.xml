@@ -110,6 +110,12 @@
               <noManPages>true</noManPages>
               <stripDebug>true</stripDebug>
               <noHeaderFiles>true</noHeaderFiles>
+              <options>
+                <option>--add-opens=java.base/java.lang.reflect=com.jfoenix</option>
+                <option>--add-opens=java.base/java.lang=com.jfoenix</option>
+                <option>--add-opens=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
+                <option>--add-opens=javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
+              </options>
             </configuration>
           </execution>
         </executions>
