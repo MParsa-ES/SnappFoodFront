@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox prefHeight="280.0" prefWidth="500.0" spacing="10.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CompletedOrderCardController">
+    <children>
+        <HBox alignment="CENTER_LEFT">
+            <children>
+                <FontIcon iconLiteral="fas-store" iconSize="20" />
+                <Label fx:id="restaurantNameLabel" text="Restaurant Name">
+                    <font><Font name="System Bold" size="18.0" /></font>
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="orderDateLabel" text="Date: 2025-07-20" />
+            </children>
+        </HBox>
+        <Separator />
+
+        <VBox fx:id="itemsVBox" spacing="5.0">
+            <children>
+                <Label text="Items:">
+                    <font><Font name="System Bold" size="14.0" /></font>
+                </Label>
+            </children>
+        </VBox>
+        <Separator />
+
+        <VBox spacing="5.0">
+            <children>
+                <HBox>
+                    <children>
+                        <Label text="Subtotal:" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="subtotalPriceLabel" text="220,000 T" />
+                    </children>
+                </HBox>
+                <HBox>
+                    <children>
+                        <Label text="Tax:" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="taxFeeLabel" text="9,000 T" />
+                    </children>
+                </HBox>
+                <HBox>
+                    <children>
+                        <Label text="Additional Fee:" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="additionalFeeLabel" text="5,000 T" />
+                    </children>
+                </HBox>
+            <HBox>
+               <children>
+                  <Label text="Courier Fee:" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label text="20,000 T" />
+               </children>
+            </HBox>
+                <HBox style="-fx-font-weight: bold;">
+                    <children>
+                        <Label text="Total Price:" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="totalPriceLabel" text="234,000 T" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <Separator />
+
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <JFXButton fx:id="reviewButton" contentDisplay="RIGHT" onAction="#handleReview" style="-fx-background-color: #ff7600;" text="Submit a Review" textFill="WHITE">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-comment" />
+               </graphic></JFXButton>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+    </padding>
+</VBox>

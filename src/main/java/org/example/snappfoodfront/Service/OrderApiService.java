@@ -1,6 +1,7 @@
 package org.example.snappfoodfront.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.snappfoodfront.model.CouponDto;
@@ -11,9 +12,13 @@ import org.example.snappfoodfront.model.TransactionDTO;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderApiService {
 
@@ -115,6 +120,61 @@ public class OrderApiService {
 
         return gson.fromJson(response.body(), TransactionDTO.PaymentResponseDTO.class);
 
+    }
+
+    public OrderDto.NamesResponse getNames(OrderDto.NamesRequest requestDto) throws IOException, InterruptedException, OrderException {
+
+        String requestBody = gson.toJson(requestDto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/orders/names"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new OrderException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), OrderDto.NamesResponse.class);
+
+    }
+
+    public List<OrderDto.OrderResponse> getOrderHistory(String token, String vendorName, String searchQuery) throws IOException, InterruptedException, OrderException {
+
+        StringBuilder urlBuilder = new StringBuilder(SERVER_URL + "/orders/history");
+        List<String> params = new ArrayList<>();
+
+        if (vendorName != null && !vendorName.isBlank()) {
+            params.add("vendor=" + URLEncoder.encode(vendorName, StandardCharsets.UTF_8));
+        }
+        if (searchQuery != null && !searchQuery.isBlank()) {
+            params.add("search=" + URLEncoder.encode(searchQuery, StandardCharsets.UTF_8));
+        }
+
+        if (!params.isEmpty()) {
+            urlBuilder.append("?").append(String.join("&", params));
+        }
+
+        String finalUrl = urlBuilder.toString();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(finalUrl))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new OrderException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<OrderDto.OrderResponse>>(){}.getType());
     }
 
     @Getter

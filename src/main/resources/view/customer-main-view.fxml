@@ -40,7 +40,55 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </FontIcon>
-            <Region prefHeight="30.0" prefWidth="140.0" />
+            <Region prefHeight="30.0" prefWidth="15.0" />
+            <JFXButton buttonType="RAISED" contentDisplay="RIGHT" layoutX="878.0" layoutY="13.0" onAction="#handleShowOrders" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Orders">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-receipt" />
+               </graphic>
+               <ripplerFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.20952381193637848" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.9523809552192688" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </ripplerFill>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton buttonType="RAISED" contentDisplay="RIGHT" onAction="#handleShowCart" style="-fx-background-color: #ff7600;" text="Cart" textFill="WHITE">
+               <ripplerFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="1.0" blue="0.6000000238418579" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </ripplerFill>
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fas-shopping-cart" text="" />
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
             <JFXButton fx:id="profileButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goToProfile" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Profile">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fas-user-circle" text="" />

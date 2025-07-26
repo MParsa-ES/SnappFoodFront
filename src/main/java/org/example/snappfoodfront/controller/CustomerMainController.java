@@ -42,6 +42,8 @@ import java.util.Set;
 public class CustomerMainController implements Initializable {
 
     private static final String PROFILE_VIEW_PATH = "/view/profile-view.fxml";
+    private static final String CART_VIEW_PATH = "/view/cart-view.fxml";
+    private static final String ORDERS_VIEW_PATH = "/view/orders-history-view.fxml";
 
     private final RestaurantApiService restaurantService = new RestaurantApiService();
     private final OrderApiService orderService = new OrderApiService();
@@ -401,6 +403,16 @@ public class CustomerMainController implements Initializable {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    @FXML
+    private void handleShowCart(ActionEvent event) {
+        SceneManager.showWindow(CART_VIEW_PATH, "", "Cart", 400, 600);
+    }
+
+    @FXML
+    protected void handleShowOrders(ActionEvent event) {
+        SceneManager.showWindow(ORDERS_VIEW_PATH, "Your Orders", "Order", 1024, 720);
     }
 
     @FXML
