@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<VBox styleClass="delivery-card" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.DeliveryCardController">
+    <children>
+        <HBox alignment="CENTER_LEFT">
+            <children>
+                <Label fx:id="orderIdLabel" styleClass="delivery-card-id" text="#12345" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="statusBadge" styleClass="status-badge" text="Status" />
+            </children>
+        </HBox>
+        <HBox spacing="15.0" style="-fx-padding: 15 0;">
+            <children>
+                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="delivery-card-section-title" text="PICKUP FROM" />
+                        <Label fx:id="pickupRestaurantLabel" styleClass="delivery-card-main-text" text="Atawich Restaurant" />
+                        <Label fx:id="pickupAddressLabel" styleClass="delivery-card-sub-text" text="Eslamshahr" />
+                    </children>
+                </VBox>
+                <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label styleClass="delivery-card-section-title" text="DELIVER TO" />
+                        <Label fx:id="customerNameLabel" styleClass="delivery-card-main-text" text="Customer Name" />
+                        <Label fx:id="deliveryAddressLabel" styleClass="delivery-card-sub-text" text="Customer Address" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox fx:id="actionBox" alignment="CENTER_RIGHT">
+            <children>
+                <Label fx:id="feeLabel" styleClass="delivery-card-fee" text="Fee: 5,000" />
+                <Region HBox.hgrow="ALWAYS" />
+                <JFXButton fx:id="actionButton" buttonType="RAISED" styleClass="primary-action-button" text="Accept">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-motorcycle" />
+                    </graphic>
+                </JFXButton>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
+    </padding>
+</VBox>

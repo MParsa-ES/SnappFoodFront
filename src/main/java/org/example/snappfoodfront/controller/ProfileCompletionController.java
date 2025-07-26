@@ -167,6 +167,8 @@ public class ProfileCompletionController implements Initializable {
                 SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "seller dashboard", 1050, 720);
             } else if (role.equals("ADMIN")) {
                 SceneManager.showWindow("/view/AdminViews/admin-dashboard-view.fxml", "SnappFood", "admin dashboard", 1050, 720);
+            } else if (role.equals("COURIER")) {
+                SceneManager.showWindow("/view/CourierViews/courier-dashboard-view.fxml", "SnappFood", "courier dashboard", 1050, 720);
             }
         } catch (IOException | InterruptedException e) {
             errorLabel.setTextFill(Color.RED);

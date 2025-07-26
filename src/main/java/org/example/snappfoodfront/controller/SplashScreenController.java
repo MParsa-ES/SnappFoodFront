@@ -95,6 +95,9 @@ public class SplashScreenController implements Initializable {
                                         SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "seller", 1050, 720);
                                 case "ADMIN" ->
                                         SceneManager.showWindow("/view/AdminViews/admin-dashboard-view.fxml", "SnappFood", "admin dashboard", 1050, 720);
+                                case "COURIER" ->
+                                    SceneManager.showWindow("/view/CourierViews/courier-dashboard-view.fxml", "SnappFood", "courier dashboard", 1050, 720);
+
                             }
 
                         } catch (Exception e) {

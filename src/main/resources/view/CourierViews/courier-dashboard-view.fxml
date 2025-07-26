@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<BorderPane prefHeight="720.0" prefWidth="1050.0" stylesheets="@../../css/CourierStyles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CourierDashboardController">
+
+    <fx:define>
+        <ToggleGroup fx:id="deliveryStatusToggleGroup" />
+    </fx:define>
+
+    <top>
+        <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+            <items>
+                <Label prefHeight="30.0" prefWidth="250.0" text="Welcome">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Region prefHeight="30.0" prefWidth="610.0" />
+                <JFXButton fx:id="profileButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goToProfile" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Profile">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="fas-user-circle" text="" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="logoutButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#logout" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Logout">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" />
+                    </graphic>
+                </JFXButton>
+            </items>
+        </ToolBar>
+    </top>
+    <center>
+        <!-- Replaced TabPane with JFXTabPane -->
+        <JFXTabPane styleClass="jfx-main-tab-pane" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab closable="false" text="Available Deliveries">
+                    <content>
+                        <ScrollPane fitToWidth="true" styleClass="panel-scroll-pane">
+                            <content>
+                                <VBox fx:id="availableDeliveriesContainer" spacing="15.0">
+                                    <padding>
+                                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                    </padding>
+                                </VBox>
+                            </content>
+                        </ScrollPane>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="My Deliveries">
+                    <content>
+                        <VBox>
+                            <children>
+                                <VBox spacing="10.0" styleClass="filter-bar">
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                            <children>
+                                                <TextField fx:id="searchFoodField" prefWidth="250.0" promptText="Search by Food Item..." styleClass="styled-textfield" />
+                                                <TextField fx:id="searchUserField" prefWidth="200.0" promptText="Filter by Customer..." styleClass="styled-textfield" />
+                                                <TextField fx:id="searchVendorField" prefWidth="200.0" promptText="Filter by Restaurant..." styleClass="styled-textfield" />
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                            <children>
+                                                <Label styleClass="filter-label" text="Status:" />
+                                                <ToggleButton mnemonicParsing="false" selected="true" styleClass="filter-button" text="All">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="deliveryStatusToggleGroup" />
+                                       </toggleGroup></ToggleButton>
+                                                <ToggleButton mnemonicParsing="false" styleClass="filter-button" text="On The Way" toggleGroup="$deliveryStatusToggleGroup" />
+                                                <ToggleButton mnemonicParsing="false" styleClass="filter-button" text="Delivered" toggleGroup="$deliveryStatusToggleGroup" />
+                                                <JFXButton fx:id="filterButton" buttonType="RAISED" onAction="#handleFilterMyDeliveries" styleClass="primary-action-button" text="Apply Filters" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                    </padding>
+                                </VBox>
+                                <ScrollPane fitToWidth="true" styleClass="panel-scroll-pane" VBox.vgrow="ALWAYS">
+                                    <content>
+                                        <VBox fx:id="myDeliveriesContainer" spacing="15.0">
+                                            <padding>
+                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                            </padding>
+                                        </VBox>
+                                    </content>
+                                </ScrollPane>
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </JFXTabPane>
+    </center>
+    <bottom>
+        <HBox fx:id="feedbackBox" alignment="CENTER" managed="false" visible="false" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="feedbackLabel" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="15.0" right="15.0" />
+            </BorderPane.margin>
+        </HBox>
+    </bottom>
+</BorderPane>
