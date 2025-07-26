@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.Cursor?>
+<BorderPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.AdminDashboardController">
+    <left>
+        <VBox prefWidth="220.0" spacing="10.0" styleClass="sidebar">
+            <children>
+                <Label styleClass="sidebar-title" text="Admin Panel" />
+                <Separator />
+                <JFXButton fx:id="usersNavButton" alignment="CENTER_LEFT" buttonType="RAISED" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleUsersNav" styleClass="sidebar-button" text="User Management">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-users" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="ordersNavButton" alignment="CENTER_LEFT" buttonType="RAISED" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleOrdersNav" styleClass="sidebar-button" text="Order Overview">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-clipboard-list" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="transactionsNavButton" alignment="CENTER_LEFT" buttonType="RAISED" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleTransactionsNav" styleClass="sidebar-button" text="Transactions">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-credit-card" />
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="couponsNavButton" alignment="CENTER_LEFT" buttonType="RAISED" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleCouponsNav" styleClass="sidebar-button" text="Coupon Management">
+                    <graphic>
+                        <FontIcon iconLiteral="fas-ticket-alt" />
+                    </graphic>
+                </JFXButton>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </VBox>
+    </left>
+
+    <top>
+        <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+            <items>
+                <Label prefHeight="30.0" prefWidth="250.0" text="Welcome">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <Region prefHeight="30.0" prefWidth="610.0" />
+                <JFXButton fx:id="profileButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#goToProfile" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Profile">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="fas-user-circle" text="" />
+                    </graphic>
+                    <ripplerFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color green="0.10000000149011612" blue="1.0" />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color green="0.8333333134651184" blue="1.0" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <JFXButton fx:id="logoutButton" buttonType="RAISED" contentDisplay="RIGHT" onAction="#logout" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Logout">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="fas-sign-out-alt" />
+                    </graphic>
+                    <ripplerFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                            <stops>
+                                <Stop>
+                                    <color>
+                                        <Color />
+                                    </color>
+                                </Stop>
+                                <Stop offset="1.0">
+                                    <color>
+                                        <Color red="1.0" />
+                                    </color>
+                                </Stop>
+                            </stops>
+                        </LinearGradient>
+                    </ripplerFill>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+            </items>
+        </ToolBar>
+    </top>
+
+    <center>
+        <BorderPane fx:id="contentArea" style="-fx-background-color: #f4f7f9;" BorderPane.alignment="CENTER" />
+    </center>
+</BorderPane>

@@ -2,8 +2,10 @@ package org.example.snappfoodfront.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.GsonBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.snappfoodfront.Utils.LocalDateAdapter;
 import org.example.snappfoodfront.model.CouponDto;
 import org.example.snappfoodfront.model.ErrorResponseDto;
 import org.example.snappfoodfront.model.OrderDto;
@@ -19,11 +21,12 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 
 public class OrderApiService {
 
     private final HttpClient client = HttpClient.newHttpClient();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
     private final String SERVER_URL = "http://localhost:8080";
 
     public BigDecimal getWalletBalance(String token) throws IOException, InterruptedException {

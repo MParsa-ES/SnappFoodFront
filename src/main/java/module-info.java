@@ -2,7 +2,6 @@ module org.example.snappfoodfront {
     requires javafx.fxml;
     requires lombok;
     requires com.google.gson;
-    requires java.prefs;
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
@@ -10,6 +9,8 @@ module org.example.snappfoodfront {
     requires java.net.http;
     requires com.jfoenix;
     requires jdk.compiler;
+    requires java.desktop;
+    requires java.prefs;
 
 
     opens org.example.snappfoodfront to javafx.fxml;

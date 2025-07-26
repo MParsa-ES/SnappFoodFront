@@ -4,17 +4,34 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
 <BorderPane prefHeight="720.0" prefWidth="1024.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.MenuManagementController">
     <top>
         <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="header-bar">
             <children>
-                <Button mnemonicParsing="false" onAction="#handleBackButton" styleClass="subtle-button" text="Back">
+                <JFXButton buttonType="RAISED" mnemonicParsing="false" onAction="#handleBackButton" style="-fx-background-color: #ff7600;" text="Back" textFill="WHITE">
                     <graphic>
-                        <FontIcon iconLiteral="fas-arrow-left" />
+                        <FontIcon iconColor="WHITE" iconLiteral="fas-arrow-left" />
                     </graphic>
-                </Button>
+               <ripplerFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.8313725590705872" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </ripplerFill>
+                </JFXButton>
                 <Label styleClass="dashboard-header" text="Menu Management" />
             </children>
             <padding>

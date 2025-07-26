@@ -174,7 +174,7 @@ public class SellerMainController implements Initializable {
     @FXML
     protected void goToProfile(ActionEvent event) throws IOException {
         SceneManager.closeCurrentStage(profileButton);
-        SceneManager.showWindow(PROFILE_VIEW_PATH, "Profile", "profile", 1024, 720);
+        SceneManager.showWindow(PROFILE_VIEW_PATH, "Profile", "profile", 1050, 720);
     }
 
     @FXML

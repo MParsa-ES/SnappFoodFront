@@ -59,7 +59,7 @@ public class FoodLibraryController implements Initializable {
     @FXML
     private void handleBackButton(ActionEvent event) {
         try {
-            SceneManager.switchScene(event,"SellerViews/seller-main-view.fxml",1024,720);
+            SceneManager.switchScene(event,"SellerViews/seller-main-view.fxml",1050,720);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error loading seller view");

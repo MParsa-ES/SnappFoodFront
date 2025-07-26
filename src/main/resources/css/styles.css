@@ -605,3 +605,358 @@
     -fx-border-color: #e5e7eb transparent transparent transparent;
     -fx-padding: 15px 0 0 0;
 }
+
+/* =================================================================
+   Order Management Styles
+   ================================================================= */
+
+/* --- Filter Bar --- */
+.filter-bar {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 1px;
+}
+.filter-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.filter-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #374151;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
+}
+.filter-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+.filter-button:selected {
+    -fx-background-color: #ff7600;
+    -fx-border-color: #ff7600;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);
+}
+.search-box {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8px;
+    -fx-padding: 0 8px;
+}
+.search-box .text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.search-box .ikonli-font-icon {
+    -fx-icon-color: #9ca3af;
+    -fx-cursor: hand;
+}
+.search-box .ikonli-font-icon:hover {
+    -fx-icon-color: #ff7600;
+}
+.search-box .ikonli-font-icon:pressed {
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+}
+
+/* --- Status Badges --- */
+.status-badge {
+    -fx-padding: 4px 10px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+.status-pending {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+}
+.status-accepted {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #065f46;
+}
+.status-ready {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+.status-cancelled {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #991b1b;
+}
+
+/* --- Action Buttons in Table --- */
+.accept-button {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.reject-button {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.ready-button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.details-button {
+    -fx-background-color: #6b7280; /* A neutral grey */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+/*
+ * FIX: This is the final, more specific rule that solves the text color issue.
+ * It targets the actual text node inside any button that is inside a table cell.
+ * This rule will always have priority, whether the row is selected or not.
+*/
+.table-cell .button .text {
+    -fx-fill: white;
+}
+/* =================================================================
+   Order Management Styles
+   ================================================================= */
+
+/* --- Filter Bar --- */
+.filter-bar {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
+    -fx-border-width: 1px;
+}
+.filter-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.filter-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #d1d5db;
+    -fx-text-fill: #374151;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
+}
+.filter-button:hover {
+    -fx-background-color: #f3f4f6;
+}
+.filter-button:selected {
+    -fx-background-color: #ff7600;
+    -fx-border-color: #ff7600;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);
+}
+.search-box {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8px;
+    -fx-padding: 0 8px;
+}
+.search-box .text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.search-box .ikonli-font-icon {
+    -fx-icon-color: #9ca3af;
+    -fx-cursor: hand;
+}
+.search-box .ikonli-font-icon:hover {
+    -fx-icon-color: #ff7600;
+}
+.search-box .ikonli-font-icon:pressed {
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
+}
+
+/* --- Status Badges --- */
+.status-badge {
+    -fx-padding: 4px 10px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+.status-pending {
+    -fx-background-color: #fef3c7;
+    -fx-text-fill: #92400e;
+}
+.status-accepted {
+    -fx-background-color: #d1fae5;
+    -fx-text-fill: #065f46;
+}
+.status-ready {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1e40af;
+}
+.status-cancelled {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #991b1b;
+}
+
+/* --- Action Buttons in Table --- */
+.accept-button {
+    -fx-background-color: #10b981;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.reject-button {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.ready-button {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.details-button {
+    -fx-background-color: #6b7280; /* A neutral grey */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+/*
+ * FIX: This is the final, highly specific rule that solves the text color issue.
+ * It targets the text node inside a button, but only when it's also inside a selected table row.
+ * This rule will always have the highest priority.
+*/
+.table-row-cell:selected .button .text {
+    -fx-fill: white;
+}
+.table-row .button .text {
+    fx-fill: white;
+}
+
+/* =================================================================
+   Admin Panel Styles
+   ================================================================= */
+
+/* --- Sidebar --- */
+.sidebar {
+    -fx-background-color: #2c3e50; /* A dark blue-grey */
+}
+
+.sidebar-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #bdc3c7; /* Light grey text */
+    -fx-font-size: 14px;
+    -fx-pref-width: 200px;
+    -fx-alignment: center-left;
+    -fx-padding: 10px 15px;
+    -fx-background-radius: 5px;
+}
+
+.sidebar-button .ikonli-font-icon {
+    -fx-icon-color: #bdc3c7;
+    -fx-icon-size: 16;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #34495e; /* Darker hover state */
+    -fx-text-fill: white;
+}
+.sidebar-button:hover .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
+/* Style for the selected navigation button */
+.sidebar-button-selected {
+    -fx-background-color: #ff7600; /* Your brand's orange */
+    -fx-text-fill: white;
+}
+.sidebar-button-selected .ikonli-font-icon {
+    -fx-icon-color: white;
+}
+
+
+/* =================================================================
+   User Management Table Button Styles (for JFXButton)
+   ================================================================= */
+
+.accept-button {
+    -fx-background-color: #10b981; /* Green */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.reject-button {
+    -fx-background-color: #e74c3c; /* Red */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.pending-button {
+    -fx-background-color: #f39c12; /* A warning yellow/orange */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.delete-button {
+    -fx-background-color: #95a5a6; /* A neutral grey for a less prominent action */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* This rule keeps the button text white when a table row is selected */
+.table-row-cell:selected .jfx-button .text {
+    -fx-fill: white;
+}
+.modern-table-view .table-cell {
+    -fx-alignment: center;
+}
+
+/* =================================================================
+   Table View & Icon Button Styles
+   ================================================================= */
+
+/* This rule centers the content of all cells in your modern table */
+.modern-table-view .table-cell {
+    -fx-alignment: center;
+}
+
+/* FIX: This new rule centers the text inside all column headers */
+.modern-table-view .column-header .label {
+    -fx-alignment: center;
+}
+
+/* Icon buttons now have a transparent background by default */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%; /* Makes the button round */
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+}
+/* FIX: The grey background is now slightly darker and more noticeable on hover */
+.icon-button:hover {
+    -fx-background-color: #dadedf;
+}
+.icon-button .ikonli-font-icon {
+    -fx-icon-color: #2c3e50; /* Dark icon color */
+    -fx-icon-size: 14;
+}
+
+/* A specific style for dangerous actions like deleting */
+.icon-button-danger:hover {
+    -fx-background-color: #e74c3c; /* Red background on hover */
+}
+.icon-button-danger:hover .ikonli-font-icon {
+    -fx-icon-color: white; /* White icon on hover */
+}
+
+/* This rule keeps the button's icon from changing color on selection */
+.table-row-cell:selected .icon-button .ikonli-font-icon {
+    -fx-icon-color: #2c3e50;
+}
+.table-row-cell:selected .icon-button-danger:hover .ikonli-font-icon {
+    -fx-icon-color: white;
+}

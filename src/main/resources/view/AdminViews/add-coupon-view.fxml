@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<BorderPane maxWidth="500.0" styleClass="dialog-pane" stylesheets="@../../css/AddCouponStyles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.AddCouponController">
+    <padding>
+        <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+    </padding>
+    <top>
+        <HBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <FontIcon iconLiteral="fas-ticket-alt" iconSize="22" styleClass="dialog-header-icon" />
+                <Label fx:id="titleLabel" styleClass="dialog-header" text="Add New Coupon" />
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="15.0" />
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <center>
+        <GridPane hgap="20.0" vgap="15.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+            <children>
+                <JFXTextField fx:id="codeField" labelFloat="true" promptText="Coupon Code" />
+                <JFXTextField fx:id="userCountField" labelFloat="true" promptText="User Count" GridPane.columnIndex="1" />
+                <JFXTextField fx:id="valueField" labelFloat="true" promptText="Value" GridPane.rowIndex="1" />
+                <JFXTextField fx:id="minPriceField" labelFloat="true" promptText="Minimum Purchase" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <DatePicker fx:id="startDatePicker" promptText="Start Date" styleClass="styled-datepicker" GridPane.rowIndex="2" />
+                <DatePicker fx:id="endDatePicker" promptText="End Date" styleClass="styled-datepicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <HBox alignment="CENTER_LEFT" spacing="20.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                    <children>
+                        <Label styleClass="form-label" text="Type:" />
+                        <JFXRadioButton fx:id="fixedTypeRadio" selected="true" text="Fixed">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="typeToggleGroup" />
+                            </toggleGroup>
+                        </JFXRadioButton>
+                        <JFXRadioButton fx:id="percentTypeRadio" text="Percent" toggleGroup="$typeToggleGroup" />
+                    </children>
+                </HBox>
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <VBox alignment="CENTER" spacing="10.0">
+            <children>
+                <HBox fx:id="feedbackBox" alignment="CENTER" prefHeight="25.0" stylesheets="@../../css/styles.css">
+                    <children>
+                        <Label fx:id="feedbackLabel" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                    <children>
+                        <JFXButton fx:id="cancelButton" onAction="#handleCancelButton" styleClass="secondary-action-button" text="Cancel" />
+                        <JFXButton fx:id="saveButton" buttonType="RAISED" onAction="#handleSaveButton" styleClass="primary-action-button" text="Save Coupon" />
+                    </children>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets top="20.0" />
+            </BorderPane.margin>
+        </VBox>
+    </bottom>
+</BorderPane>

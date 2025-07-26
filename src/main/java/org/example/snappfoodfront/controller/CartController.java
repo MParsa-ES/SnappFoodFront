@@ -174,7 +174,7 @@ public class CartController implements Initializable {
                 // --- مرحله ۲: پردازش پرداخت ---
                 TransactionDTO.PaymentRequestDTO paymentRequestDto = new TransactionDTO.PaymentRequestDTO(
                         createdOrder.getId(),
-                        methodBox.getValue().toUpperCase()
+                        TransactionMethod.valueOf(methodBox.getValue().toUpperCase())
                 );
 
                 // ارسال درخواست پرداخت

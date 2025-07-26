@@ -33,11 +33,12 @@ public class LoginController implements Initializable {
 
     private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
     private static final String SELLER_MAIN_VIEW_PATH = "/view/SellerViews/seller-main-view.fxml";
+    private static final String ADMIN_VIEW_PATH = "/view/AdminViews/admin-dashboard-view.fxml";
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Methods.filterPhoneField(phoneField);
+//        Methods.filterPhoneField(phoneField);
     }
 
 
@@ -60,23 +61,22 @@ public class LoginController implements Initializable {
                 TokenManager.clearToken();
                 TokenManager.saveToken(token);
                 Platform.runLater(() -> {
-                    try {
-                        errorLabel.setVisible(true);
-                        errorLabel.setText("Login Successful");
+                    errorLabel.setVisible(true);
+                    errorLabel.setText("Login Successful");
 
-                        if (loginResponse.getUser().getRole().equals("SELLER")) {
-                            // will add the seller dashboard here
+                    switch (loginResponse.getUser().getRole()) {
+                        case "SELLER" -> {
                             SceneManager.closeCurrentStage(errorLabel);
-                            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "Dashboard", "dashboard", 1024, 720);
-                        } else if (loginResponse.getUser().getRole().equals("BUYER")) {
-                            SceneManager.closeCurrentStage(errorLabel);
-                            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "SnappFood", 1024, 720);
-                        } else {
-                            SceneManager.switchScene(event, "dashboard-view.fxml", 1024, 720);
+                            SceneManager.showWindow(SELLER_MAIN_VIEW_PATH, "SnappFood", "seller dashboard", 1050, 720);
                         }
-                    } catch (IOException e) {
-                        errorLabel.setVisible(true);
-                        errorLabel.setText("Unable to load dashboard");
+                        case "BUYER" -> {
+                            SceneManager.closeCurrentStage(errorLabel);
+                            SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "buyer dashboard", 1050, 720);
+                        }
+                        case "ADMIN" -> {
+                            SceneManager.closeCurrentStage(errorLabel);
+                            SceneManager.showWindow(ADMIN_VIEW_PATH, "SnappFood", "admin dashboard", 1050, 720);
+                        }
                     }
                 });
 

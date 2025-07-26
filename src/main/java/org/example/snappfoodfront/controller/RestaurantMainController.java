@@ -300,7 +300,7 @@ public class RestaurantMainController implements Initializable {
     @FXML
     protected void goBack(ActionEvent event) throws IOException {
         SceneManager.closeCurrentStage(goBackButton);
-        SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1024, 720);
+        SceneManager.showWindow(CUSTOMER_MAIN_VIEW_PATH, "SnappFood", "dashboard", 1050, 720);
     }
 
     @FXML

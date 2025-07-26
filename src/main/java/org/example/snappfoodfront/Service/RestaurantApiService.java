@@ -14,7 +14,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import java.net.URLEncoder;
 
 public class RestaurantApiService {
 
@@ -370,6 +375,71 @@ public class RestaurantApiService {
             ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
             throw new RestaurantException(errorResponseDto);
         }
+
+    }
+
+    public List<OrderDto.OrderResponse> getAllOrders(String token, Long restaurantId, String status, String search, String user, String courier) throws IOException, RestaurantException, InterruptedException {
+
+        StringBuilder urlBuilder = new StringBuilder(SERVER_URL + "/restaurants/" + restaurantId + "/orders");
+
+        StringBuilder queryBuilder = new StringBuilder();
+
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("status", status);
+        params.put("search", search);
+        params.put("user", user);
+        params.put("courier", courier);
+
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            if (value != null && !value.isBlank()) {
+                if (!queryBuilder.isEmpty()) {
+                    queryBuilder.append("&");
+                }
+                queryBuilder.append(key).append("=").append(URLEncoder.encode(value, StandardCharsets.UTF_8));
+            }
+        }
+
+        if (!queryBuilder.isEmpty()) {
+            urlBuilder.append("?").append(queryBuilder);
+        }
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(urlBuilder.toString()))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), new TypeToken<List<OrderDto.OrderResponse>>(){}.getType());
+
+    }
+
+    public MessageDto updateOrderStatus(String token, Long orderId, OrderDto.OrderStatusChangeRequest statusChangeRequest) throws IOException, RestaurantException, InterruptedException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/restaurants/orders/" + orderId)) // Note: The YAML endpoint is /restaurants/orders/{order_id}
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(gson.toJson(statusChangeRequest)))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new RestaurantException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), MessageDto.class);
 
     }
 
