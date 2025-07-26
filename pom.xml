@@ -42,6 +42,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.34</version>
+      <scope>provided</scope>
     </dependency>
 
 
@@ -92,6 +93,13 @@
         <configuration>
           <source>23</source>
           <target>23</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.34</version>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
       <plugin>
@@ -100,7 +108,6 @@
         <version>0.0.8</version>
         <executions>
           <execution>
-            <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
               <mainClass>org.example.snappfoodfront/org.example.snappfoodfront.SnappFoodApplication</mainClass>
@@ -116,6 +123,26 @@
                 <option>--add-opens=javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
                 <option>--add-opens=javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
               </options>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>org.example.snappfoodfront.Launcher</mainClass>
+                </transformer>
+              </transformers>
             </configuration>
           </execution>
         </executions>
