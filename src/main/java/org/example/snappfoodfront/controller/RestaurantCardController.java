@@ -17,20 +17,11 @@ import java.util.Base64;
 
 public class RestaurantCardController {
 
-    @FXML
-    private Label addressLabel;
-
-    @FXML
-    private ImageView logoImageView;
-
-    @FXML
-    private Label phoneLabel;
-
-    @FXML
-    private Label restaurantNameLabel;
-
-    @FXML
-    private Circle statusIndicatorCircle;
+    @FXML private Label addressLabel;
+    @FXML private ImageView logoImageView;
+    @FXML private Label phoneLabel;
+    @FXML private Label restaurantNameLabel;
+    @FXML private Circle statusIndicatorCircle;
 
     private RestaurantDto.Response restaurant;
 
@@ -103,7 +94,6 @@ public class RestaurantCardController {
 
     @FXML
     void handleOrdersButton(ActionEvent event) {
-        // TODO : add the handle orders view
         try {
             OrderManagementController controller = SceneManager.switchScene(event, "SellerViews/order-management-view.fxml",1050,720);
             controller.initData(restaurant.getId());

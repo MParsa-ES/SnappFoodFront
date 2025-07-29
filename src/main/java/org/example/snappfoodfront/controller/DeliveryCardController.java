@@ -11,34 +11,19 @@ import org.example.snappfoodfront.model.OrderDto;
 
 public class DeliveryCardController {
 
-    // --- FXML Injections ---
-    @FXML
-    private Label orderIdLabel;
-
-    @FXML
-    private Label statusBadge;
-
-    @FXML
-    private Label pickupRestaurantLabel;
-
-    @FXML
-    private Label customerNameLabel;
-
-    @FXML
-    private Label deliveryAddressLabel;
-
-    @FXML
-    private Label feeLabel;
-
-    @FXML
-    private HBox actionBox;
-
-    @FXML
-    private JFXButton actionButton;
+    @FXML private Label orderIdLabel;
+    @FXML private Label statusBadge;
+    @FXML private Label pickupRestaurantLabel;
+    @FXML private Label customerNameLabel;
+    @FXML private Label deliveryAddressLabel;
+    @FXML private Label feeLabel;
+    @FXML private HBox actionBox;
+    @FXML private JFXButton actionButton;
 
     private OrderDto.OrderResponse order;
     private Runnable refreshCallback;
     private Runnable refreshAvailableDeliveries;
+
     private final CourierApiService courierApiService = new CourierApiService();
 
     public void setData(OrderDto.OrderResponse order, Runnable refreshCallback, Runnable refreshAvailableDeliveries) {

@@ -15,14 +15,9 @@ import java.util.Base64;
 
 public class FoodChipController {
 
-    @FXML
-    private HBox rootPane;
-
-    @FXML
-    private ImageView foodImageView;
-
-    @FXML
-    private Label foodNameLabel;
+    @FXML private HBox rootPane;
+    @FXML private ImageView foodImageView;
+    @FXML private Label foodNameLabel;
 
     private FoodItemDto.Response foodItem;
 

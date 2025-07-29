@@ -33,24 +33,13 @@ import java.util.ResourceBundle;
 
 public class FoodLibraryController implements Initializable {
 
-    @FXML
-    private TableView<FoodItemDto.Response> foodTableView;
-
-    @FXML
-    private TableColumn<FoodItemDto.Response, String> nameColumn;
-
-    @FXML
-    private TableColumn<FoodItemDto.Response, Integer> priceColumn;
-
-    @FXML
-    private TableColumn<FoodItemDto.Response, Integer> supplyColumn;
-
-    @FXML
-    private TableColumn<FoodItemDto.Response, Void> actionsColumn;
-
+    @FXML private TableView<FoodItemDto.Response> foodTableView;
+    @FXML private TableColumn<FoodItemDto.Response, String> nameColumn;
+    @FXML private TableColumn<FoodItemDto.Response, Integer> priceColumn;
+    @FXML private TableColumn<FoodItemDto.Response, Integer> supplyColumn;
+    @FXML private TableColumn<FoodItemDto.Response, Void> actionsColumn;
 
     private Long restaurantId;
-
     private final String token = TokenManager.getToken();
 
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();

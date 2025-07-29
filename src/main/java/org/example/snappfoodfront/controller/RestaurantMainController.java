@@ -228,13 +228,9 @@ public class RestaurantMainController implements Initializable {
         new Thread(() -> {
 
             try{
-
                 final List<FoodItemDto.Response> itemList = restaurantService.getMenuItems(menuId);
-
                 Platform.runLater(() -> {
-
                     foodContainer.getChildren().clear();
-
                     if (itemList.isEmpty()) {
                         Label errorLabel = new Label("No items found");
                         errorLabel.setStyle("-fx-text-fill: red;");
@@ -242,9 +238,7 @@ public class RestaurantMainController implements Initializable {
                     } else {
                         listItems(itemList, foodContainer);
                     }
-
                 });
-
             } catch (IOException | RestaurantApiService.RestaurantException | InterruptedException e) {
                 e.printStackTrace();
             }

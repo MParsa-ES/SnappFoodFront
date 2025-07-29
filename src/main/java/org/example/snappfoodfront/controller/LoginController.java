@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.example.snappfoodfront.Service.AuthApiService;
+import org.example.snappfoodfront.Service.RestaurantApiService;
 import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.UserLoginDto;
 import org.example.snappfoodfront.Utils.SceneManager;
@@ -17,19 +18,13 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    private final AuthApiService authApiService;
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private TextField phoneField;
-    @FXML
-    private Label errorLabel;
-    @FXML
-    private Hyperlink signUpLink;
 
-    public LoginController() {
-        this.authApiService = new AuthApiService();
-    }
+    @FXML private PasswordField passwordField;
+    @FXML private TextField phoneField;
+    @FXML private Label errorLabel;
+    @FXML private Hyperlink signUpLink;
+
+    private final AuthApiService authApiService = new AuthApiService();
 
     private static final String CUSTOMER_MAIN_VIEW_PATH = "/view/customer-main-view.fxml";
     private static final String SELLER_MAIN_VIEW_PATH = "/view/SellerViews/seller-main-view.fxml";

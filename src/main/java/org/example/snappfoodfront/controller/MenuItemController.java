@@ -13,8 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 public class MenuItemController {
 
-    @FXML
-    private Label itemNameLabel;
+    @FXML private Label itemNameLabel;
 
     private MenuManagementController mainController;
     private Long restaurantId;

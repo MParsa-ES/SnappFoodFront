@@ -27,14 +27,9 @@ import java.util.Map;
 
 public class MenuManagementController {
 
-    @FXML
-    private VBox availableFoodsContainer;
-
-    @FXML
-    private VBox menuCategoriesContainer;
-
-    @FXML
-    private TextField newMenuTextField;
+    @FXML private VBox availableFoodsContainer;
+    @FXML private VBox menuCategoriesContainer;
+    @FXML private TextField newMenuTextField;
 
     private Long restaurantId;
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();
@@ -47,7 +42,6 @@ public class MenuManagementController {
         this.restaurantId = restaurantId;
         loadAllData();
     }
-
 
     private void loadAllData() {
         new Thread(() -> {
@@ -64,7 +58,6 @@ public class MenuManagementController {
             }
         }).start();
     }
-
 
     private void populateAvailableFoods() {
         availableFoodsContainer.getChildren().clear();
@@ -107,7 +100,6 @@ public class MenuManagementController {
             }
         }
     }
-
 
     public void refreshDataAndUI() {
         loadAllData();

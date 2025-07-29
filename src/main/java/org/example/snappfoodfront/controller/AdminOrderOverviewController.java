@@ -28,52 +28,21 @@ import java.util.ResourceBundle;
 public class AdminOrderOverviewController implements Initializable {
 
 
-    @FXML
-    private TableView<OrderDto.OrderResponse> ordersTableView;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Long> orderIdColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Long> vendorColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Long> customerColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Long> courierColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Integer> priceColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, String> statusColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Void> actionsColumn;
-
-
-
-    @FXML
-    private ToggleGroup statusToggleGroup;
-
-    @FXML
-    private TextField searchFoodField;
-
-    @FXML
-    private TextField searchVendorField;
-
-    @FXML
-    private TextField searchCourierField;
-
-    @FXML
-    private TextField searchCustomerField;
-
-    @FXML
-    private HBox feedbackBox;
-
-    @FXML
-    private Label feedbackLabel;
+    @FXML private TableView<OrderDto.OrderResponse> ordersTableView;
+    @FXML private TableColumn<OrderDto.OrderResponse, Long> orderIdColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Long> vendorColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Long> customerColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Long> courierColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Integer> priceColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, String> statusColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Void> actionsColumn;
+    @FXML private ToggleGroup statusToggleGroup;
+    @FXML private TextField searchFoodField;
+    @FXML private TextField searchVendorField;
+    @FXML private TextField searchCourierField;
+    @FXML private TextField searchCustomerField;
+    @FXML private HBox feedbackBox;
+    @FXML private Label feedbackLabel;
 
 
     private final AdminApiService adminApiService = new AdminApiService();
@@ -174,7 +143,7 @@ public class AdminOrderOverviewController implements Initializable {
                             break;
                         case "completed":
                         case "delivered":
-                            statusBadge.getStyleClass().add("status-completed"); // A new style for completed
+                            statusBadge.getStyleClass().add("status-completed");
                             break;
                         case "cancelled":
                         case "unpaid_and_cancelled":
@@ -253,8 +222,6 @@ public class AdminOrderOverviewController implements Initializable {
         };
         actionsColumn.setCellFactory(cellFactory);
     }
-
-
 
     private void showFeedback(String message, boolean isError) {
         feedbackLabel.setText(message);

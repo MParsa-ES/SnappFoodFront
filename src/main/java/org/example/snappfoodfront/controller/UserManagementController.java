@@ -20,33 +20,15 @@ import java.util.ResourceBundle;
 
 public class UserManagementController implements Initializable {
 
-    @FXML
-    private TableColumn<UserLoginDto.UserData, Void> actionsColumn;
-
-    @FXML
-    private TableColumn<UserLoginDto.UserData, Long> idColumn;
-
-    @FXML
-    private TableColumn<UserLoginDto.UserData, String> nameColumn;
-
-    @FXML
-    private TableColumn<UserLoginDto.UserData, String> phoneColumn;
-
-    @FXML
-    private TableColumn<UserLoginDto.UserData, String> roleColumn;
-
-    @FXML
-    private TableColumn<UserLoginDto.UserData, String> statusColumn;
-
-    @FXML
-    private TableView<UserLoginDto.UserData> usersTableView;
-
-
-    @FXML
-    private HBox feedbackBox;
-
-    @FXML
-    private Label feedbackLabel;
+    @FXML private TableColumn<UserLoginDto.UserData, Void> actionsColumn;
+    @FXML private TableColumn<UserLoginDto.UserData, Long> idColumn;
+    @FXML private TableColumn<UserLoginDto.UserData, String> nameColumn;
+    @FXML private TableColumn<UserLoginDto.UserData, String> phoneColumn;
+    @FXML private TableColumn<UserLoginDto.UserData, String> roleColumn;
+    @FXML private TableColumn<UserLoginDto.UserData, String> statusColumn;
+    @FXML private TableView<UserLoginDto.UserData> usersTableView;
+    @FXML private HBox feedbackBox;
+    @FXML private Label feedbackLabel;
 
     private final AdminApiService adminApiService = new AdminApiService();
 

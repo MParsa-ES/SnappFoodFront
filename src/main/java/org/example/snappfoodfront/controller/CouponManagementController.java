@@ -29,35 +29,16 @@ import java.util.ResourceBundle;
 
 public class CouponManagementController implements Initializable {
 
-    @FXML
-    private TableView<CouponDto.Response> couponsTableView;
-
-    @FXML
-    private TableColumn<CouponDto.Response, String> codeColumn;
-
-    @FXML
-    private TableColumn<CouponDto.Response, String> typeColumn;
-
-    @FXML
-    private TableColumn<CouponDto.Response, Double> valueColumn;
-
-    @FXML
-    private TableColumn<CouponDto.Response, Integer> userCountColumn;
-
-    @FXML
-    private TableColumn<CouponDto.Response, String> startDateColumn;
-
-    @FXML
-    private TableColumn<CouponDto.Response, String> endDateColumn;
-
-    @FXML
-    private TableColumn<CouponDto.Response, Void> actionsColumn;
-
-    @FXML
-    private HBox feedbackBox;
-
-    @FXML
-    private Label feedbackLabel;
+    @FXML private TableView<CouponDto.Response> couponsTableView;
+    @FXML private TableColumn<CouponDto.Response, String> codeColumn;
+    @FXML private TableColumn<CouponDto.Response, String> typeColumn;
+    @FXML private TableColumn<CouponDto.Response, Double> valueColumn;
+    @FXML private TableColumn<CouponDto.Response, Integer> userCountColumn;
+    @FXML private TableColumn<CouponDto.Response, String> startDateColumn;
+    @FXML private TableColumn<CouponDto.Response, String> endDateColumn;
+    @FXML private TableColumn<CouponDto.Response, Void> actionsColumn;
+    @FXML private HBox feedbackBox;
+    @FXML private Label feedbackLabel;
 
 
     private final AdminApiService adminApiService = new AdminApiService();

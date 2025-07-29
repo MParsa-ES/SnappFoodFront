@@ -34,38 +34,17 @@ import java.util.ResourceBundle;
 
 public class RestaurantCreationController implements Initializable {
 
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private TextField additionalFeeTextField;
-
-    @FXML
-    private TextArea addressTextField;
-
-    @FXML
-    private Button chooseLogoButton;
-
-    @FXML
-    private HBox feedbackBox;
-
-    @FXML
-    private Label feedbackLabel;
-
-    @FXML
-    private ImageView logoImage;
-
-    @FXML
-    private TextField nameTextField;
-
-    @FXML
-    private TextField phoneTextField;
-
-    @FXML
-    private TextField taxFeeTextField;
-
-    @FXML
-    private Button createRestaurantButton;
+    @FXML private Label titleLabel;
+    @FXML private TextField additionalFeeTextField;
+    @FXML private TextArea addressTextField;
+    @FXML private Button chooseLogoButton;
+    @FXML private HBox feedbackBox;
+    @FXML private Label feedbackLabel;
+    @FXML private ImageView logoImage;
+    @FXML private TextField nameTextField;
+    @FXML private TextField phoneTextField;
+    @FXML private TextField taxFeeTextField;
+    @FXML private Button createRestaurantButton;
 
 
     private String logoBase64;

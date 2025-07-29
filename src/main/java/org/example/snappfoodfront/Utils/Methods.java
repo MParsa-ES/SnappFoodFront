@@ -29,39 +29,6 @@ public class Methods {
         field.setTextFormatter(textFormatter);
     }
 
-    public static void applyThousandSeparator(TextField textField) {
-
-        filterPhoneField(textField);
-
-        final ChangeListener<String> listener = new ChangeListener<>() {
-            @Override
-            public void changed(javafx.beans.value.ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
-                textField.textProperty().removeListener(this);
-
-                String cleanText = newValue.replaceAll("[,]", "");
-
-                if (!cleanText.isEmpty()) {
-                    try {
-                        long value = Long.parseLong(cleanText);
-                        NumberFormat formatter = NumberFormat.getInstance(Locale.US);
-                        String formattedText = formatter.format(value);
-                        textField.setText(formattedText);
-                        textField.positionCaret(formattedText.length());
-                    } catch (NumberFormatException e) {
-                        textField.setText(oldValue);
-                    }
-                } else {
-                    textField.clear();
-                }
-
-                textField.textProperty().addListener(this);
-            }
-        };
-
-        textField.textProperty().addListener(listener);
-    }
-
     public static Image convertToImage(String base64String) {
         if (base64String == null || base64String.isEmpty()) {
             return null;

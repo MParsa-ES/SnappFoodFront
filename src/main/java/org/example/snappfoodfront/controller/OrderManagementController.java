@@ -29,32 +29,15 @@ import java.util.stream.Collectors;
 
 public class OrderManagementController implements Initializable {
 
-    @FXML
-    private TableView<OrderDto.OrderResponse> ordersTableView;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Long> orderIdColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Long> customerColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, String> timeColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Integer> priceColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, String> statusColumn;
-
-    @FXML
-    private TableColumn<OrderDto.OrderResponse, Void> actionsColumn;
-
-    @FXML
-    private ToggleGroup statusToggleGroup;
-
-    @FXML
-    private TextField searchTextField;
+    @FXML private TableView<OrderDto.OrderResponse> ordersTableView;
+    @FXML private TableColumn<OrderDto.OrderResponse, Long> orderIdColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Long> customerColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, String> timeColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Integer> priceColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, String> statusColumn;
+    @FXML private TableColumn<OrderDto.OrderResponse, Void> actionsColumn;
+    @FXML private ToggleGroup statusToggleGroup;
+    @FXML private TextField searchTextField;
 
 
     private Long restaurantId;

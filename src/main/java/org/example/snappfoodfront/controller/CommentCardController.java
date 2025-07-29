@@ -54,18 +54,4 @@ public class CommentCardController {
         }
     }
 
-    private void setUserName(Long id) {
-        new Thread(() -> {
-            try {
-                String name  = profileService.getName(id);
-                Platform.runLater(() -> {
-                    userNameLabel.setText(name);
-                    System.out.println("User Name : " + name);
-                });
-            } catch (AuthApiService.AuthException | IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
 }

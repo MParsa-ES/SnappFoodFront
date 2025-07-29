@@ -34,36 +34,18 @@ import java.util.*;
 
 public class AddFoodController {
 
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField priceField;
-    @FXML
-    private TextField supplyField;
-    @FXML
-    private TextArea descriptionArea;
-
-    @FXML
-    private JFXButton chooseImageButton;
-    @FXML
-    private ImageView foodImageView;
-    @FXML
-    private GridPane keywordsGridPane;
-
-    @FXML
-    private HBox feedbackBox;
-
-    @FXML
-    private Label feedbackLabel;
-
-    @FXML
-    private JFXButton cancelButton;
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private JFXButton saveButton;
+    @FXML private TextField nameField;
+    @FXML private TextField priceField;
+    @FXML private TextField supplyField;
+    @FXML private TextArea descriptionArea;
+    @FXML private JFXButton chooseImageButton;
+    @FXML private ImageView foodImageView;
+    @FXML private GridPane keywordsGridPane;
+    @FXML private HBox feedbackBox;
+    @FXML private Label feedbackLabel;
+    @FXML private JFXButton cancelButton;
+    @FXML private Label titleLabel;
+    @FXML private JFXButton saveButton;
 
 
     private final RestaurantApiService restaurantApiService = new RestaurantApiService();

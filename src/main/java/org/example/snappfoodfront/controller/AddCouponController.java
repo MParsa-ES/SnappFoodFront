@@ -25,45 +25,19 @@ import java.util.ResourceBundle;
 
 public class AddCouponController implements Initializable {
 
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private JFXTextField codeField;
-
-    @FXML
-    private JFXTextField userCountField;
-
-    @FXML
-    private JFXTextField valueField;
-
-    @FXML
-    private JFXTextField minPriceField;
-
-    @FXML
-    private DatePicker startDatePicker;
-
-    @FXML
-    private DatePicker endDatePicker;
-
-    @FXML
-    private ToggleGroup typeToggleGroup;
-
-    @FXML
-    private JFXRadioButton fixedTypeRadio;
-
-    @FXML
-    private JFXRadioButton percentTypeRadio;
-
-    @FXML
-    private HBox feedbackBox;
-
-    @FXML
-    private Label feedbackLabel;
-
-    @FXML
-    private JFXButton saveButton;
+    @FXML private Label titleLabel;
+    @FXML private JFXTextField codeField;
+    @FXML private JFXTextField userCountField;
+    @FXML private JFXTextField valueField;
+    @FXML private JFXTextField minPriceField;
+    @FXML private DatePicker startDatePicker;
+    @FXML private DatePicker endDatePicker;
+    @FXML private ToggleGroup typeToggleGroup;
+    @FXML private JFXRadioButton fixedTypeRadio;
+    @FXML private JFXRadioButton percentTypeRadio;
+    @FXML private HBox feedbackBox;
+    @FXML private Label feedbackLabel;
+    @FXML private JFXButton saveButton;
 
 
     private final AdminApiService adminApiService = new AdminApiService();

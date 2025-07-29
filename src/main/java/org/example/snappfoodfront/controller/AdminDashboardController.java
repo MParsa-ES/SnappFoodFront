@@ -13,20 +13,13 @@ import java.util.ResourceBundle;
 
 public class AdminDashboardController implements Initializable {
 
-    @FXML
-    private JFXButton profileButton;
-
-    @FXML
-    private JFXButton logoutButton;
-
-    @FXML
-    private BorderPane contentArea;
+    @FXML private JFXButton profileButton;
+    @FXML private JFXButton logoutButton;
+    @FXML private BorderPane contentArea;
 
     public void initialize(URL url, ResourceBundle rb) {
         handleStatisticsNav(null);
     }
-
-
 
     @FXML
     void handleCouponsNav(ActionEvent event) {
@@ -79,7 +72,6 @@ public class AdminDashboardController implements Initializable {
             System.err.println("Error loading statistics view :" + e.getMessage());
         }
     }
-
 
     @FXML
     protected void goToProfile(ActionEvent event) throws IOException {

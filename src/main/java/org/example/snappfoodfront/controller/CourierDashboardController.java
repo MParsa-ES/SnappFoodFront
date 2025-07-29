@@ -26,37 +26,16 @@ import java.util.ResourceBundle;
 public class CourierDashboardController implements Initializable {
 
 
-    @FXML
-    private VBox availableDeliveriesContainer;
-
-    @FXML
-    private VBox myDeliveriesContainer;
-
-    @FXML
-    private JFXButton profileButton;
-
-    @FXML
-    private JFXButton logoutButton;
-
-
-
-    @FXML
-    private TextField searchFoodField;
-
-    @FXML
-    private TextField searchUserField;
-
-    @FXML
-    private TextField searchVendorField;
-
-    @FXML
-    private ToggleGroup deliveryStatusToggleGroup;
-
-    @FXML
-    private Label feedbackLabel;
-
-    @FXML
-    private HBox feedbackBox;
+    @FXML private VBox availableDeliveriesContainer;
+    @FXML private VBox myDeliveriesContainer;
+    @FXML private JFXButton profileButton;
+    @FXML private JFXButton logoutButton;
+    @FXML private TextField searchFoodField;
+    @FXML private TextField searchUserField;
+    @FXML private TextField searchVendorField;
+    @FXML private ToggleGroup deliveryStatusToggleGroup;
+    @FXML private Label feedbackLabel;
+    @FXML private HBox feedbackBox;
 
     private final CourierApiService courierApiService = new CourierApiService();
 
@@ -68,7 +47,6 @@ public class CourierDashboardController implements Initializable {
             loadMyDeliveries();
         });
     }
-
 
     private void loadAvailableDeliveries() {
         new Thread(() -> {
@@ -149,7 +127,6 @@ public class CourierDashboardController implements Initializable {
             }
         }
     }
-
 
     @FXML
     protected void goToProfile(ActionEvent event) throws IOException {

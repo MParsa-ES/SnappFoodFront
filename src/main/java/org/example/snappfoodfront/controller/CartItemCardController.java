@@ -13,7 +13,7 @@ public class CartItemCardController {
     @FXML private Label totalPriceLabel;
 
     private FoodItemDto.Response foodItem;
-    private CartController cartController; // ارجاع به کنترلر اصلی سبد خرید
+    private CartController cartController;
 
     public void setData(FoodItemDto.Response foodItem, int quantity, CartController cartController) {
         this.foodItem = foodItem;
@@ -33,7 +33,7 @@ public class CartItemCardController {
     @FXML
     private void handleDecrement() {
         int newQuantity = Integer.parseInt(quantityField.getText()) - 1;
-        if (newQuantity >= 0) { // اجازه می‌دهیم به صفر برسد
+        if (newQuantity >= 0) {
             updateCartAndUI(newQuantity);
         }
     }
@@ -45,12 +45,10 @@ public class CartItemCardController {
 
     private void updateCartAndUI(int newQuantity) {
         try {
-            CartManager.addItem(foodItem, newQuantity); // addItem صفر را به عنوان حذف مدیریت می‌کند
+            CartManager.addItem(foodItem, newQuantity);
             updateFields(newQuantity);
-            cartController.updateCartView(); // به کنترلر اصلی اطلاع بده که خود را آپدیت کند
-        } catch (CartManager.DifferentRestaurantException e) {
-            // این خطا در اینجا رخ نمی‌دهد چون آیتم از قبل در سبد است
-        }
+            cartController.updateCartView();
+        } catch (CartManager.DifferentRestaurantException e) {}
     }
 
     private void updateFields(int quantity) {

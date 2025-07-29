@@ -32,6 +32,7 @@ public class CartController implements Initializable {
     @FXML public Label taxLabel;
     @FXML public TextField couponField;
     @FXML public Label messageLabel;
+    @FXML public JFXButton couponButton;
     @FXML public JFXButton placeOrderButton;
     @FXML public JFXButton closeButton;
     @FXML public JFXComboBox<String> methodBox;
@@ -104,8 +105,13 @@ public class CartController implements Initializable {
                 Platform.runLater(() -> {
                     messageLabel.setTextFill(Color.GREEN);
                     messageLabel.setText("Coupon applied");
-                    totalPrice -= coupon.getValue().intValue();
+                    if (coupon.getType().equals("FIXED")) {
+                        totalPrice -= coupon.getValue().intValue();
+                    } else if (coupon.getType().equals("PERCENT")) {
+                        totalPrice *= (int) (coupon.getValue().intValue() /100.0);
+                    }
                     totalPriceLabel.setText(String.format("Total: %d T", totalPrice));
+                    couponButton.setDisable(true);
                 });
             } catch (IOException | OrderApiService.OrderException | InterruptedException e) {
                 e.printStackTrace();

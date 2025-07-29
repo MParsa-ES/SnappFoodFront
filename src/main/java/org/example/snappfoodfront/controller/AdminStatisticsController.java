@@ -16,17 +16,10 @@ import java.util.ResourceBundle;
 
 public class AdminStatisticsController implements Initializable {
 
-    @FXML
-    private Label totalUsersLabel;
-
-    @FXML
-    private Label totalRestaurantsLabel;
-
-    @FXML
-    private Label ordersTodayLabel;
-
-    @FXML
-    private Label totalRevenueLabel;
+    @FXML private Label totalUsersLabel;
+    @FXML private Label totalRestaurantsLabel;
+    @FXML private Label ordersTodayLabel;
+    @FXML private Label totalRevenueLabel;
 
 
     private final AdminApiService adminApiService = new AdminApiService();

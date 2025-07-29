@@ -18,41 +18,18 @@ import java.util.ResourceBundle;
 
 public class TransactionManagementController implements Initializable {
 
-    @FXML
-    private TableView<TransactionDTO.PaymentResponseDTO> transactionsTableView;
-
-    @FXML
-    private TableColumn<TransactionDTO.PaymentResponseDTO, Long> idColumn;
-
-    @FXML
-    private TableColumn<TransactionDTO.PaymentResponseDTO, Long> orderIdColumn;
-
-    @FXML
-    private TableColumn<TransactionDTO.PaymentResponseDTO, Long> userIdColumn;
-
-    @FXML
-    private TableColumn<TransactionDTO.PaymentResponseDTO, String> methodColumn;
-
-    @FXML
-    private TableColumn<TransactionDTO.PaymentResponseDTO, String> statusColumn;
-
-    @FXML
-    private TextField searchField;
-
-    @FXML
-    private TextField searchUserField;
-
-    @FXML
-    private JFXCheckBox walletMethodCheck;
-
-    @FXML
-    private JFXCheckBox onlineMethodCheck;
-
-    @FXML
-    private JFXCheckBox successStatusCheck;
-
-    @FXML
-    private JFXCheckBox failedStatusCheck;
+    @FXML private TableView<TransactionDTO.PaymentResponseDTO> transactionsTableView;
+    @FXML private TableColumn<TransactionDTO.PaymentResponseDTO, Long> idColumn;
+    @FXML private TableColumn<TransactionDTO.PaymentResponseDTO, Long> orderIdColumn;
+    @FXML private TableColumn<TransactionDTO.PaymentResponseDTO, Long> userIdColumn;
+    @FXML private TableColumn<TransactionDTO.PaymentResponseDTO, String> methodColumn;
+    @FXML private TableColumn<TransactionDTO.PaymentResponseDTO, String> statusColumn;
+    @FXML private TextField searchField;
+    @FXML private TextField searchUserField;
+    @FXML private JFXCheckBox walletMethodCheck;
+    @FXML private JFXCheckBox onlineMethodCheck;
+    @FXML private JFXCheckBox successStatusCheck;
+    @FXML private JFXCheckBox failedStatusCheck;
 
     private final AdminApiService adminApiService = new AdminApiService();
 

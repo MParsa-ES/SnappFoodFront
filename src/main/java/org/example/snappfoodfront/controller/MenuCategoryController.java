@@ -23,14 +23,9 @@ import java.util.List;
 
 public class MenuCategoryController {
 
-    @FXML
-    private VBox rootPane;
-
-    @FXML
-    private Label categoryNameLabel;
-
-    @FXML
-    private VBox itemsContainer;
+    @FXML private VBox rootPane;
+    @FXML private Label categoryNameLabel;
+    @FXML private VBox itemsContainer;
 
     private MenuManagementController mainController;
     private Long restaurantId;

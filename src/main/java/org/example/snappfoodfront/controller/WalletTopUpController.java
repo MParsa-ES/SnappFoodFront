@@ -16,17 +16,13 @@ import java.util.ResourceBundle;
 
 public class WalletTopUpController implements Initializable {
 
-    @FXML
-    private TextField amountField;
-
-    @FXML
-    private Label statusLabel;
+    @FXML private TextField amountField;
+    @FXML private Label statusLabel;
 
     private final OrderApiService orderService = new OrderApiService();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Methods.applyThousandSeparator(amountField);
     }
 
     @FXML

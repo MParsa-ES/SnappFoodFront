@@ -70,11 +70,9 @@ public class CartManager {
         return (item != null) ? item.getQuantity() : 0;
     }
 
-
     public static List<CartItem> getCartItems() {
         return new ArrayList<>(items.values());
     }
-
 
     public static void clearCart() {
         items.clear();
