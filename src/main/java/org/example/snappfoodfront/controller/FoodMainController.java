@@ -4,7 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -13,13 +15,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import org.example.snappfoodfront.Service.OrderApiService;
+import org.example.snappfoodfront.Service.ProfileApiService;
+import org.example.snappfoodfront.Service.RatingApiService;
 import org.example.snappfoodfront.Utils.*;
 import org.example.snappfoodfront.model.FoodItemDto;
+import org.example.snappfoodfront.model.RatingDTO;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class FoodMainController implements Initializable {
 
@@ -46,12 +53,14 @@ public class FoodMainController implements Initializable {
     private static final String CART_VIEW_PATH = "/view/cart-view.fxml";
 
     private final OrderApiService orderService = new OrderApiService();
+    private final RatingApiService ratingService = new RatingApiService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         foodItem = MainViewState.selectedFoodItem;
         loadItemDetails(foodItem);
+        loadComments(foodItem.getId());
         setWalletBalance();
 
     }
@@ -62,13 +71,57 @@ public class FoodMainController implements Initializable {
 
         Platform.runLater(() -> {
             foodNameLabel.setText(foodItem.getName());
-            priceLabel.setText(String.valueOf(foodItem.getPrice()) + " T");
+            priceLabel.setText(foodItem.getPrice() + " T");
             supplyLabel.setText(String.valueOf(foodItem.getSupply()));
             descriptionLabel.setText(foodItem.getDescription());
             ratingLabel.setText(String.valueOf(foodItem.getRating()));
 
             Image image = Methods.convertToImage(foodItem.getImageBase64());
             logoImageView.setImage(image);
+        });
+
+    }
+
+    private void loadComments(Long itemId) {
+
+        new Thread(() -> {
+            try {
+                RatingDTO.ItemRatings ratings = ratingService.getComments(TokenManager.getToken(), itemId);
+                Set<RatingDTO.ItemRatings.Comments> comments = ratings.getComments();
+
+                if (comments.isEmpty()) {
+                    Label errorLabel = new Label("No Comments yet");
+                    errorLabel.setStyle("-fx-text-fill: red;");
+                    commentContainer.getChildren().add(errorLabel);
+                } else {
+                    listComments(comments, commentContainer);
+                }
+
+            } catch (RatingApiService.RatingException | IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+
+    }
+
+    private void listComments(Set<RatingDTO.ItemRatings.Comments> commentList, VBox commentContainer) {
+
+        Platform.runLater(() -> {
+            for (RatingDTO.ItemRatings.Comments comment : commentList) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/comment-card.fxml"));
+                    Node foodCardNode = loader.load();
+
+                    CommentCardController cardController = loader.getController();
+                    cardController.setData(comment);
+
+                    commentContainer.getChildren().add(foodCardNode);
+                } catch (IOException e) {
+                    System.err.println("error while loading restaurant's card" + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
         });
 
     }

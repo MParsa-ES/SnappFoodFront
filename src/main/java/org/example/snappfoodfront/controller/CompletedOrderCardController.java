@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.example.snappfoodfront.Service.OrderApiService;
+import org.example.snappfoodfront.Service.RatingApiService;
+import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.OrderDto;
 import org.example.snappfoodfront.Utils.SceneManager; // برای باز کردن پنجره ثبت نظر
 
@@ -25,17 +27,22 @@ public class CompletedOrderCardController {
     @FXML private JFXButton reviewButton;
 
     private OrderDto.OrderResponse order;
+    private OrderHistoryController parentController;
+    private final Long ratingId = 0L;
 
     private final OrderApiService orderService = new OrderApiService();
+    private final RatingApiService ratingService = new RatingApiService();
 
 
-    public void setData(OrderDto.OrderResponse order) throws IOException, InterruptedException, OrderApiService.OrderException {
+    public void setData(OrderDto.OrderResponse order,  OrderHistoryController controller) throws IOException, InterruptedException, OrderApiService.OrderException {
         this.order = order;
+        this.parentController = controller;
 
         new Thread(() -> {
             try {
                 OrderDto.NamesRequest request = new OrderDto.NamesRequest(order.getVendor_id(), order.getItem_ids());
                 final OrderDto.NamesResponse names = orderService.getNames(request);
+                boolean hasAlreadyReviewed = ratingService.hasOrderBeenReviewed(TokenManager.getToken(), order.getId());
 
                 Platform.runLater(() -> {
                     restaurantNameLabel.setText(names.getRestaurant_name());
@@ -53,6 +60,11 @@ public class CompletedOrderCardController {
                         reviewButton.setManaged(false);
                     }
 
+                    if (hasAlreadyReviewed) {
+                        reviewButton.setDisable(true);
+                        reviewButton.setText("Your order has been reviewed");
+                    }
+
                     itemsVBox.getChildren().clear();
                     for (String itemName : names.getItem_names()) {
                         Label itemLabel = new Label("- " + itemName);
@@ -68,11 +80,7 @@ public class CompletedOrderCardController {
 
     @FXML
     private void handleReview() {
-        System.out.println("دکمه ثبت نظر برای سفارش با ID: " + order.getId() + " کلیک شد.");
-        // در اینجا، شما باید یک پنجره جدید برای ثبت نظر باز کنید
-        // و ID سفارش را به کنترلر آن پنجره پاس دهید.
-        // SceneManager.showSubmitReviewWindow(order.getId());
+        parentController.startReviewProcess(order.getId());
     }
 
-    // ... (متد setStatusStyle مانند کنترلر قبلی)
 }

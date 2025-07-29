@@ -65,14 +65,14 @@ public class CustomerMainController implements Initializable {
 
     @FXML public CustomTextField minPriceField;
     @FXML public CustomTextField maxPriceField;
-    @FXML public JFXCheckBox kababBox;
-    @FXML public JFXCheckBox poloBox;
-    @FXML public JFXCheckBox khoreshtBox;
-    @FXML public JFXCheckBox daryaiiBox;
-    @FXML public JFXCheckBox fastFoodBox;
-    @FXML public JFXCheckBox sokhariBox;
     @FXML public JFXCheckBox pizzaBox;
     @FXML public JFXCheckBox burgerBox;
+    @FXML public JFXCheckBox kebabBox;
+    @FXML public JFXCheckBox sandwichBox;
+    @FXML public JFXCheckBox riceBox;
+    @FXML public JFXCheckBox stewBox;
+    @FXML public JFXCheckBox seafoodBox;
+    @FXML public JFXCheckBox friedBox;
     @FXML public Label walletLabel;
 
 
@@ -105,14 +105,14 @@ public class CustomerMainController implements Initializable {
             minPriceField.setText(MainViewState.getLastMinPrice().toString());
             maxPriceField.setText(MainViewState.getLastMaxPrice().toString());
             if (keywords.size() > 0) {
-                if (keywords.contains("kebab")) {kababBox.setSelected(true);}
-                if (keywords.contains("polo")) {poloBox.setSelected(true);}
-                if (keywords.contains("khoresht")) {khoreshtBox.setSelected(true);}
-                if (keywords.contains("daryaii")) {daryaiiBox.setSelected(true);}
-                if (keywords.contains("fastfood")) {fastFoodBox.setSelected(true);}
-                if (keywords.contains("sokhari")) {sokhariBox.setSelected(true);}
-                if (keywords.contains("pizza")) {pizzaBox.setSelected(true);}
-                if (keywords.contains("burger")) {burgerBox.setSelected(true);}
+                if (keywords.contains("Pizza")) {pizzaBox.setSelected(true);}
+                if (keywords.contains("Burger")) {burgerBox.setSelected(true);}
+                if (keywords.contains("Kebab")) {kebabBox.setSelected(true);}
+                if (keywords.contains("Sandwich")) {sandwichBox.setSelected(true);}
+                if (keywords.contains("Rice Dish")) {riceBox.setSelected(true);}
+                if (keywords.contains("Stew")) {stewBox.setSelected(true);}
+                if (keywords.contains("Seafood")) {seafoodBox.setSelected(true);}
+                if (keywords.contains("Fried")) {friedBox.setSelected(true);}
             }
 
             filterPanel.setVisible(false);
@@ -259,14 +259,14 @@ public class CustomerMainController implements Initializable {
         String search = searchBar.getText();
 
         List<String> keywords = new ArrayList<>();
-        if (kababBox.isSelected()) { keywords.add("کباب"); }
-        if (poloBox.isSelected()) { keywords.add("پلو"); }
-        if (khoreshtBox.isSelected()) { keywords.add("خورشت"); }
-        if (daryaiiBox.isSelected()) { keywords.add("دریایی"); }
-        if (fastFoodBox.isSelected()) { keywords.add("فست فود"); }
-        if (sokhariBox.isSelected()) { keywords.add("سوخاری"); }
-        if (pizzaBox.isSelected()) { keywords.add("پیتزا"); }
-        if (burgerBox.isSelected()) { keywords.add("برگر"); }
+        if (pizzaBox.isSelected()) { keywords.add("Pizza"); }
+        if (burgerBox.isSelected()) { keywords.add("Burger"); }
+        if (kebabBox.isSelected()) { keywords.add("Kebab"); }
+        if (sandwichBox.isSelected()) { keywords.add("Sandwich"); }
+        if (riceBox.isSelected()) { keywords.add("Rice Dish"); }
+        if (stewBox.isSelected()) { keywords.add("Stew"); }
+        if (seafoodBox.isSelected()) { keywords.add("Seafood"); }
+        if (friedBox.isSelected()) { keywords.add("Fried"); }
 
         BuyerDto.ItemSearch request = new BuyerDto.ItemSearch(search, minPrice, maxPrice, keywords);
 
@@ -342,14 +342,14 @@ public class CustomerMainController implements Initializable {
         }
         String search = searchBar.getText();
         List<String> keywords = new ArrayList<>();
-        if (kababBox.isSelected()) { keywords.add("کباب"); }
-        if (poloBox.isSelected()) { keywords.add("پلو"); }
-        if (khoreshtBox.isSelected()) { keywords.add("خورشت"); }
-        if (daryaiiBox.isSelected()) { keywords.add("دریایی"); }
-        if (fastFoodBox.isSelected()) { keywords.add("فست فود"); }
-        if (sokhariBox.isSelected()) { keywords.add("سوخاری"); }
-        if (pizzaBox.isSelected()) { keywords.add("پیتزا"); }
-        if (burgerBox.isSelected()) { keywords.add("برگر"); }
+        if (pizzaBox.isSelected()) { keywords.add("Pizza"); }
+        if (burgerBox.isSelected()) { keywords.add("Burger"); }
+        if (kebabBox.isSelected()) { keywords.add("Kebab"); }
+        if (sandwichBox.isSelected()) { keywords.add("Sandwich"); }
+        if (riceBox.isSelected()) { keywords.add("Rice Dish"); }
+        if (stewBox.isSelected()) { keywords.add("Stew"); }
+        if (seafoodBox.isSelected()) { keywords.add("Seafood"); }
+        if (friedBox.isSelected()) { keywords.add("Fried"); }
 
         boolean isFilterActive = (search != null && !search.isBlank()) ||
                 (minPrice > 0) || (maxPrice > 0) || (!keywords.isEmpty());

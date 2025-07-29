@@ -40,7 +40,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </FontIcon>
-            <Region prefHeight="30.0" prefWidth="15.0" />
+            <Region maxWidth="40.0" prefHeight="30.0" prefWidth="15.0" />
             <JFXButton buttonType="RAISED" contentDisplay="RIGHT" layoutX="878.0" layoutY="13.0" onAction="#handleShowOrders" style="-fx-background-color: #ff7600; -fx-text-fill: white;" text="Orders">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fas-receipt" />
@@ -143,7 +143,7 @@
    <left>
    </left>
    <center>
-      <TabPane fx:id="tabPane" maxHeight="680.0" maxWidth="1024.0" side="BOTTOM" styleClass="main-tab-pane" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" maxHeight="680.0" maxWidth="1050.0" side="BOTTOM" styleClass="main-tab-pane" stylesheets="@../css/styles.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
             <Tab closable="false" onSelectionChanged="#handleMainPage" style="fx-cursor: hand;" text="Main Page">
                <content>
@@ -168,8 +168,14 @@
                               </HBox>
                               <ScrollPane fitToWidth="true">
                                  <content>
-                                    <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="10.0" />
+                                    <VBox fx:id="restaurantContainer" alignment="TOP_CENTER" spacing="5.0">
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding></VBox>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
                               </ScrollPane>
                            </children>
                         </VBox>
@@ -296,14 +302,14 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <JFXCheckBox fx:id="kababBox" checkedColor="#00ff80" text="کباب" textAlignment="CENTER" GridPane.halignment="LEFT" />
-                        <JFXCheckBox fx:id="poloBox" checkedColor="#00ff80" text="پلو" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
-                        <JFXCheckBox fx:id="khoreshtBox" checkedColor="#00ff80" text="خورشت" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-                        <JFXCheckBox fx:id="daryaiiBox" checkedColor="#00ff80" text="دریایی" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-                        <JFXCheckBox fx:id="fastFoodBox" checkedColor="#00ff80" text="فست فود" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                        <JFXCheckBox fx:id="sokhariBox" checkedColor="#00ff80" text="سوخاری" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                        <JFXCheckBox fx:id="pizzaBox" checkedColor="#00ff80" text="پیتزا" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-                        <JFXCheckBox fx:id="burgerBox" checkedColor="#00ff80" text="برگر" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+                        <JFXCheckBox fx:id="pizzaBox" checkedColor="#00ff80" text="Pizza" textAlignment="CENTER" GridPane.halignment="LEFT" />
+                        <JFXCheckBox fx:id="burgerBox" checkedColor="#00ff80" text="Burger" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                        <JFXCheckBox fx:id="kebabBox" checkedColor="#00ff80" text="Kebab" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+                        <JFXCheckBox fx:id="sandwichBox" checkedColor="#00ff80" text="Sandwich" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+                        <JFXCheckBox fx:id="riceBox" checkedColor="#00ff80" text="Rice Dish" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                        <JFXCheckBox fx:id="stewBox" checkedColor="#00ff80" text="Stew" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                        <JFXCheckBox fx:id="seafoodBox" checkedColor="#00ff80" text="Seefood" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+                        <JFXCheckBox fx:id="friedBox" checkedColor="#00ff80" text="Fried" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>

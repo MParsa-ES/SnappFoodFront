@@ -10,6 +10,8 @@ import javafx.scene.layout.VBox;
 import org.example.snappfoodfront.Service.OrderApiService;
 import org.example.snappfoodfront.Utils.TokenManager;
 import org.example.snappfoodfront.model.OrderDto;
+import org.example.snappfoodfront.Utils.MainViewState;
+import org.example.snappfoodfront.Utils.SceneManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,13 +83,25 @@ public class OrderHistoryController implements Initializable {
                 controller.setData(order);
             } else {
                 CompletedOrderCardController controller = loader.getController();
-                controller.setData(order);
+                controller.setData(order, this);
             }
 
             container.getChildren().add(cardNode);
         } catch (IOException | InterruptedException | OrderApiService.OrderException e) {
             e.printStackTrace();
         }
+    }
+
+    public void startReviewProcess(Long orderId) {
+        MainViewState.setSelectedOrderId(orderId);
+        Runnable refreshCallback = this::loadOrderHistory;
+
+        SceneManager.showReviewWindow(refreshCallback);
+    }
+
+    @FXML
+    private void refreshPage() {
+        loadOrderHistory();
     }
 
 

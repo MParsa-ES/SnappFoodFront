@@ -90,7 +90,7 @@ public class SplashScreenController implements Initializable {
 
                             switch (profile.getRole()) {
                                 case "BUYER" ->
-                                        SceneManager.showWindow("/view/customer-main-view.fxml", "SnappFood", "customer", 1050, 720);
+                                        SceneManager.showWindow("/view/customer-main-view.fxml", "SnappFood", "customer", 1024, 720);
                                 case "SELLER" ->
                                         SceneManager.showWindow("/view/SellerViews/seller-main-view.fxml", "SnappFood", "seller", 1050, 720);
                                 case "ADMIN" ->

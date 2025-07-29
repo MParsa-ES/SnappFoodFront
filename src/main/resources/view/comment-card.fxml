@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox prefHeight="230.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.CommentCardController">
+    <children>
+        <HBox alignment="CENTER_LEFT" spacing="10.0">
+            <children>
+                <FontIcon iconLiteral="fas-user-circle" iconSize="20" />
+                <Label fx:id="userNameLabel" ellipsisString="" prefWidth="150.0">
+                    <font><Font name="System Bold" size="14.0" /></font>
+                </Label>
+            <Region prefHeight="57.0" HBox.hgrow="ALWAYS" />
+                <HBox fx:id="starsContainer" alignment="CENTER_LEFT" />
+            </children>
+        </HBox>
+        <Label fx:id="dateLabel" style="-fx-text-fill: #808080;" />
+        <Separator />
+
+        <Label fx:id="commentTextLabel" wrapText="true" />
+
+        <ScrollPane fx:id="imageScrollPane" minHeight="80.0" prefHeight="80.0" vbarPolicy="NEVER">
+            <content>
+                <HBox fx:id="imagesContainer" alignment="CENTER_LEFT" prefHeight="80.0" spacing="10.0" />
+            </content>
+        </ScrollPane>
+
+    </children>
+    <padding>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+    </padding>
+</VBox>

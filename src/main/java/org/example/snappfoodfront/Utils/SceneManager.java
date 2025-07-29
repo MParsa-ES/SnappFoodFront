@@ -9,10 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.example.snappfoodfront.Service.AuthApiService;
+import org.example.snappfoodfront.controller.ReviewController;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +36,10 @@ public class SceneManager {
 
             if (title.isEmpty()) {
                 stage.initStyle(StageStyle.UNDECORATED);
+                stage.initModality(Modality.APPLICATION_MODAL);
+            }
+            if (title.equals("Your Orders")) {
+                stage.initModality(Modality.APPLICATION_MODAL);
             }
 
             stage.setTitle(title);
@@ -43,6 +49,31 @@ public class SceneManager {
 
         } catch (IOException e) {
             System.err.println("Error loading " + error + "window");
+            e.printStackTrace();
+        }
+    }
+
+    public static void showReviewWindow(Runnable refreshCallback) {
+        try {
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/view/review-view.fxml"));
+            Parent root = loader.load();
+
+            ReviewController reviewController = loader.getController();
+
+            if (reviewController != null) {
+                reviewController.setOnReviewSubmitted(refreshCallback);
+            }
+
+            Stage reviewStage = new Stage();
+            reviewStage.setTitle("Submit Review");
+            reviewStage.setScene(new Scene(root));
+
+            reviewStage.initModality(Modality.APPLICATION_MODAL);
+
+            reviewStage.setResizable(false);
+            reviewStage.showAndWait();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

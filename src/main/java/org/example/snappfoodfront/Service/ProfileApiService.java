@@ -53,6 +53,23 @@ public class ProfileApiService {
             throw new AuthApiService.AuthException(errorResponseDto);
         }
 
+    }
+
+    public String getName(Long id) throws IOException, InterruptedException, AuthApiService.AuthException {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(SERVER_URL + "/auth/user/name/" + id))
+                .GET()
+                .build();
+
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200) {
+            ErrorResponseDto errorResponseDto = gson.fromJson(response.body(), ErrorResponseDto.class);
+            throw new AuthApiService.AuthException(errorResponseDto);
+        }
+
+        return gson.fromJson(response.body(), String.class);
 
     }
 

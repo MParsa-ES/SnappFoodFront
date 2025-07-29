@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantMainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.RestaurantMainController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
          <items>
@@ -150,7 +150,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <ScrollPane fitToHeight="true" prefHeight="50.0" vbarPolicy="NEVER">
+                  <ScrollPane fitToHeight="true" prefHeight="50.0" style="fo: transparent;" vbarPolicy="NEVER">
                      <content>
                         <HBox fx:id="menuContainer" alignment="CENTER" prefHeight="100.0" spacing="10.0">
                            <padding>

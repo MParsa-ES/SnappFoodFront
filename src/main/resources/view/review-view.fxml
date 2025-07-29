@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" spacing="15.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.snappfoodfront.controller.ReviewController">
+    <children>
+        <Label text="Submit Your Review">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+      <JFXComboBox fx:id="ratingBox" focusColor="#e1ff00" promptText="Choose your rating">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin></JFXComboBox>
+
+        <VBox alignment="CENTER" spacing="5.0">
+            <children>
+                <Label text="Your Comment:" />
+                <TextArea fx:id="commentTextArea" prefHeight="100.0" prefWidth="400.0" promptText="Write your comment here..." wrapText="true" />
+            </children>
+        </VBox>
+      <VBox alignment="CENTER">
+         <children>
+            <HBox fx:id="imageThumbnailsContainer" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="460.0" spacing="10.0" />
+            <JFXButton buttonType="RAISED" onAction="#handleAddImages" text="Add Photo">
+               <ripplerFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.8809523582458496" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color green="1.0" blue="0.43809521198272705" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </ripplerFill>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </VBox>
+
+        <JFXButton fx:id="submitButton" onAction="#handleSubmit" prefWidth="150.0" style="-fx-background-color: #2ecc71;" text="Submit" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+        </JFXButton>
+
+        <Label fx:id="errorLabel" textFill="RED" />
+    </children>
+    <padding>
+        <Insets bottom="15.0" left="20.0" right="20.0" top="10.0" />
+    </padding>
+</VBox>

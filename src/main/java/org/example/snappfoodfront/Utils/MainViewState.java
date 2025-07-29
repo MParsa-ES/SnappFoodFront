@@ -39,6 +39,15 @@ public class MainViewState {
     @Getter
     @Setter
     public static FoodItemDto.Response selectedFoodItem;
+    @Getter
+    @Setter
+    private static Long selectedOrderId;
+    @Getter
+    @Setter
+    private static Long ratingId;
+    @Getter
+    @Setter
+    private static boolean isEditingReview = false;
 
     public static void saveState(String searchTerm, Integer minPrice, Integer maxPrice, List<String> keywords) {
         lastSearchTerm = searchTerm;
