@@ -58,13 +58,17 @@ public class OngoingOrderCardController {
 
     private void setStatusStyle(String status) {
         switch (status) {
-            case "ON_THE_WAY":
-            case "FINDING_COURIER":
             case "WAITING_VENDOR":
+            case "FINDING_COURIER":
+            case "ON_THE_WAY":
+            case "ACCEPTED":
+            case "RECEIVED":
                 switch (status) {
-                    case "ON_THE_WAY" -> status = "On the way";
-                    case "FINDING_COURIER" -> status = "Finding Courier";
                     case "WAITING_VENDOR" -> status = "Waiting For Vendor";
+                    case "FINDING_COURIER" -> status = "Finding Courier";
+                    case "ON_THE_WAY" -> status = "On the way";
+                    case "ACCEPTED" -> status = "Accepted";
+                    case "RECEIVED" -> status = "Received";
                 }
                 statusLabel.setTextFill(Color.BLUE);
                 statusLabel.setText(status);

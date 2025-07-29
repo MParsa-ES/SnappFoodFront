@@ -53,6 +53,8 @@ public class OrderHistoryController implements Initializable {
                             case "WAITING_VENDOR":
                             case "FINDING_COURIER":
                             case "ON_THE_WAY":
+                            case "ACCEPTED":
+                            case "RECEIVED":
                                 addOrderCard(order, ongoingOrdersContainer, "/view/ongoing-order-card.fxml");
                                 break;
 
