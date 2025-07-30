@@ -27,6 +27,10 @@ public class FoodCardController {
         supplyLabel.setText(String.valueOf(response.getSupply()));
         ratingLabel.setText(String.valueOf(response.getRating()));
 
+        if (response.getImageBase64() == null) {
+            return;
+        }
+
         byte[] imageBytes = Base64.getDecoder().decode(response.getImageBase64());
         logoImageView.setImage(new Image(new ByteArrayInputStream(imageBytes)));
 
