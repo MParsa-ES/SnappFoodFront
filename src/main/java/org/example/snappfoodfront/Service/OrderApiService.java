@@ -66,7 +66,7 @@ public class OrderApiService {
     public CouponDto.Response checkCoupon(String token, String coupon_code) throws IOException, InterruptedException, OrderException {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(SERVER_URL + "/coupon?coupon_code=" + coupon_code))
+                .uri(URI.create(SERVER_URL + "/coupons?coupon_code=" + coupon_code))
                 .header("Authorization", "Bearer " + token)
                 .GET().build();
 

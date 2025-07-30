@@ -145,6 +145,7 @@ public class MenuManagementController {
 
 
             addFoodController.setRestaurantId(this.restaurantId);
+            addFoodController.initForAdd(this.restaurantId);
 
 
             Stage dialogStage = new Stage();

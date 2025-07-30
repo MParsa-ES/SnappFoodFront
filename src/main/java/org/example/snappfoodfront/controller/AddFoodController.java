@@ -62,6 +62,7 @@ public class AddFoodController {
         this.foodToEdit = foodToEdit;
         this.restaurantId = restaurantId;
 
+        this.ImageBase64 = foodToEdit.getImageBase64();
 
         nameField.setText(foodToEdit.getName());
         priceField.setText(String.valueOf(foodToEdit.getPrice()));
@@ -74,16 +75,26 @@ public class AddFoodController {
         saveButton.setText("Save Changes");
         titleLabel.setText("Edit Food");
 
-
         Set<String> keywords = foodToEdit.getKeywords();
         for (Node node : keywordsGridPane.getChildren()) {
             if (node instanceof JFXCheckBox checkBox && keywords.contains(checkBox.getText())) {
                 checkBox.setSelected(true);
             }
         }
-
     }
 
+    public void initForAdd(Long restaurantId) {
+        this.restaurantId = restaurantId;
+        this.foodToEdit = null;
+        titleLabel.setText("Add New Food Item");
+        saveButton.setText("Save Food");
+        try {
+            this.ImageBase64 = loadDefaultLogoBase64();
+        } catch (IOException e) {
+            this.ImageBase64 = "";
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void initialize() {
@@ -105,17 +116,6 @@ public class AddFoodController {
                         .or(descriptionArea.textProperty().isEmpty());
 
         saveButton.disableProperty().bind(formIsInvalid);
-
-        if (foodToEdit == null) {
-            try {
-                ImageBase64 = loadDefaultLogoBase64();
-            } catch (IOException e) {
-                e.printStackTrace();
-                ImageBase64 = "";
-                System.err.println("Failed to load default food picture");
-            }
-        }
-
     }
 
     @FXML
@@ -168,11 +168,7 @@ public class AddFoodController {
         foodItemDto.setDescription(descriptionArea.getText());
         foodItemDto.setKeywords(keywords);
 
-        if (this.ImageBase64 == null && this.foodToEdit != null) {
-            foodItemDto.setImageBase64(foodToEdit.getImageBase64());
-        } else {
-            foodItemDto.setImageBase64(this.ImageBase64);
-        }
+        foodItemDto.setImageBase64(this.ImageBase64);
 
         new Thread(() -> {
             try {
