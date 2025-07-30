@@ -75,18 +75,10 @@ public class CustomerMainController implements Initializable {
     @FXML public JFXCheckBox friedBox;
     @FXML public Label walletLabel;
 
+    private boolean isRestoringState = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        String token = TokenManager.getToken();
-        try {
-            CartManager.setBuyerAddress(profileService.getProfile(token).getAddress());
-        } catch (IOException | InterruptedException | AuthApiService.AuthException e) {
-            e.printStackTrace();
-        }
-        getFavoriteRestaurantIds();
-        setWalletBalance();
 
         if (MainViewState.cameFromFavorites) {
 
@@ -94,10 +86,9 @@ public class CustomerMainController implements Initializable {
             loadFavoriteRestaurants();
 
             MainViewState.clearState();
-            return;
-        }
 
-        if (MainViewState.hasState) {
+        } else if (MainViewState.hasState) {
+            isRestoringState = true;
 
             List<String> keywords = MainViewState.getLastKeywords();
 
@@ -131,6 +122,15 @@ public class CustomerMainController implements Initializable {
             filterPanel.setManaged(false);
             loadAllRestaurants();
         }
+
+        String token = TokenManager.getToken();
+        try {
+            CartManager.setBuyerAddress(profileService.getProfile(token).getAddress());
+        } catch (IOException | InterruptedException | AuthApiService.AuthException e) {
+            e.printStackTrace();
+        }
+        getFavoriteRestaurantIds();
+        setWalletBalance();
 
     }
 
@@ -370,15 +370,18 @@ public class CustomerMainController implements Initializable {
 
     @FXML
     protected void handleMainPage() {
+        if (isRestoringState) {
+            return;
+        }
         getFavoriteRestaurantIds();
         Platform.runLater(() -> {
             region.setPrefWidth(410);
 
             searchBar.setDisable(false);
             searchIcon.setDisable(false);
-            loadAllRestaurants();
         });
     }
+
     private void setWalletBalance() {
         try {
             CartManager.setWalletBalance(orderService.getWalletBalance(TokenManager.getToken()));
